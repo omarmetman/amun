@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="64" viewBox="0 0 340 64" role="img">
+  <defs>
+    <linearGradient id="btn-blue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a50a8"/>
+      <stop offset="40%" stop-color="#1A3A85"/>
+      <stop offset="100%" stop-color="#0f2252"/>
+    </linearGradient>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-weight: 700; }
+  </style>
+  <g>
+    <!-- Drop Shadow -->
+    <rect x="0" y="6" width="340" height="58" rx="8" fill="#040917"/>
+    <!-- Button Face -->
+    <rect x="0" y="0" width="340" height="58" rx="8" fill="url(#btn-blue)" stroke="#38bdf8" stroke-width="1.2"/>
+    <!-- Play Icon -->
+    <polygon points="32,21 44,29 32,37" fill="#E3A92F"/>
+    <!-- Label -->
+    <text x="180" y="36" font-size="15" fill="#EDE7D8" text-anchor="middle" letter-spacing="1.2">PLAY 30s PROMO VIDEO  ▶</text>
+  </g>
+</svg>

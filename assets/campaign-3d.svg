@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-labelledby="t-campaign d-campaign">
+  <title id="t-campaign">AMUN Horizon: 6-Chapter Solar System Campaign (2041-2051)</title>
+  <desc id="d-campaign">Isometric 3D timeline mapping the narrative journey across the Moon, Mars, Bennu, Venus, Jupiter, and Ceres</desc>
+
+  <defs>
+    <filter id="c-glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5"/></filter>
+    <linearGradient id="bg-map" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#030613"/>
+      <stop offset="100%" stop-color="#0a1538"/>
+    </linearGradient>
+    <clipPath id="map-clip"><rect width="1200" height="340" rx="16"/></clipPath>
+  </defs>
+
+  <style>
+    text { font-family: 'Segoe UI', Inter, sans-serif; }
+    .mono { font-family: 'Fira Code', monospace; }
+    @keyframes float-node {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .node-float { animation: float-node 5s ease-in-out infinite; }
+  </style>
+
+  <g clip-path="url(#map-clip)">
+    <rect width="1200" height="340" fill="url(#bg-map)"/>
+
+    <!-- Deep Space Grid Lines -->
+    <g stroke="#1A3A85" stroke-opacity="0.3" stroke-width="1">
+      <line x1="0" y1="170" x2="1200" y2="170" stroke-dasharray="6 6"/>
+      <line x1="0" y1="270" x2="1200" y2="270" stroke-opacity="0.2"/>
+      <line x1="0" y1="70" x2="1200" y2="70" stroke-opacity="0.2"/>
+    </g>
+
+    <!-- Header Section Badge -->
+    <g transform="translate(40, 24)">
+      <rect width="360" height="30" rx="4" fill="#0D1F4C" stroke="#E3A92F" stroke-width="1.2"/>
+      <circle cx="16" cy="15" r="4" fill="#E3A92F"/>
+      <text class="mono" x="32" y="20" font-size="12" font-weight="700" fill="#EDE7D8" letter-spacing="1.2">CAMPAIGN: AMUN HORIZON [2041 - 2051]</text>
+    </g>
+
+    <!-- Signal Frequency Tag -->
+    <text class="mono" x="1160" y="44" font-size="11" fill="#E3A92F" text-anchor="end">
+      ANOMALOUS PULSE: 1420.405 MHz ◆ 26-MONTH INTERVAL
+    </text>
+
+    <!-- 3D Interplanetary Spline Line -->
+    <path d="M 100 170 C 260 90 320 230 480 150 C 640 70 700 240 860 160 C 960 100 1040 180 1100 170" 
+          fill="none" stroke="#E3A92F" stroke-width="2.5" stroke-dasharray="8 4" opacity="0.8"/>
+
+    <!-- 6 CAMPAIGN CHAPTER NODES -->
+
+    <!-- Ch 1: Moon (2041) -->
+    <g class="node-float" transform="translate(100, 170)">
+      <circle cx="0" cy="0" r="22" fill="#0D1F4C" stroke="#E3A92F" stroke-width="2"/>
+      <circle cx="0" cy="0" r="14" fill="#94a3b8"/>
+      <!-- Shadow -->
+      <path d="M0 -14 A14 14 0 0 1 0 14 A8 14 0 0 1 0 -14" fill="#334155"/>
+      <text class="mono" x="0" y="38" font-size="11" font-weight="700" fill="#EDE7D8" text-anchor="middle">CH.01 MOON</text>
+      <text class="mono" x="0" y="52" font-size="9" fill="#7dd3fc" text-anchor="middle">2041 · ORBITER</text>
+    </g>
+
+    <!-- Ch 2: Mars (2043) -->
+    <g class="node-float" style="animation-delay: -1s;" transform="translate(300, 130)">
+      <circle cx="0" cy="0" r="26" fill="#0D1F4C" stroke="#E3A92F" stroke-width="2"/>
+      <circle cx="0" cy="0" r="18" fill="#e0533c"/>
+      <path d="M0 -18 A18 18 0 0 1 0 18 A10 18 0 0 1 0 -18" fill="#7f1d1d"/>
+      <text class="mono" x="0" y="44" font-size="11" font-weight="700" fill="#EDE7D8" text-anchor="middle">CH.02 MARS</text>
+      <text class="mono" x="0" y="58" font-size="9" fill="#fca5a5" text-anchor="middle">2043 · DUST RECON</text>
+    </g>
+
+    <!-- Ch 3: Bennu (2045) -->
+    <g class="node-float" style="animation-delay: -2s;" transform="translate(500, 190)">
+      <circle cx="0" cy="0" r="22" fill="#0D1F4C" stroke="#E3A92F" stroke-width="2"/>
+      <!-- Irregular Asteroid Shape -->
+      <polygon points="-10,-10 4,-14 14,-4 10,10 -6,14 -14,2" fill="#64748b"/>
+      <text class="mono" x="0" y="38" font-size="11" font-weight="700" fill="#EDE7D8" text-anchor="middle">CH.03 BENNU</text>
+      <text class="mono" x="0" y="52" font-size="9" fill="#3FA878" text-anchor="middle">2045 · SAMPLE RETURN</text>
+    </g>
+
+    <!-- Ch 4: Venus (2047) -->
+    <g class="node-float" style="animation-delay: -3s;" transform="translate(700, 120)">
+      <circle cx="0" cy="0" r="26" fill="#0D1F4C" stroke="#E3A92F" stroke-width="2"/>
+      <circle cx="0" cy="0" r="18" fill="#f59e0b"/>
+      <path d="M0 -18 A18 18 0 0 1 0 18 A10 18 0 0 1 0 -18" fill="#92400e"/>
+      <text class="mono" x="0" y="44" font-size="11" font-weight="700" fill="#EDE7D8" text-anchor="middle">CH.04 VENUS</text>
+      <text class="mono" x="0" y="58" font-size="9" fill="#fde68a" text-anchor="middle">2047 · ATMOSPHERE LANDER</text>
+    </g>
+
+    <!-- Ch 5: Jupiter (2049) -->
+    <g class="node-float" style="animation-delay: -4s;" transform="translate(900, 195)">
+      <circle cx="0" cy="0" r="32" fill="#0D1F4C" stroke="#E3A92F" stroke-width="2"/>
+      <circle cx="0" cy="0" r="24" fill="#ca8a04"/>
+      <!-- Bands & Storm -->
+      <ellipse cx="0" cy="0" rx="36" ry="6" fill="none" stroke="#eab308" stroke-width="1.5" transform="rotate(-15)"/>
+      <circle cx="-6" cy="6" r="4" fill="#dc2626"/>
+      <text class="mono" x="0" y="48" font-size="11" font-weight="700" fill="#EDE7D8" text-anchor="middle">CH.05 JUPITER</text>
+      <text class="mono" x="0" y="62" font-size="9" fill="#fde047" text-anchor="middle">2049 · RADIATION ORBIT</text>
+    </g>
+
+    <!-- Ch 6: Ceres (2051) -->
+    <g class="node-float" style="animation-delay: -2.5s;" transform="translate(1100, 160)">
+      <circle cx="0" cy="0" r="24" fill="#0D1F4C" stroke="#E3A92F" stroke-width="2.5" filter="url(#c-glow)"/>
+      <polygon points="-9,-11 6,-13 14,-2 8,12 -5,13 -13,4" fill="#94a3b8"/>
+      <!-- Bright Spot Occator Crater -->
+      <circle cx="-2" cy="-2" r="2.5" fill="#ffffff" filter="url(#c-glow)"/>
+      <text class="mono" x="0" y="42" font-size="11" font-weight="700" fill="#FFF5D1" text-anchor="middle">CH.06 CERES</text>
+      <text class="mono" x="0" y="56" font-size="9" fill="#E3A92F" text-anchor="middle">2051 · THE HORIZON</text>
+    </g>
+
+    <!-- Bottom Status Bar -->
+    <g transform="translate(40, 290)">
+      <rect width="1120" height="32" rx="4" fill="#060c24" stroke="#1A3A85" stroke-width="1"/>
+      <text class="mono" x="20" y="20" font-size="11" fill="#C2B89E">
+        ALL 6 CHAPTERS FEATURING AUTOMATED TEST SUITE CI VALIDATION (100% 3-STAR FEASIBLE PRESETS)
+      </text>
+      <text class="mono" x="1100" y="20" font-size="11" fill="#3FA878" font-weight="700" text-anchor="end">
+        UNLOCKABLE PILOT CERTIFICATE
+      </text>
+    </g>
+
+    <!-- Outer Structural Border -->
+    <rect x="1" y="1" width="1198" height="338" rx="15" fill="none" stroke="#1A3A85" stroke-width="1.5"/>
+  </g>
+</svg>

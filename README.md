@@ -2,20 +2,15 @@
 
 <div align="center">
 
-```
-             /\
-            /  \      /\
-           /    \    /  \      (O)
-          /  /\  \  / /\ \     / \
-         /  /  \  \/ /  \ \   /___\
-        /__/    \___/    \__\
-        ======================
-        P R O J E C T   A M U N
-        ======================
-```
+<img src="./assets/header-3d.svg" alt="Project AMUN: Deep Space Mission Designer and Orbital Simulator" width="100%" />
 
-**An authentic, client-side aerospace engineering simulator and interactive educational platform.**  
-*Bridge genuine orbital mechanics, NASA datasets, and systems engineering trade-offs within an authentic Ancient Egyptian mural pigment interface.*
+<br /><br />
+
+<a href="https://github.com/omarmetman/amun"><img src="./assets/btn-launch.svg" alt="Launch Simulator" height="52" /></a>
+<a href="./promo-video.html"><img src="./assets/btn-video.svg" alt="Play 30s Promo Video" height="52" /></a>
+<a href="https://github.com/omarmetman/amun"><img src="./assets/btn-github.svg" alt="View Source Code on GitHub" height="52" /></a>
+
+<br /><br />
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)](https://react.dev/)
@@ -82,6 +77,12 @@ Unlike typical gamified space titles that rely on arbitrary scores or unphysical
 
 ## Core Engineering Workflow (11 Steps)
 
+<div align="center">
+  <img src="./assets/telemetry-3d.svg" alt="Live Aerospace Flight Telemetry Deck & Margin Rulers" width="100%" />
+</div>
+
+<br />
+
 The simulator is structured as a sequential aerospace design review lifecycle:
 
 ```
@@ -107,6 +108,12 @@ The simulator is structured as a sequential aerospace design review lifecycle:
 ---
 
 ## Astrophysics & Mathematical Formulations
+
+<div align="center">
+  <img src="./assets/physics-3d.svg" alt="5 Coupled Computational Physics Engines" width="100%" />
+</div>
+
+<br />
 
 All computations reside in standalone, pure TypeScript modules (`src/engine/`) with zero framework dependencies.
 
@@ -198,6 +205,12 @@ AMUN connects directly to official NASA/JPL public endpoints. Every factual para
 ---
 
 ## Story Campaign: "AMUN Horizon"
+
+<div align="center">
+  <img src="./assets/campaign-3d.svg" alt="AMUN Horizon: 6-Chapter Solar System Campaign" width="100%" />
+</div>
+
+<br />
 
 Beyond sandbox mission planning, AMUN introduces **AMUN Horizon**—a six-chapter narrative campaign spanning from 2041 to 2051.
 

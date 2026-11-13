@@ -1,0 +1,364 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-labelledby="title desc">
+  <title id="title">Project AMUN — Deep Space Mission Designer and Orbital Simulator</title>
+  <desc id="desc">3D isometric space operations bridge with celestial bodies, deep space probe, and aerospace telemetry</desc>
+
+  <defs>
+    <!-- Blur filters for realistic atmospheric glows and thruster emission -->
+    <filter id="glow-soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="glow-deep" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="thruster-bloom" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="12"/></filter>
+
+    <!-- Deep Space Gradients -->
+    <linearGradient id="space-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#030612"/>
+      <stop offset="45%" stop-color="#060c24"/>
+      <stop offset="85%" stop-color="#0b173d"/>
+      <stop offset="100%" stop-color="#112255"/>
+    </linearGradient>
+
+    <!-- Nebular dust glow -->
+    <radialGradient id="nebula-gold" cx="75%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#E3A92F" stop-opacity="0.22"/>
+      <stop offset="40%" stop-color="#E3A92F" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#030612" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="nebula-cyan" cx="20%" cy="35%" r="50%">
+      <stop offset="0%" stop-color="#1A3A85" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#060c24" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#030612" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- 3D Planet Shading Gradients -->
+    <radialGradient id="earth-sphere" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="30%" stop-color="#0284c7"/>
+      <stop offset="70%" stop-color="#034870"/>
+      <stop offset="95%" stop-color="#021a2c"/>
+      <stop offset="100%" stop-color="#010c17"/>
+    </radialGradient>
+
+    <radialGradient id="mars-sphere" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#fca5a5"/>
+      <stop offset="35%" stop-color="#e0533c"/>
+      <stop offset="75%" stop-color="#991b1b"/>
+      <stop offset="95%" stop-color="#450a0a"/>
+      <stop offset="100%" stop-color="#1a0404"/>
+    </radialGradient>
+
+    <radialGradient id="jupiter-sphere" cx="35%" cy="25%" r="75%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="25%" stop-color="#eab308"/>
+      <stop offset="60%" stop-color="#ca8a04"/>
+      <stop offset="85%" stop-color="#713f12"/>
+      <stop offset="100%" stop-color="#2a1505"/>
+    </radialGradient>
+
+    <!-- 3D Gold Extrusion Gradients -->
+    <linearGradient id="gold-front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF5D1"/>
+      <stop offset="35%" stop-color="#F7D070"/>
+      <stop offset="75%" stop-color="#E3A92F"/>
+      <stop offset="100%" stop-color="#B87B14"/>
+    </linearGradient>
+
+    <linearGradient id="gold-bevel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8c5806"/>
+      <stop offset="50%" stop-color="#5a3702"/>
+      <stop offset="100%" stop-color="#2a1800"/>
+    </linearGradient>
+
+    <linearGradient id="lapis-surface" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#264ea0"/>
+      <stop offset="50%" stop-color="#1a3575"/>
+      <stop offset="100%" stop-color="#0f2048"/>
+    </linearGradient>
+
+    <!-- 3D Perspective Grid Mask -->
+    <linearGradient id="grid-fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="25%" stop-color="#fff" stop-opacity="0.3"/>
+      <stop offset="75%" stop-color="#fff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="1"/>
+    </linearGradient>
+    <mask id="perspective-mask">
+      <rect x="0" y="270" width="1200" height="190" fill="url(#grid-fade)"/>
+    </mask>
+
+    <clipPath id="frame-clip">
+      <rect width="1200" height="460" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <style>
+    text { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; }
+    .mono { font-family: 'Fira Code', ui-monospace, Menlo, Consolas, monospace; }
+    
+    @keyframes orbit-float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-9px) rotate(0.8deg); }
+    }
+    @keyframes probe-float {
+      0%, 100% { transform: translateY(0px) translateX(0px); }
+      50% { transform: translateY(-7px) translateX(4px); }
+    }
+    @keyframes radar-pulse {
+      0% { transform: scale(0.9); opacity: 0.9; }
+      100% { transform: scale(2.8); opacity: 0; }
+    }
+    @keyframes star-twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.95; }
+    }
+    @keyframes hud-sweep {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+    @keyframes beam-glow {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 0.85; }
+    }
+
+    .float-slow { animation: orbit-float 8s ease-in-out infinite; }
+    .float-fast { animation: probe-float 6s ease-in-out infinite; }
+    .twinkle-1 { animation: star-twinkle 3s ease-in-out infinite; }
+    .twinkle-2 { animation: star-twinkle 4.5s ease-in-out -1.5s infinite; }
+    .twinkle-3 { animation: star-twinkle 2.2s ease-in-out -0.8s infinite; }
+    .pulse-ring { transform-box: fill-box; transform-origin: center; animation: radar-pulse 2.4s ease-out infinite; }
+    .hud-laser { animation: hud-sweep 6s linear infinite; }
+    .signal-beam { animation: beam-glow 3.5s ease-in-out infinite; }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, .float-slow, .float-fast, .twinkle-1, .twinkle-2, .twinkle-3, .pulse-ring, .hud-laser, .signal-beam {
+        animation: none !important;
+      }
+    }
+  </style>
+
+  <g clip-path="url(#frame-clip)">
+    <!-- Canvas Base -->
+    <rect width="1200" height="460" fill="url(#space-bg)"/>
+    <rect width="1200" height="460" fill="url(#nebula-cyan)"/>
+    <rect width="1200" height="460" fill="url(#nebula-gold)"/>
+
+    <!-- Distant Starfield -->
+    <g fill="#ffffff">
+      <circle class="twinkle-1" cx="85" cy="52" r="1.4"/>
+      <circle class="twinkle-2" cx="195" cy="115" r="0.8"/>
+      <circle class="twinkle-3" cx="310" cy="40" r="1.2"/>
+      <circle class="twinkle-1" cx="420" cy="88" r="0.9"/>
+      <circle class="twinkle-2" cx="540" cy="35" r="1.5"/>
+      <circle class="twinkle-3" cx="690" cy="95" r="1.0"/>
+      <circle class="twinkle-1" cx="810" cy="45" r="1.3"/>
+      <circle class="twinkle-2" cx="950" cy="72" r="0.7"/>
+      <circle class="twinkle-3" cx="1080" cy="38" r="1.5"/>
+      <circle class="twinkle-1" cx="1140" cy="110" r="1.1"/>
+      <circle class="twinkle-2" cx="70" cy="190" r="1.0"/>
+      <circle class="twinkle-3" cx="1110" cy="210" r="1.2"/>
+      <circle class="twinkle-1" cx="240" cy="240" r="0.8"/>
+      <circle class="twinkle-2" cx="980" cy="250" r="1.4"/>
+    </g>
+
+    <!-- 3D Perspective Flight Deck Floor Grid -->
+    <g mask="url(#perspective-mask)" stroke="#E3A92F" stroke-opacity="0.32" stroke-width="1.2">
+      <!-- Vanishing Perspective Lines radiating from Horizon (x: 600, y: 270) -->
+      <line x1="600" y1="270" x2="-600" y2="460"/>
+      <line x1="600" y1="270" x2="-400" y2="460"/>
+      <line x1="600" y1="270" x2="-200" y2="460"/>
+      <line x1="600" y1="270" x2="0" y2="460"/>
+      <line x1="600" y1="270" x2="150" y2="460"/>
+      <line x1="600" y1="270" x2="300" y2="460"/>
+      <line x1="600" y1="270" x2="450" y2="460"/>
+      <line x1="600" y1="270" x2="600" y2="460"/>
+      <line x1="600" y1="270" x2="750" y2="460"/>
+      <line x1="600" y1="270" x2="900" y2="460"/>
+      <line x1="600" y1="270" x2="1050" y2="460"/>
+      <line x1="600" y1="270" x2="1200" y2="460"/>
+      <line x1="600" y1="270" x2="1400" y2="460"/>
+      <line x1="600" y1="270" x2="1600" y2="460"/>
+      <line x1="600" y1="270" x2="1800" y2="460"/>
+
+      <!-- Transverse Grid Steps (Logarithmic Depth) -->
+      <line x1="0" y1="275" x2="1200" y2="275" stroke-opacity="0.15"/>
+      <line x1="0" y1="282" x2="1200" y2="282" stroke-opacity="0.2"/>
+      <line x1="0" y1="293" x2="1200" y2="293" stroke-opacity="0.3"/>
+      <line x1="0" y1="310" x2="1200" y2="310" stroke-opacity="0.4"/>
+      <line x1="0" y1="334" x2="1200" y2="334" stroke-opacity="0.5"/>
+      <line x1="0" y1="368" x2="1200" y2="368" stroke-opacity="0.6"/>
+      <line x1="0" y1="412" x2="1200" y2="412" stroke-opacity="0.8"/>
+      <line x1="0" y1="460" x2="1200" y2="460" stroke-opacity="1.0"/>
+    </g>
+
+    <!-- Horizon Energy Line -->
+    <line x1="0" y1="270" x2="1200" y2="270" stroke="#E3A92F" stroke-width="2" stroke-opacity="0.75" filter="url(#glow-soft)"/>
+    <line x1="0" y1="270" x2="1200" y2="270" stroke="#FFF5D1" stroke-width="1" stroke-opacity="0.95"/>
+
+    <!-- Laser Scan Sweep Line -->
+    <rect class="hud-laser" x="0" y="269" width="300" height="3" fill="#67e8f9" opacity="0.8" filter="url(#glow-soft)"/>
+
+    <!-- ======================================================== -->
+    <!-- 3D CELESTIAL BODIES (Floating with orbital geometry)     -->
+    <!-- ======================================================== -->
+
+    <!-- Orbit Trajectory Arc -->
+    <path class="signal-beam" d="M 120 220 Q 600 -30 1080 200" fill="none" stroke="#E3A92F" stroke-width="1.8" stroke-dasharray="8 6" opacity="0.6"/>
+
+    <!-- Earth (Left Foreground 3D Sphere) -->
+    <g class="float-slow" transform="translate(130, 210)">
+      <!-- Orbital Ring -->
+      <ellipse cx="0" cy="0" rx="68" ry="24" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4 4" opacity="0.5" transform="rotate(-15)"/>
+      <!-- Shadow caster on grid -->
+      <ellipse cx="0" cy="95" rx="52" ry="14" fill="#020713" opacity="0.6" filter="url(#glow-soft)"/>
+      <!-- Atmospheric Glow -->
+      <circle cx="0" cy="0" r="46" fill="#38bdf8" opacity="0.25" filter="url(#glow-soft)"/>
+      <!-- Main Earth Sphere -->
+      <circle cx="0" cy="0" r="44" fill="url(#earth-sphere)"/>
+      <!-- Terminator & Continents outline -->
+      <path d="M-15 -38 C5 -20 18 5 8 36 C-18 30 -38 10 -40 -15 Z" fill="#059669" opacity="0.65"/>
+      <path d="M5 -15 C22 -8 32 15 26 30 C15 35 2 25 -5 10 Z" fill="#059669" opacity="0.55"/>
+      <path d="M-40 -12 C-10 -25 20 -28 42 -8 C44 5 35 30 18 40 C-10 44 -35 20 -44 0 Z" fill="#ffffff" opacity="0.18"/>
+      <!-- Label -->
+      <text class="mono" x="0" y="62" font-size="11" fill="#7dd3fc" text-anchor="middle" font-weight="600" letter-spacing="1">EARTH [1.00 AU]</text>
+    </g>
+
+    <!-- Mars (Right Midground 3D Sphere) -->
+    <g class="float-slow" style="animation-delay: -3s;" transform="translate(1040, 180)">
+      <!-- Orbital Ring -->
+      <ellipse cx="0" cy="0" rx="55" ry="20" fill="none" stroke="#f87171" stroke-width="1" stroke-dasharray="3 3" opacity="0.4" transform="rotate(18)"/>
+      <!-- Shadow on floor -->
+      <ellipse cx="0" cy="115" rx="42" ry="11" fill="#020713" opacity="0.6" filter="url(#glow-soft)"/>
+      <!-- Atmospheric haze -->
+      <circle cx="0" cy="0" r="36" fill="#f87171" opacity="0.25" filter="url(#glow-soft)"/>
+      <!-- Mars Sphere -->
+      <circle cx="0" cy="0" r="34" fill="url(#mars-sphere)"/>
+      <!-- Polar Cap & Basins -->
+      <ellipse cx="-8" cy="-28" rx="10" ry="4" fill="#ffffff" opacity="0.75"/>
+      <path d="M-18 -8 C-6 10 12 15 25 2 C28 15 15 28 -5 26 C-24 22 -30 5 -20 -8 Z" fill="#450a0a" opacity="0.5"/>
+      <!-- Label -->
+      <text class="mono" x="0" y="52" font-size="11" fill="#fca5a5" text-anchor="middle" font-weight="600" letter-spacing="1">MARS [1.52 AU]</text>
+    </g>
+
+    <!-- Jupiter (Far Background Distant Sphere) -->
+    <g class="float-slow" style="animation-delay: -5s;" transform="translate(860, 85)">
+      <circle cx="0" cy="0" r="22" fill="url(#jupiter-sphere)"/>
+      <!-- Equatorial Ring -->
+      <ellipse cx="0" cy="0" rx="36" ry="6" fill="none" stroke="#ca8a04" stroke-width="1.2" opacity="0.65" transform="rotate(-12)"/>
+      <text class="mono" x="0" y="34" font-size="9" fill="#fde047" text-anchor="middle" opacity="0.8">JUPITER</text>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- 3D INTERPLANETARY SPACECRAFT PROBE (Floating Center)     -->
+    <!-- ======================================================== -->
+    <g class="float-fast" transform="translate(600, 165)">
+      <!-- Ion Engine Thruster Exhaust Plume -->
+      <polygon points="0,32 -14,88 0,115 14,88" fill="#38bdf8" opacity="0.6" filter="url(#thruster-bloom)"/>
+      <polygon points="0,32 -6,70 0,90 6,70" fill="#ffffff" opacity="0.9"/>
+      
+      <!-- High Gain Antenna (Parabolic Dish 3D Ellipse) -->
+      <g transform="translate(0, -32) rotate(-15)">
+        <ellipse cx="0" cy="0" rx="36" ry="14" fill="#1e293b" stroke="#E3A92F" stroke-width="2"/>
+        <ellipse cx="0" cy="0" rx="28" ry="10" fill="#0f172a"/>
+        <!-- Subreflector Horn -->
+        <line x1="0" y1="0" x2="0" y2="-18" stroke="#E3A92F" stroke-width="2"/>
+        <circle cx="0" cy="-18" r="3.5" fill="#FFF5D1"/>
+      </g>
+
+      <!-- Spacecraft Bus Core (Hexagonal Isometric Prism) -->
+      <polygon points="-24,-16 0,-28 24,-16 24,18 0,30 -24,18" fill="url(#lapis-surface)" stroke="#1A3A85" stroke-width="1.5"/>
+      <polygon points="-24,-16 0,-28 0,30 -24,18" fill="#15295c"/>
+      <polygon points="0,-28 24,-16 24,18 0,30" fill="#1d3878"/>
+      <!-- Gold MLI Foil Thermal Blanketing -->
+      <rect x="-14" y="-8" width="28" height="18" fill="#E3A92F" opacity="0.85" rx="2" stroke="#B87B14" stroke-width="1"/>
+
+      <!-- Star Tracker & Instruments Mast -->
+      <line x1="-16" y1="-14" x2="-32" y2="-32" stroke="#EDE7D8" stroke-width="1.8"/>
+      <circle cx="-32" cy="-32" r="3" fill="#E3A92F"/>
+      <line x1="16" y1="-14" x2="32" y2="-32" stroke="#EDE7D8" stroke-width="1.8"/>
+      <circle cx="32" cy="-32" r="3" fill="#3FA878"/>
+
+      <!-- Deployable Solar Array Wings (3D Isometric Panels) -->
+      <!-- Left Wing -->
+      <g transform="translate(-24, 2) skewY(-8)">
+        <rect x="-95" y="-12" width="95" height="24" rx="2" fill="#082f49" stroke="#E3A92F" stroke-width="1.5"/>
+        <!-- Photovoltaic Grid lines -->
+        <line x1="-72" y1="-12" x2="-72" y2="12" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+        <line x1="-48" y1="-12" x2="-48" y2="12" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+        <line x1="-24" y1="-12" x2="-24" y2="12" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+        <line x1="-95" y1="0" x2="0" y2="0" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+      </g>
+      <!-- Right Wing -->
+      <g transform="translate(24, 2) skewY(8)">
+        <rect x="0" y="-12" width="95" height="24" rx="2" fill="#082f49" stroke="#E3A92F" stroke-width="1.5"/>
+        <!-- Photovoltaic Grid lines -->
+        <line x1="24" y1="-12" x2="24" y2="12" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+        <line x1="48" y1="-12" x2="48" y2="12" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+        <line x1="72" y1="-12" x2="72" y2="12" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+        <line x1="0" y1="0" x2="95" y2="0" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+      </g>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- TOP STATUS HEADS-UP DISPLAY (HUD) PILLARS                -->
+    <!-- ======================================================== -->
+
+    <!-- Top Left: Mission Operational Status -->
+    <g transform="translate(36, 26)">
+      <rect width="260" height="34" rx="17" fill="#060f26" fill-opacity="0.88" stroke="#1A3A85" stroke-width="1.5"/>
+      <circle class="pulse-ring" cx="20" cy="17" r="4.5" fill="#3FA878"/>
+      <circle cx="20" cy="17" r="4.5" fill="#3FA878"/>
+      <text class="mono" x="34" y="21.5" font-size="11" font-weight="700" fill="#3FA878" letter-spacing="1.2">SYSTEMS NOMINAL: 41/41</text>
+    </g>
+
+    <!-- Top Center: NASA Provenance Indicator -->
+    <g transform="translate(480, 26)">
+      <rect width="240" height="34" rx="17" fill="#060f26" fill-opacity="0.88" stroke="#E3A92F" stroke-width="1.5"/>
+      <circle cx="18" cy="17" r="4" fill="#E3A92F"/>
+      <text class="mono" x="120" y="21.5" font-size="11" font-weight="700" fill="#EDE7D8" text-anchor="middle" letter-spacing="1.5">NASA OPEN DATA ◆ LIVE</text>
+    </g>
+
+    <!-- Top Right: Offline Readiness -->
+    <g transform="translate(904, 26)">
+      <rect width="260" height="34" rx="17" fill="#060f26" fill-opacity="0.88" stroke="#1A3A85" stroke-width="1.5"/>
+      <circle class="pulse-ring" cx="20" cy="17" r="4.5" fill="#38bdf8"/>
+      <circle cx="20" cy="17" r="4.5" fill="#38bdf8"/>
+      <text class="mono" x="34" y="21.5" font-size="11" font-weight="700" fill="#7dd3fc" letter-spacing="1">100% OFFLINE CAPABLE</text>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- 3D EXTRUDED HERO TYPOGRAPHY: PROJECT AMUN                -->
+    <!-- ======================================================== -->
+    <g transform="translate(600, 345)">
+      <!-- Drop Extrusion Depth Layers (3D Stacking Effect) -->
+      <text class="mono" x="0" y="16" font-size="64" font-weight="900" fill="#050a17" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+      <text class="mono" x="0" y="14" font-size="64" font-weight="900" fill="#0b1736" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+      <text class="mono" x="0" y="12" font-size="64" font-weight="900" fill="#102352" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+      <text class="mono" x="0" y="10" font-size="64" font-weight="900" fill="#18367a" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+      <text class="mono" x="0" y="8" font-size="64" font-weight="900" fill="#5c3b03" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+      <text class="mono" x="0" y="6" font-size="64" font-weight="900" fill="#8c5806" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+      <text class="mono" x="0" y="4" font-size="64" font-weight="900" fill="#b87b14" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+      <text class="mono" x="0" y="2" font-size="64" font-weight="900" fill="#e3a92f" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+      
+      <!-- Face Layer with Gleaming Gold & Limestone Gradient -->
+      <text class="mono" x="0" y="0" font-size="64" font-weight="900" fill="url(#gold-front)" text-anchor="middle" letter-spacing="14" filter="url(#glow-soft)" opacity="0.3">PROJECT AMUN</text>
+      <text class="mono" x="0" y="0" font-size="64" font-weight="900" fill="url(#gold-front)" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+      <!-- Crisp Inner Stroke Highlight -->
+      <text class="mono" x="0" y="0" font-size="64" font-weight="900" fill="none" stroke="#FFFFFF" stroke-width="0.8" stroke-opacity="0.6" text-anchor="middle" letter-spacing="14">PROJECT AMUN</text>
+
+      <!-- Subtitle Tagline in Monospace Cartouche -->
+      <g transform="translate(0, 36)">
+        <rect x="-310" y="-14" width="620" height="28" rx="14" fill="#060f26" fill-opacity="0.9" stroke="#E3A92F" stroke-width="1.2"/>
+        <text class="mono" x="0" y="4.5" font-size="12" fill="#EDE7D8" text-anchor="middle" letter-spacing="3" font-weight="600">DEEP SPACE MISSION DESIGNER &amp; ORBITAL SIMULATOR</text>
+      </g>
+
+      <!-- Authentic Arabic Identity & Provenance Sub-tag -->
+      <g transform="translate(0, 72)">
+        <text x="0" y="0" font-size="14" fill="#C2B89E" text-anchor="middle" font-weight="500">
+          محاكي تصميم وإدارة المهام الفضائية بأصباغ الجداريات المصرية ومعادلات الفيزياء الفلكية الحقيقية
+        </text>
+      </g>
+    </g>
+
+    <!-- Outer Structural Border Frame -->
+    <rect x="1" y="1" width="1198" height="458" rx="19" fill="none" stroke="#1A3A85" stroke-width="2"/>
+    <rect x="4" y="4" width="1192" height="452" rx="16" fill="none" stroke="#E3A92F" stroke-width="0.75" stroke-opacity="0.4"/>
+  </g>
+</svg>
