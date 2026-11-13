@@ -1,606 +1,443 @@
-# AMUN / آمون
+# AMUN (آمون) — Deep Space Mission Designer & Orbital Simulator
 
-**لعبة تصميم وتقييم مهام فضائية تعليمية — Arabic-first, fully bilingual.**  
-صمّم مركبة، اختر أجهزتها وصاروخها وميزانيتها، ثم شغّل محاكاة حتمية واقرأ تقريرًا يشرح كل نقطة وكيف تُصلحها.
+<div align="center">
 
-> AMUN is an educational space-mission designer built with React 18, TypeScript, Vite and Tailwind CSS. It runs entirely in the browser with no backend, uses NASA-sourced reference data with visible provenance, and reproduces the same simulation from the same design and seed.
+```
+             /\
+            /  \      /\
+           /    \    /  \      (O)
+          /  /\  \  / /\ \     / \
+         /  /  \  \/ /  \ \   /___\
+        /__/    \___/    \__\
+        ======================
+        P R O J E C T   A M U N
+        ======================
+```
+
+**An authentic, client-side aerospace engineering simulator and interactive educational platform.**  
+*Bridge genuine orbital mechanics, NASA datasets, and systems engineering trade-offs within an authentic Ancient Egyptian mural pigment interface.*
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Tests Passing](https://img.shields.io/badge/Vitest-41%2F41%20Passed-3FA878?logo=vitest&logoColor=white)](https://vitest.dev/)
+[![NASA Open Data](https://img.shields.io/badge/NASA%20Data-Horizons%20%7C%20SBDB%20%7C%20NTRS-E3A92F?logo=nasa&logoColor=white)](https://www.nasa.gov/)
+[![Offline First](https://img.shields.io/badge/Architecture-100%25%20Client--Side%20%7C%20Offline%20Ready-0D1F4C)](#offline-architecture)
+[![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%20AA%20%7C%20RTL%20%2B%20LTR-EDE7D8?logoColor=0D1F4C)](#accessibility--internationalization)
+
+[Live Demo](https://github.com/omarmetman/amun) • [Interactive Promo Player](promo-video.html) • [Subtitles (AR/EN)](amun_subtitles_ar.srt) • [Documentation](#table-of-contents)
+
+</div>
 
 ---
 
-## التشغيل السريع / Quick start
+## Table of Contents
 
-المتطلبات: **Node.js 18+** و npm.
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Core Engineering Workflow (11 Steps)](#core-engineering-workflow-11-steps)
+- [Astrophysics & Mathematical Formulations](#astrophysics--mathematical-formulations)
+- [NASA Open Data Provenance](#nasa-open-data-provenance)
+- [Story Campaign: "AMUN Horizon"](#story-campaign-amun-horizon)
+- [Pilot Profile & 26 Achievements](#pilot-profile--26-achievements)
+- [Design Identity: The Egyptian Engineer's Blueprint](#design-identity-the-egyptian-engineers-blueprint)
+- [Development Methodology (50% AI / 50% Human Engineering)](#development-methodology-50-ai--50-human-engineering)
+- [Technical Architecture](#technical-architecture)
+- [Interactive 30-Second Promo Video Player](#interactive-30-second-promo-video-player)
+- [Getting Started & Installation](#getting-started--installation)
+- [Automated Testing & Verification](#automated-testing--verification)
+- [Extensibility Guide](#extensibility-guide)
+- [Scientific Scope & Pedagogical Limits](#scientific-scope--pedagogical-limits)
+- [License & NASA Media Compliance](#license--nasa-media-compliance)
+
+---
+
+## Overview
+
+**Project AMUN** (*named after the ancient Egyptian deity of hidden potential, represented by the iconic twin plumes and solar disc*) is a modern, web-based space mission design laboratory. It guides users through the intricate compromises of interplanetary spaceflight: balancing scientific instrument power against solar decay, sizing rocket propellants using closed-form structural equations, optimizing Deep Space Network communications, and navigating Hohmann transfer trajectories.
+
+Unlike typical gamified space titles that rely on arbitrary scores or unphysical sliders, AMUN enforces a **pure, deterministic computational engine** (`src/engine`). Every slider movement or subsystem choice immediately ripples through five coupled aerospace constraints:
+1. **Mass vs. Launch Vehicle Capacity** ($C_3$ characteristic energy curve)
+2. **Power Generation vs. Load Budget** (Cruise, Science, and Eclipse safe-modes)
+3. **Data Link Budget vs. Interplanetary Range** (Deep Space Network 34m / 70m)
+4. **Mission $\Delta v$ Demand vs. Available Rocket Velocity**
+5. **Subsystem Expenditures vs. Budget & Reserves**
+
+---
+
+## Key Features
+
+* **Authentic 11-Step Mission Wizard**: From initial science objectives to orbital trajectory design and post-mortem evaluation.
+* **Pure Mathematical Engine**: Decoupled from the UI, executing closed-form rocket equations, inverse-square solar flux models, and link margins.
+* **Deterministic Monte Carlo Simulation**: Seeded pseudo-random number generator (FNV-1a + Mulberry32) ensuring identical design + identical seed = identical mission trajectory and events.
+* **"AMUN Horizon" 6-Chapter Story Campaign**: An episodic narrative following a catastrophic 2041 solar flare, unraveling deep-space signals across the Solar System (2041–2051).
+* **Commander Profile & 26 Scientific Achievements**: Permanent browser-persisted progression with pilot ranks from *Trainee* to *Legend of Amun*.
+* **Bespoke Visual Language**: Replaces generic dark sci-fi templates with authentic Egyptian mural pigments (*Lapis Lazuli*, *Egyptian Blue*, *Limestone*, *Gold Ochre*), linear Margin Rulers, and an SVG Trajectory Stepper.
+* **NASA Provenance Badges**: Real-time provenance badges documenting live vs. cached vs. snapshot data from NASA JPL Horizons, SBDB, and NTRS citations.
+* **100% Client-Side & Offline-Ready**: Embedded JSON snapshots guarantee complete functionality without external servers or internet connection.
+* **Full Bidirectional Localization**: Native Right-to-Left (RTL) Arabic and Left-to-Right (LTR) English interfaces.
+
+---
+
+## Core Engineering Workflow (11 Steps)
+
+The simulator is structured as a sequential aerospace design review lifecycle:
+
+```
+[01 Objectives] ──> [02 Spacecraft] ──> [03 Instruments] ──> [04 Launch Vehicle]
+                                                                     │
+[08 Comms]      <── [07 Mass & Δv]  <── [06 Power Budget] <── [05 Budget & Reserves]
+    │
+    └──> [09 Orbit Trajectory] ──> [10 Mission Simulation] ──> [11 Post-Mortem Report]
+```
+
+1. **Step 01 — Mission Objectives**: Select celestial target (Moon, Mars, Venus, Jupiter, Asteroids like Bennu/Ceres, Comets like 67P/Halley) and mission profile (Flyby, Orbiter, Lander, Rendezvous, Sample Return).
+2. **Step 02 — Spacecraft Bus & Propulsion**: Select bus platform (Dry mass, structural capacity) and engine chemistry (Monopropellant, Bipropellant, or High-$I_{sp}$ Ion thruster) with redundancy and radiation hardening options.
+3. **Step 03 — Scientific Instruments**: Allocate payload suite (Narrow/Wide Cameras, IR Spectrometer, LIDAR, Magnetometer, Sub-surface Radar, Mass Spectrometer, Gamma/Neutron detector, Sample Capsule). Science return scales dynamically with target affinity.
+4. **Step 04 — Launch Vehicle**: Interpolate rocket payload capacities as a function of characteristic injection energy ($C_3$) across Electron, Falcon 9, Falcon Heavy, Atlas V 551, Vulcan Centaur, Ariane 6, and SLS Block 1.
+5. **Step 05 — Budget & Reserves**: Allocate development, daily operations ($opsDays$), DSN tracking hours, and financial safety reserves against stochastic cost inflation.
+6. **Step 06 — Power Subsystems**: Size solar array surface areas ($m^2$), Radioisotope Thermoelectric Generators (RTGs), and battery capacities ($Wh/kg$) across Cruise, Science, and Eclipse modes.
+7. **Step 07 — Mass & Rocket Sizing**: Solve the structural tank-to-propellant mass ratio in closed form. Flags physical singularities when delta-v demands exceed propulsion capability.
+8. **Step 08 — Deep Space Communications**: High-Gain Antenna (HGA) diameter sizing, X/Ka band selection, transmitter RF power, and DSN ground station aperture matching (34m vs 70m).
+9. **Step 09 — Orbital Constraints**: Hohmann transfer mechanics, synodic launch window penalties, planetary capture, landing velocity requirements, and orbital plane change penalties ($\Delta v \approx 2v\sin(i/2)$).
+10. **Step 10 — Mission Simulation**: Seeded timeline execution modeling launch reliability, interplanetary cruise, planetary insertion, operational telemetry, and stochastic anomalies (solar storms, micrometeoroid impacts, DSN scheduling conflicts).
+11. **Step 11 — Mission Success Evaluation**: 100-point composite score (Science 35%, Budget 20%, Engineering Margins 20%, Reliability 25%), letter rank ($S, A, B, C, D, F$), and root-cause post-mortem analysis.
+
+---
+
+## Astrophysics & Mathematical Formulations
+
+All computations reside in standalone, pure TypeScript modules (`src/engine/`) with zero framework dependencies.
+
+### 1. Closed-Form Propellant & Structural Sizing (`rocket.ts`)
+
+Standard rocket calculations suffer from recursive dependency: adding propellant requires larger tanks, which adds dry mass, demanding more propellant. AMUN resolves this analytically using a closed-form closed-mass solution.
+
+Let $k = \frac{m_{\text{tank}}}{m_{\text{prop}}}$ be the structural tank fraction (typically $0.08$ to $0.15$), and $m_{\text{other}}$ be the spacecraft dry mass excluding propellant tanks:
+
+$$x = \frac{\Delta v_{\text{req}} \cdot (1 + \text{reserve})}{I_{sp} \cdot g_0}$$
+
+The closed-form propellant mass is derived from:
+
+$$m_{\text{wet}} = m_{\text{other}} + (1 + k) m_{\text{prop}} = (m_{\text{other}} + k m_{\text{prop}}) \cdot e^x$$
+
+$$m_{\text{prop}} = \frac{m_{\text{other}} \cdot (e^x - 1)}{1 - k \cdot (e^x - 1)}$$
+
+> **Physical Singularity Boundary**: If $1 - k \cdot (e^x - 1) \le 0$, the denominator collapses to zero or negative. The engine flags `equationClosed = false`, preventing impossible spacecraft designs and triggering an immediate engineering halt: *"Equation cannot close: Reduce required $\Delta v$ or upgrade $I_{sp}$"*.
+
+### 2. Solar Flux & Power Generation Model (`power.ts`)
+
+Solar irradiance $S(r)$ decays according to the inverse-square law based on heliocentric distance $r$ (in Astronomical Units, AU):
+
+$$S(r) = \frac{1361}{r^2} \quad [\text{W/m}^2]$$
+
+Solar array electrical output accounting for multi-junction cell efficiency $\eta \approx 0.28$, structural packing factor $P_f \approx 0.90$, and annual radiation degradation $\delta \approx 2.5\%/\text{year}$:
+
+$$P_{\text{solar}}(t) = A \cdot S(r) \cdot \eta \cdot P_f \cdot (1 - \delta)^t$$
+
+RTG electrical power with radioactive isotope decay (plutonium-238, $\approx 0.8\%/\text{year}$):
+
+$$P_{\text{rtg}}(t) = n_{\text{rtg}} \cdot 290 \cdot (1 - 0.008)^t \quad [\text{W}]$$
+
+### 3. Deep Space Network Link Budget (`comms.ts`)
+
+Telecommunication downlink bitrate $R$ is calibrated against Mars Reconnaissance Orbiter (MRO) empirical benchmarks:
+
+$$R = R_{\text{ref}} \cdot \left(\frac{P_{\text{tx}}}{100}\right) \cdot \left(\frac{D_{\text{ant}}}{3}\right)^2 \cdot f_{\text{ratio}}^2 \cdot \left(\frac{0.5}{d_{\text{AU}}}\right)^2 \cdot G_{\text{ground}} \quad [\text{kbit/s}]$$
+
+* $R_{\text{ref}} \approx 4000 \text{ kbit/s}$ at reference distance $0.5 \text{ AU}$.
+* $f_{\text{ratio}} = 4.0$ for Ka-band ($\approx 32 \text{ GHz}$) vs. $1.0$ for X-band ($\approx 8.4 \text{ GHz}$).
+* $G_{\text{ground}} = 4.2$ for the massive DSN $70\text{m}$ antenna vs. $1.0$ for standard $34\text{m}$ beam waveguide antennas.
+* $d_{\text{AU}}$ is the dynamic target-to-Earth range extracted from NASA JPL Horizons.
+
+### 4. Hohmann Transfer & Synodic Launch Windows (`orbit.ts`)
+
+Interplanetary transit duration $T$ along a semi-major axis $a = \frac{r_1 + r_2}{2}$:
+
+$$T = \pi \sqrt{\frac{a^3}{\mu_{\odot}}} \approx 0.5 \cdot a_{\text{AU}}^{1.5} \cdot 365.25 \quad [\text{days}]$$
+
+Launch window recurrence periods are derived from the synodic period $P_{\text{syn}}$:
+
+$$P_{\text{syn}} = \frac{1}{|1/P_{\text{Earth}} - 1/P_{\text{target}}|}$$
+
+Departures outside optimal planar alignments incur an orbital plane-change $\Delta v$ penalty:
+
+$$\Delta v_{\text{plane}} \approx 2 \cdot v_{\text{target}} \cdot \sin\left(\frac{i}{2}\right)$$
+
+---
+
+## NASA Open Data Provenance
+
+AMUN connects directly to official NASA/JPL public endpoints. Every factual parameter is accompanied by an interactive provenance footnote badge:
+
+| Endpoint / Archive | Implementation | Purpose in AMUN |
+| :--- | :--- | :--- |
+| **[NASA JPL Horizons API](https://ssd.jpl.nasa.gov/api/horizons.api)** | REST Vector & Ephemeris Queries | Real target-to-Sun and target-to-Earth ranges, orbital inclinations, and heliocentric positions. |
+| **[NASA JPL SBDB API](https://ssd-api.jpl.nasa.gov/sbdb.api)** | Small-Body Database Queries | High-precision orbital elements, diameters, and rotational periods for asteroids (Bennu, Ceres, Vesta) and comets (67P, Halley). |
+| **[NASA Image & Video Library](https://images-api.nasa.gov/search)** | Media Asset Retrieval | High-resolution celestial body photography paired with official mission attribution credits. |
+| **[NASA Technical Reports (NTRS)](https://ntrs.nasa.gov/api/citations/search)** | STI Program Citations | Aerospace engineering literature links provided inside the in-game *Learn Panel*. |
+| **[Basics of Space Flight](https://science.nasa.gov/learn/basics-of-space-flight/)** | Educational Concept Reference | JPL educational chapter citations integrated into contextual help popovers. |
+
+```
+                ┌──────────────────────────────────┐
+                │        Client Web Browser        │
+                └────────────────┬─────────────────┘
+                                 │
+           ┌─────────────────────┴─────────────────────┐
+           ▼                                           ▼
+┌──────────────────────┐                    ┌──────────────────────┐
+│  Live NASA Endpoints │                    │  Fallback Snapshots  │
+│  JPL Horizons / SBDB │                    │  Offline JSON Files  │
+│  (7-day Cache Layer) │                    │  (Zero Connectivity) │
+└──────────────────────┘                    └──────────────────────┘
+```
+
+> **Offline Snapshot Failover**: To ensure robust operation in remote educational settings or during API maintenance, AMUN packages verified static snapshots (`horizons.json`, `sbdb.json`). The system automatically fails over to the snapshot if network latency exceeds 8 seconds.
+
+---
+
+## Story Campaign: "AMUN Horizon"
+
+Beyond sandbox mission planning, AMUN introduces **AMUN Horizon**—a six-chapter narrative campaign spanning from 2041 to 2051.
+
+```
+2041                 2043               2045               2047               2049               2051
+[Ch 1: Moon Echo] ──> [Ch 2: Mars Dust] ──> [Ch 3: Bennu] ──> [Ch 4: Venus] ──> [Ch 5: Jupiter] ──> [Ch 6: Ceres]
+```
+
+* **Premise**: In 2041, an unprecedented solar super-storm severs deep-space relay grids. Amidst the noise, an anomalous 1420.405 MHz pulse is detected repeating every 26 months across six strategic loci.
+* **Campaign Mechanics**: Each chapter enforces a strict operational brief (fixed target, mission profile, and seed), tasking the player with engineering a viable spacecraft configuration that satisfies both primary and optional secondary milestones.
+* **Balanced Presets**: All chapters feature mathematically verified reference presets tested via automated CI test suites (`campaign.test.ts`) guaranteeing 3-star feasibility.
+
+---
+
+## Pilot Profile & 26 Achievements
+
+The simulator features a comprehensive career tracking system storing pilot accomplishments locally without external user accounts:
+
+* **26 Unique Achievements** grouped into four disciplines:
+  1. *Milestones* (First launch, first successful planetary orbit, first sample returned).
+  2. *Exploration* (Visiting comets, extreme outer solar system targets).
+  3. *Engineering Mastery* (Closing design margins within the optimal 10%–30% safety window, surviving safe-mode emergencies, zero-loss telecommunication links).
+  4. *Excellence* (Attaining S-Rank evaluations, completing the campaign).
+* **Progressive Ranks**: *Trainee* $\rightarrow$ *Assistant Engineer* $\rightarrow$ *Mission Engineer* $\rightarrow$ *Flight Director* $\rightarrow$ *Legend of AMUN*.
+
+---
+
+## Design Identity: The Egyptian Engineer's Blueprint
+
+AMUN rejects generic sci-fi tropes—such as neon glows, starfield particle backgrounds, and glassmorphic card stacks—in favor of a disciplined aesthetic inspired by ancient Egyptian mural pigments and technical drafting blueprints.
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│  COLOR PALETTE (Authentic Mural Pigments)                              │
+├────────────────────────────────────────────────────────────────────────┤
+│  ■ Lapis Lazuli     #0D1F4C   Deep engineering canvas background       │
+│  ■ Egyptian Blue    #1A3A85   Structural surfaces and 1px borders      │
+│  ■ Limestone White  #EDE7D8   High-contrast legible typography         │
+│  ■ Gold Ochre       #E3A92F   Primary interactive focus and highlights │
+│  ■ Malachite        #3FA878   Nominal margins & verified systems       │
+│  ■ Amber            #F28C28   Engineering warnings & cautions          │
+│  ■ Carnelian        #D8452F   Critical blockers & unclosed equations   │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+* **The Trajectory Stepper**: Replaces standard step bars with an interactive SVG orbital transfer curve tracking the spacecraft from Earth to destination.
+* **Margin Rulers**: Replaces radial dials with horizontal linear aerospace margin bars clearly highlighting the optimal $10\% - 30\%$ engineering safety margin.
+* **The Cartouche (الخرطوش)**: Traditional oval rope cartouches frame mission names and the final letter evaluation grade.
+* **The Lotus Frieze**: A subtle geometric architectural border gracing the welcome interface and mission debrief dossier.
+* **Bespoke 24px Iconography**: Handcrafted SVG vector icons with uniform 1.75px line-weights.
+
+---
+
+## Development Methodology (50% AI / 50% Human Engineering)
+
+AMUN was developed under a disciplined, hybrid development model pairing rigorous human aerospace systems architecture with AI development acceleration.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│              PROJECT AMUN COLLABORATIVE ENGINEERING MODEL               │
+├────────────────────────────────────┬────────────────────────────────────┤
+│   HUMAN SYSTEMS ARCHITECTURE (50%) │   AI IMPLEMENTATION ACCEL. (50%)   │
+├────────────────────────────────────┼────────────────────────────────────┤
+│ • Derivation of closed-form rocket │ • DeepSeek 4.1 Flash (Free Tier):  │
+│   and mass-ratio equations.        │   Initial TypeScript scaffolding,  │
+│ • Definition of 11-step workflow   │   pure mathematical formulations,  │
+│   and interactive dependency graph.│   and Vitest unit test suites.     │
+│ • "AMUN Horizon" 6-chapter story   │ • Google Gemini Flash (Free Tier): │
+│   narrative and debrief lore.      │   Visual redesign execution,       │
+│ • Authentic Egyptian mural pigment │   mobile 360px viewport auditing,  │
+│   art direction & UX blueprints.   │   RTL bidirectionality compliance, │
+│ • NASA API integration & vetting   │   and final production build       │
+│   of orbital mechanics benchmarks. │   stabilization.                   │
+└────────────────────────────────────┴────────────────────────────────────┘
+```
+
+---
+
+## Technical Architecture
+
+```
+src/
+├── data/              # Typed game records (Targets, Launchers, Instruments, Campaign)
+│   ├── snapshot/      # Embedded JPL Horizons & SBDB offline cache
+│   └── sources.ts     # Provenance records & citation links
+├── engine/            # PURE COMPUTATIONAL LAYER (Zero React dependencies)
+│   ├── constants.ts   # Astrodynamic constants (g0, AU, mu_sun)
+│   ├── rocket.ts      # Closed-form Tsiolkovsky mass equation
+│   ├── orbit.ts       # Hohmann transfer, C3 interpolation, synodic windows
+│   ├── power.ts       # Solar flux decay, RTG, eclipse battery sizing
+│   ├── comms.ts       # DSN link margin & bitrate formulas
+│   ├── derive.ts      # Single unified design resolution pipeline
+│   ├── simulate.ts    # Seeded Monte Carlo mission simulator
+│   └── score.ts       # Multi-attribute scoring & causal post-mortem analysis
+├── store/             # Zustand persistent state management
+│   ├── useMissionStore.ts # Central mission state + schema migrations
+│   └── useCampaign.ts     # Chapter progress & evaluation selectors
+├── components/        # Handcrafted modular presentation layer
+│   ├── AmunLogo.tsx   # Bespoke twin-plume & solar disc vector logo
+│   ├── Ornament.tsx   # Egyptian Cartouche & Lotus Frieze components
+│   ├── Icons.tsx      # Unified 24px geometric stroke icon suite
+│   ├── Stepper.tsx    # SVG Trajectory transfer curve stepper
+│   ├── Gauge.tsx      # Aerospace Margin Rulers
+│   └── Dashboard.tsx  # Persistent engineering telemetry bar
+└── steps/             # Step01Objectives through Step11Evaluation views
+```
+
+---
+
+## Interactive 30-Second Promo Video Player
+
+The repository includes a dedicated, browser-based motion graphics player: [`promo-video.html`](promo-video.html).
+
+* **Format**: Precision 30.0-second timeline (900 frames @ 30 FPS).
+* **Dual Aspect Ratio**: Switchable between **16:9 Landscape (1920×1080)** and **9:16 Vertical (1080×1920)** with safe margin guides.
+* **Audio Synthesis**: Integrated Web Audio API sound generator (soft clicks, carnelian warning alert, launch rumble, evaluation chime).
+* **Subtitles**: Accompanied by synchronized subtitle files:
+  * Arabic: [`amun_subtitles_ar.srt`](amun_subtitles_ar.srt)
+  * English: [`amun_subtitles_en.srt`](amun_subtitles_en.srt)
+
+To preview or capture the video, open `promo-video.html` in any modern web browser.
+
+---
+
+## Getting Started & Installation
+
+### Prerequisites
+
+* **Node.js**: Version 18.0 or higher
+* **npm** (or `pnpm` / `yarn`)
+
+### Quick Start
 
 ```bash
+# Clone the repository
+git clone https://github.com/omarmetman/amun.git
+cd amun
+
+# Install dependencies
 npm install
-npm run dev        # http://localhost:5173
+
+# Start local development server
+npm run dev
 ```
 
-أوامر أخرى:
+Open your browser at `http://localhost:5173` to explore the simulator.
+
+### Production Build
 
 ```bash
-npm test           # 41 اختبارًا للمحرك والمخزن والإنجازات والحملة (Vitest)
-npm run build      # TypeScript check + production build → dist/
-npm run preview    # معاينة حزمة الإنتاج محليًا
+# Run strict TypeScript validation and build optimized production bundle
+npm run build
+
+# Preview production build locally
+npm run preview
 ```
 
-لا يحتاج التطبيق إلى خادم أو قاعدة بيانات. ملفات `dist/` بعد البناء هي موقع ثابت يمكن استضافته على GitHub Pages أو Netlify أو أي استضافة ملفات.
-
-> تعمل اللعبة دون اتصال بالإنترنت، لكن صور NASA والخطوط الخارجية قد لا تظهر؛ تعرض البطاقات توضيحًا فنيًا بديلًا عند فشل الصورة.
+The resulting `dist/` directory is completely static and can be deployed directly to GitHub Pages, Netlify, Vercel, or any static hosting service with zero backend requirements.
 
 ---
 
-## ما الذي تقدمه اللعبة؟
+## Automated Testing & Verification
 
-- **شاشة ترحيب من ثلاث مراحل** تشرح الفكرة، ثم اختيار مستوى التحدي، ثم الانطلاق.
-- **معالج من 11 خطوة**: الأهداف، المركبة، الأجهزة، صاروخ الإطلاق، الميزانية، الطاقة، الكتلة، الاتصالات، قيود المدار، المحاكاة، التقييم.
-- **لوحة قيادة حية**: أربعة مؤشرات دائمة على الجوال (الكتلة، الطاقة، Δv، الميزانية) تتوسع إلى لوحة كاملة، وشريط جانبي دائم على سطح المكتب.
-- **تحقق فوري**: أخطاء مانعة، تحذيرات، ومعلومات، مع انتقال مباشر إلى الخطوة المسؤولة عن الإصلاح. لا تعمل المحاكاة قبل إزالة الأخطاء المانعة.
-- **محاكاة حتمية مبذورة**: التصميم نفسه + البذرة نفسها = النتيجة نفسها دائمًا.
-- **تقييم تفصيلي**: درجة من 100، تقدير من S إلى F، تفكيك مرجح، أسباب، قرارات إيجابية وسلبية، وخطة تحسين.
-- **حفظ محلي**: استئناف تلقائي، تصدير/استيراد JSON، مهمة جديدة، إعادة تعيين كاملة، وسجل محاولات ولوحة صدارة محلية.
-- **ملف قائد وإنجازات**: 26 وسامًا تُفتح تلقائيًا من إحصاءاتك، مع رتبة متدرجة من «متدرب» إلى «أسطورة آمون» تُحفظ محليًا وترافق المهمات الجديدة.
-- **حملة قصصية من ستة فصول**: «أفق آمون» رحلة مترابطة من 2041 إلى 2051 بين القمر والمريخ وبينو والزهرة والمشتري وسيريس، بتوجيهات فصل ثابتة وأهداف إضافية ونجوم وإيبيلوغ وشهادة إتمام — مستقلة عن اللعب الحر.
-- **ثلاث طرق لإعادة اللعب**: بالخيارات نفسها، بالبذرة نفسها مع تصميم جديد، أو من الصفر ببذرة جديدة.
-- **عربي RTL وإنجليزي LTR** بالكامل، مع لوحة «تعلّم» وتلميحات سياقية تتغير حسب الصعوبة.
-- **وصولية**: تنقل بلوحة المفاتيح، رابط تجاوز، حوارات دلالية، واحترام `prefers-reduced-motion`.
-
----
-
-## التقنيات / Stack
-
-| الطبقة | التقنية |
-| --- | --- |
-| الواجهة | React 18.3 + TypeScript 5.6 (strict) |
-| البناء | Vite 5 |
-| التنسيق | Tailwind CSS 3.4 |
-| الحالة | Zustand 4.5 + `persist` |
-| الرسوم | SVG خفيف مخصص (بدون مكتبة رسوم) |
-| الأيقونات | lucide-react |
-| الاختبارات | Vitest 2.1 (بيئة Node للمحرك والمخزن) |
-
-الخطة المعمارية: **محرك نقي** (`src/engine`) لا يعرف شيئًا عن React، و**بيانات معزولة** (`src/data`)، و**واجهة تقرأ نتيجة مشتقة واحدة** (`deriveDesign`) بدل إعادة حساب الفيزياء في المكونات.
-
----
-
-## بنية المشروع / Project structure
-
-```text
-amun/
-├─ index.html
-├─ package.json
-├─ vite.config.ts              # Vite + إعداد Vitest المضمّن
-├─ tailwind.config.js
-├─ postcss.config.js
-├─ tsconfig.json
-├─ amun-feather.svg            # أيقونة الموقع
-└─ src/
-   ├─ main.tsx                 # نقطة دخول React
-   ├─ App.tsx                  # الغلاف العام، التنقل، الحوارات، التصدير/الاستيراد
-   ├─ index.css                # الثيم، الأنماط المشتركة، تقليل الحركة
-   ├─ i18n/                    # الترجمة والاتجاه والتنسيق
-   ├─ lib/                     # تنسيق الأرقام، تقليل الحركة
-   ├─ test/setup.ts            # بديل localStorage لبيئة اختبار Node
-   ├─ data/                    # كل المحتوى القابل للتوسعة
-   │  ├─ types.ts              # عقود البيانات والحالة والمحاكاة والتقييم
-   │  ├─ steps.ts              # تعريف الخطوات الـ11
-   │  ├─ sources.ts            # سجل المصادر وبطاقاتها
-   │  ├─ targets.ts            # 12 هدفًا
-   │  ├─ missions.ts           # أنواع المهام، معايير النجاح، الصعوبات
-   │  ├─ buses.ts              # منصات المركبات
-   │  ├─ propulsion.ts         # أنظمة الدفع
-   │  ├─ instruments.ts        # 10 أجهزة علمية
-   │  ├─ launchers.ts          # 8 صواريخ إطلاق
-   │  ├─ power.ts              # ثوابت الطاقة والمكونات
-   │  ├─ comms.ts              # الهوائيات ومحطات DSN
-   │  ├─ events.ts             # 14 حدثًا عشوائيًا
-   │  ├─ achievements.ts       # 26 إنجازًا ورتب القائد وشروطها
-   │  ├─ campaign.ts           # «أفق آمون»: الفصول الستة والتوجيهات والواصفات والإيبيلوغ
-   │  ├─ learn.ts              # محتوى لوحة «تعلّم»
-   │  └─ snapshot/
-   │     ├─ horizons.json      # لقطة JPL Horizons
-   │     └─ sbdb.json          # لقطة JPL SBDB
-   ├─ engine/
-   │  ├─ constants.ts          # g0, AU, μ☉, إصدار المخطط
-   │  ├─ rng.ts                # FNV-1a + Mulberry32
-   │  ├─ rocket.ts             # معادلة الصاروخ والخزان
-   │  ├─ orbit.ts              # Hohmann، C3، نوافذ الإطلاق، Δv
-   │  ├─ power.ts              # التدفق الشمسي، RTG، البطارية
-   │  ├─ comms.ts              # معدل البيانات والرابط
-   │  ├─ cost.ts               # تجميع التكلفة والميزانية
-   │  ├─ validate.ts           # الأخطاء والتحذيرات والمعلومات
-   │  ├─ derive.ts             # خط الأنابيب النقي الوحيد
-   │  ├─ simulate.ts           # المحاكاة الحتمية والأحداث
-   │  ├─ score.ts              # الدرجة والتقدير والتفسير
-   │  ├─ achievements.ts       # تجميع إحصاءات القائد وفتح الأوسمة والترحيل
-   │  ├─ campaign.ts           # تقييم الفصل والنجوم وفتح الفصول والترحيل
-   │  ├─ model.ts              # أنواع النتائج المشتقة
-   │  ├─ engine.test.ts        # 18 اختبارًا
-   │  ├─ achievements.test.ts  # 8 اختبارات للإنجازات والترحيل
-   │  └─ campaign.test.ts      # 8 اختبارات لصلاحية الفصول والفتح والترحيل
-   ├─ store/
-   │  ├─ useMissionStore.ts    # الحالة المركزية + persist + التصدير/الاستيراد + الحملة
-   │  ├─ useMissionStore.test.ts # 7 اختبارات للتصدير/الاستيراد والملف والحملة
-   │  ├─ useCampaign.ts        # محددات الفصل النشط وتقدم الحملة
-   │  └─ useDesign.ts          # محدد التصميم المشتق
-   ├─ components/              # الغلاف، اللوحة، الشارات، الحوارات، لوحة تعلّم، ملف القائد، واجهة الحملة
-   └─ steps/                   # شاشات الخطوات الـ11
-```
-
----
-
-## نموذج البيانات / Data model
-
-كل المحتوى عبارة عن سجلات TypeScript عادية. المحرك يقرأها ولا يحتوي أسماء أهداف أو أجهزة أو صواريخ مثبتة داخله.
-
-| ما تريد إضافته | الملف | ما يتأثر به |
-| --- | --- | --- |
-| هدف | `src/data/targets.ts` | المسافات، C3، Δv، الطاقة، الاتصالات، نوافذ الإطلاق |
-| نوع مهمة | `src/data/missions.ts` | مضاعفات العلم والبيانات ومتطلبات الالتقاط/الهبوط/الإرجاع |
-| معيار نجاح | `src/data/missions.ts` (`SUCCESS_TIERS`) | الحد الأدنى للعلم والبيانات |
-| صعوبة | `src/data/missions.ts` (`DIFFICULTIES`) | الميزانية، معدل الأحداث، كلفة العمليات، التلميحات |
-| منصة مركبة | `src/data/buses.ts` | الكتلة الجافة، الطاقة الأساسية، الكلفة، الذاكرة، سعة الحمولة |
-| نظام دفع | `src/data/propulsion.ts` | Isp، نسبة الخزان، الكتلة، الطاقة، عامل زمن الرحلة |
-| جهاز علمي | `src/data/instruments.ts` | الكتلة، الطاقة، الكلفة، معدل البيانات، العلم، التوافق |
-| صاروخ | `src/data/launchers.ts` | جدول الحمولة مقابل C3، الكلفة، الموثوقية |
-| هوائي/محطة أرضية | `src/data/comms.ts` | معدل الرابط، الكتلة، الكلفة، ساعات الاتصال |
-| ثوابت الطاقة | `src/data/power.ts` | التدفق الشمسي، التدهور، RTG، البطارية |
-| حدث محاكاة | `src/data/events.ts` | الاحتمال، الشروط، الآثار، رابط «تعلّم» |
-| إنجاز أو رتبة | `src/data/achievements.ts` | شروط الفتح، فئة الوسام، رتب القائد وحدودها |
-| فصل حملة | `src/data/campaign.ts` | القصة، الهدف والتوجيهات، الواصفة المرجعية، الأهداف الإضافية، النجوم، الفصل التالي |
-| موضوع تعليمي | `src/data/learn.ts` | لوحة «تعلّم» والمصادر |
-| مصدر بيانات | `src/data/sources.ts` | شارة المصدر: الاسم، الناشر، الرابط، الحالة، وقت الجلب |
-
-### إضافة هدف جديد
-
-أضف كائن `MissionTarget` إلى مصفوفة `TARGETS`. الحقول المطلوبة:
-
-- الهوية: `id`, `name` (ar/en), `kind`, `horizonsId`, `sbdbId?`.
-- المدار والمسافات: `sunDistanceAU`, `earthDistanceAU`, `semiMajorAxisAU`, `eccentricity`, `orbitalPeriodYears`, `inclinationDeg`.
-- الخصائص الفيزيائية: `diameterKm`, `gravityMS2`, `rotationHours`.
-- اللعب: `captureDvMS`, `landingDvMS`, `returnDvMS`, `hazardFactor`, `sampleReturnCapable`, `landingCapable`, `allowedMissions`, `windowAnchor`.
-- العرض والمصادر: `description`, `image` (الرابط والنسبة/الائتمان و`illustrative?`), `sourceKeys`, `simplifiedNote`, `snapshotDate`.
-
-بعد الإضافة تحقق من أن `allowedMissions` لا تسمح بمهمة غير مدعومة، وأن الهدف يملك صورة NASA أو `illustrative: true`. لا تحتاج إلى تعديل المحرك.
-
-### إضافة جهاز علمي
-
-```ts
-{
-  id: 'spectrometer',
-  name: { ar: 'مطياف', en: 'Spectrometer' },
-  category: 'spectroscopy',
-  massKg: 12,
-  powerW: 18,
-  costM: 22,
-  dataRateKbps: 60,
-  scienceBase: 9,
-  affinity: { planet: 1.2, asteroid: 0.8 },
-  affinityByTarget: { mars: 1.25 },
-  description: { ar: '...', en: '...' },
-  sourceKeys: ['nasaFact', 'game'],
-}
-```
-
-`scienceBase` هو القيمة الخام، و`affinity` يضاعفها حسب نوع الهدف. إذا كان الجهاز يتطلب إرجاع عينات أو هبوطًا، أضف `requiresSampleReturn` أو `requiresLanding`؛ سيمنع المحرك اختياره في المهام غير المتوافقة.
-
-### إضافة صاروخ
-
-جدول `payloadAtC3` يجب أن يكون مرتبًا تصاعديًا حسب `c3`. يستخدم المحرك **استيفاءً خطيًا** بين النقاط، ويعيد **صفرًا** فوق آخر نقطة، لذا أضف نقطة أخيرة تتجاوز أعلى C3 قد تصل إليه المهمة.
-
-### إضافة حدث محاكاة
-
-الحدث يحدد `phases` و`severity` و`baseProbability` و`effects`. يمكن تقييده بـ`requires` (نوع الهدف، نوع المهمة، نوع النقل، جهاز موجود أو غائب)، وتعديل احتماله بـ`probabilityModifiers`:
-
-```ts
-probabilityModifiers: [
-  { when: 'lowPowerMargin', multiplier: 1.6 },
-  { when: 'noRadHard', multiplier: 2.2 },
-]
-```
-
-الآثار المدعومة تشمل التأخير، خسارة/مكافأة العلم، خسارة البيانات، تقليل ساعات الاتصال، النمط الآمن، تجاوز الميزانية، وخطر فقدان المهمة. اربط الحدث بمفتاح `learnKey` من `learn.ts` ليظهر شرحه في لوحة «تعلّم».
-
-> أي قيمة واقعية جديدة يجب أن تشير إلى `sourceKey` مسجل. القيم المضبوطة للعب فقط تُوسم بالمصدر `game` وتظهر بشارة **مبسّط للعبة**.
-
----
-
-## المعادلات والنموذج / Equations and model
-
-كل الحسابات في `src/engine`، ونتيجتها الوحيدة هي `DesignResult` من `deriveDesign(choices)`. واجهة المستخدم لا تعيد حساب أي معادلة.
-
-### 1) معادلة الصاروخ والخزان
-
-يُحسب الوقود المطلوب بصيغة مغلقة تأخذ كتلة الخزان في الحسبان. لنسبة خزان `k`:
-
-```text
-x = Δv_req × (1 + reserve% / 100) / (Isp × g0)
-m_prop = m_other × (e^x − 1) / (1 − k × (e^x − 1))
-m_tank = k × m_prop
-m_wet  = m_other + m_tank + m_prop
-```
-
-- `m_other` هي الكتلة الجافة **بدون الخزان**: المنصة + الأجهزة + الطاقة + الاتصالات + الدفع + التكرار + الحماية من الإشعاع + 15% هيكل.
-- إذا كان المقام `≤ 0`، فإن Δv غير قابل للتحقيق فيزيائيًا مهما أضفت من وقود؛ يصبح `equationClosed = false` ويظهر خطأ مانع.
-- إذا تجاوز الوقود المطلوب سعة الصاروخ، يُقصّ الوقود إلى:
-
-```text
-m_prop,max = (m_capacity − m_other) / (1 + k)
-```
-
-ثم يُحسب Δv المتاح من الوقود الفعلي:
-
-```text
-Δv_avail = Isp × g0 × ln((m_other + m_prop(1+k)) / (m_other + k×m_prop))
-```
-
-وهامش Δv هو `(Δv_avail − Δv_req) / Δv_req`. احتياطي الوقود يزيد **الوقود المحمّل** لا Δv المطلوب، لذلك يتحول مباشرة إلى هامش.
-
-### 2) الطاقة الشمسية والتدهور
-
-```text
-S(r) = 1361 / r²                     [W/m²]
-P_solar = A × S(r) × η × packing × (1 − 0.025)^years
-```
-
-حيث `η = 0.28` و`packing = 0.9`. يُحسب التدفق في الإبحار عند منتصف المسافة بين الأرض والهدف، وعند الهدف في العمليات. RTG:
-
-```text
-P_rtg = n × 290 × (1 − 0.008)^years     [W]
-```
-
-البطارية: `120 Wh/kg`، وعمق تفريغ مسموح `90%`. يحتاج الكسوف إلى:
-
-```text
-E_battery = max(0, load_science − P_rtg) × eclipse_hours / 0.9
-```
-
-تُفحص ثلاثة أنماط: الإبحار، العمليات العلمية، والنمط الآمن. أي عجز طاقة مانع.
-
-### 3) الاتصالات ومعدل البيانات
-
-```text
-R = 4000 × (P_tx/100) × (D/3)² × f² × (0.5/d_AU)² × G     [kbit/s]
-```
-
-- `f = 1` للنطاق X و`f = 4` للنطاق Ka.
-- `G = 1` لهوائي DSN 34 م و`G = 4.2` لهوائي 70 م.
-- `d_AU` هي مسافة الأرض–الهدف عند اللقطة.
-- المعدل محدود بين 0 و200,000 kbit/s، ويصبح خطأً مانعًا إذا نزل تحت 1 kbit/s.
-
-البيانات المنتجة والمرسلة:
-
-```text
-produced/day = Σ(instrument_kbps) × 6h × 3600 / 8 / 1e6 × missionDataMultiplier   [GB]
-downlink/day = R × linkHours × 3600 / 8 / 1e6                                       [GB]
-sent_total   = min(produced/day × opsDays, downlink/day × opsDays + storage)
-lost_total   = max(0, produced_total − sent_total)
-```
-
-ساعات الاتصال تنخفض إذا كان هامش الطاقة أقل من 10% (عامل 0.7) أو سالبًا (عامل 0.35). البيانات المفقودة تخفض العائد العلمي وتظهر كسبب في التقرير.
-
-### 4) النقل المداري ونوافذ الإطلاق
-
-زمن انتقال Hohmann من مدار الأرض إلى نصف المحور الأكبر للهدف:
-
-```text
-T = 0.5 × a_AU^1.5 × 365.25     [days]
-```
-
-وللقمر تُستخدم قيمة تقريبية قدرها 3.4 يومًا. تُحسب C3 من فرق سرعة الحضيض الانتقالي عن سرعة الأرض باستخدام vis-viva. ميزانية Δv التقريبية:
-
-```text
-Δv_req = (TCM + planeChange + capture + landing + proximity + return)
-         × transferFactor × (1 + 0.6 × windowPenalty)
-```
-
-- `planeChange ≈ 2 v_target sin(i/2) × share`، حيث `share = 0.06` للعبور و`0.28` لبقية المهام.
-- `transferFactor` يعتمد على نوع النقل: Hohmann 1.0، سريع 1.15، مساعدة جاذبية 1.02.
-- نوافذ الإطلاق تُشتق من الدور التزامني `1/|1 − 1/P|`، وعقوباتها 0%، 6%، 13%، 22% على التوالي. النافذة الأولى عادةً الأفضل.
-
-### 5) التكلفة والميزانية
-
-```text
-subtotal = bus + instruments + power + comms + propulsion + launch
-           + ops + DSN + redundancy + rad-hard + propellant
-total    = subtotal + subtotal × reserve%
-```
-
-- العمليات = `opsCostPerDayM × opsDays` حسب الصعوبة.
-- DSN = `costPerHourM × linkHoursPerDay × opsDays`.
-- الوقود = `0.002 مليون دولار/كغ`.
-- المنصة، الأجهزة، الطاقة، الاتصالات، الدفع، الإطلاق، والاحتياطي كلها بنود ظاهرة في الخطوة 5.
-
-الميزانية تأتي من مستوى الصعوبة: **850 / 600 / 420 مليون دولار** للمبتدئ/العادي/الخبير. تجاوز الميزانية خطأ مانع.
-
-### 6) التحقق
-
-`validateDesign` يُرجع قائمة مرتبة حسب الخطورة ثم رقم الخطوة. كل مشكلة تحمل `code` ثابتًا و`severity` و`step` ورسالة بالعربية والإنجليزية.
-
-| النوع | أمثلة |
-| --- | --- |
-| خطأ مانع | مهمة غير متوافقة مع الهدف، لا أجهزة، حمولة > سعة المنصة، معادلة الصاروخ لا تُغلق، كتلة الإطلاق > سعة الصاروخ، Δv متاح < مطلوب، عجز طاقة في أي نمط، بطارية لا تكفي الكسوف، معدل بيانات ≈ 0، تجاوز الميزانية |
-| تحذير | هامش كتلة/طاقة/Δv أقل من 10%، وقود مقيد بسعة الصاروخ، فقدان بيانات، توافق أجهزة ضعيف، احتياطي ميزانية < 10%، شمس ضعيفة عند > 2.5 AU، دفع أيوني بهامش طاقة ضيق |
-| معلومة | نافذة إطلاق غير مثالية، صاروخ أكبر من الحاجة |
-
-الأخطاء تمنع تشغيل المحاكاة. التحذيرات والمعلومات لا تمنعها، لكنها تظهر في التقرير وقد تؤثر في الدرجة عبر الهوامش والبيانات والاحتياطي.
-
-### 7) المحاكاة الحتمية
-
-المراحل: `launch → cruise → arrival → operations → return`. يبدأ المحرك بفحص موثوقية الصاروخ، ثم يسحب الأحداث العشوائية من مولّد Mulberry32 بعد تجزئة البذرة بـ FNV-1a. احتمالات الأحداث تُعدّل حسب:
-
-- هوامش الطاقة وΔv.
-- الحماية من الإشعاع والتكرار الوقائي.
-- نوع الهدف (مذنب/عملاق غازي) والأجهزة المختارة.
-- مضاعف صعوبة اللعبة.
-
-كل حدث مسجل بالطور واليوم والاسم والآثار ورابط الشرح. المحاكاة تنتج العلم المحقق، البيانات المرسلة والمفقودة، استهلاك الاحتياطي، التجاوز، الموثوقية، وسبب الفشل إن وقع.
-
-### 8) الدرجة
-
-| البند | الوزن | كيف يُحسب |
-| --- | --- | --- |
-| العائد العلمي | 35 | `scienceAchieved / (1.25 × tier.minScience)` محدودًا بين 0 و1 |
-| كفاءة الميزانية | 20 | نسبة الاحتياطي غير المستهلك، مع خصم إضافي عند التجاوز |
-| الهوامش الهندسية | 20 | متوسط فائدة هوامش الكتلة والطاقة وΔv |
-| الموثوقية والتنفيذ | 25 | نجاح: `0.75 + 0.25 × reliability`؛ فشل الإرجاع: 0.35؛ فشل آخر: 0.08 |
-
-فائدة الهامش تبلغ ذروتها في نطاق **10–30%**، وتنخفض تحت 10% وفوق 30% لأن الكتلة الزائدة وزن ميت. التقديرات:
-
-```text
-S ≥ 90   A ≥ 80   B ≥ 70   C ≥ 60   D ≥ 50   F < 50
-```
-
-النتيجة تُصنّف إلى نجاح كامل، نجاح جزئي، أو فشل، ويُضاف كل ذلك إلى سجل المحاولات ولوحة الصدارة المحلية تلقائيًا عند تشغيل المحاكاة.
-
----
-
-## طبقة بيانات NASA / NASA data layer
-
-كل رقم واقعي في اللعبة مرتبط بمصدر ظاهر في الواجهة. الضغط على شارة المصدر يفتح بطاقة تحتوي:
-
-- اسم المصدر والناشر.
-- الرابط الأصلي.
-- حالة البيانات: **مباشر / مخزّن مؤقتًا / لقطة مضمّنة / مبسّط للعبة**.
-- وقت الجلب.
-- ملاحظة عن طريقة الاستخدام.
-
-| المصدر | الاستخدام |
-| --- | --- |
-| JPL Horizons | مسافات الهدف عن الشمس والأرض عند تاريخ اللقطة |
-| JPL Small-Body Database | العناصر المدارية والقطر والدوران للكويكبات والمذنبات |
-| NASA Planetary Fact Sheet | الجاذبية والقطر والميل ومتوسطات الكواكب |
-| NASA Image and Video Library | صور الأهداف مع الائتمان الأصلي |
-| NASA Technical Reports Server | مراجع هندسية اختيارية في لوحة «تعلّم» |
-| Basics of Space Flight | شرح المفاهيم المدارية والفيزيائية |
-| NASA Deep Space Network | مرجع هوائيات 34 م و70 م وكسب المحطة |
-| بيانات إطلاق منشورة | جداول حمولة–C3 تقريبية |
-| AMUN game values | معاملات موازنة اللعب، موسومة دائمًا «مبسّط للعبة» |
-
-**مهم:** التطبيق لا يستدعي واجهات NASA وقت التشغيل. الأرقام مضمّنة في `src/data`، وصور NASA تُحمّل مباشرة من خوادم NASA. شارة «مباشر» تعني أن المرجع صفحة حية، وليست قيمة تُجلب لحظيًا.
-
-### الصور والبدائل
-
-- كل صورة تعرض الائتمان الأصلي، ورقم NASA عند توفره.
-- إذا فشل تحميل الصورة أو كانت `illustrative: true`، تظهر بطاقة فنية بديلة بشارة **توضيح فني**.
-- ريوغو تحديدًا يستخدم رسمًا توضيحيًا لأن اللقطة لا تحتوي صورة NASA له؛ القيم المدارية تبقى من SBDB.
-- الصور لا تُعاد استضافتها داخل المستودع؛ احترم إرشادات استخدام وسائط NASA عند النشر.
-
----
-
-## تحديث اللقطات / Refreshing snapshots
-
-اللقطة الحالية مؤرخة **2026-11-12**. لتحديثها:
-
-1. **اجلب القيم من JPL Horizons** باستخدام مراقب أرضي (`500@399`) والكميات `19,20` للمسافات، ثم حدّث `rSunAU` و`rEarthAU` في `src/data/snapshot/horizons.json`.
-2. **اجلب الأجسام الصغيرة من JPL SBDB** عبر `sbdb.api?sstr=<id>&phys-par=1`، وحدّث العناصر والقطر والدوران في `src/data/snapshot/sbdb.json`.
-3. **انسخ القيم التشغيلية إلى `src/data/targets.ts`**: `sunDistanceAU`، `earthDistanceAU`، `semiMajorAxisAU`، `orbitalPeriodYears`، `inclinationDeg`، `diameterKm`، `gravityMS2`، `rotationHours`، وحدّث `snapshotDate` لكل هدف.
-4. **حدّث `fetchedAt`** في ملفي اللقطة. شارتا Horizons وSBDB تقرآن الوقت منهما مباشرة. المصادر الأخرى تُحدّث تواريخها في `SOURCE_STATE` داخل `src/components/Badges.tsx`.
-5. **حدّث صور NASA** عند الحاجة: `image.url` و`image.nasaId` و`image.credit`.
-6. شغّل `npm test` و`npm run build`، ثم راجع شاشة الهدف للتأكد من ظهور الشارات والتواريخ الجديدة.
-
-> القيم مكررة عمدًا بين ملفات اللقطة و`targets.ts`: ملفات JSON تحفظ أثر التدقيق ووقت الجلب، بينما يقرأ المحرك السجل المتزامن من `targets.ts`. حدّث الاثنين معًا.
-
----
-
-## ملف القائد والإنجازات / Pilot profile and achievements
-
-- **26 إنجازًا** موزعة على أربع فئات: محطات الرحلة، الاستكشاف، الهندسة، والإتقان.
-- تُقيَّم الشروط على **إحصاءات مجمعة** (`PilotStats`) وليس على كائنات التصميم أو المحاكاة، لذلك تعمل بعد إعادة التحميل وبعد ترحيل البيانات القديمة.
-- تُفتح الأوسمة تلقائيًا بعد كل تشغيل، وتظهر الجديدة منها في نهاية شاشة التقييم. يعرض «ملف القائد» كل الأوسمة، المقفلة منها بشروط فتحها.
-- الرتب: متدرب (0) → مهندس مساعد (4) → مهندس مهام (9) → قائد مهام (15) → أسطورة آمون (21).
-- الملف محلي ولا يحتاج خادمًا. **مهمة جديدة** تحتفظ به، أما **إعادة التعيين الكاملة** فتمسحه مع المحاولات ولوحة الصدارة.
-- لإضافة إنجاز: أضف سجلًا في `src/data/achievements.ts` مع `id` فريد ودالة `test(stats)` نقية. عدّاد `ACHIEVEMENT_COUNT` والواجهة والشاشة التقييمية تتحدث تلقائيًا، وأضف اختبارًا في `src/engine/achievements.test.ts`.
-
----
-
-## الحملة القصصية: أفق آمون / Story campaign: AMUN Horizon
-
-> **تنبيه خيالي:** قصة الحملة وإشارة 1420.405 MHz المتكررة خيال علمي داخل اللعبة. القيمة الرقمية نفسها هي خط الهيدروجين الفلكي الحقيقي (21 cm)، لكن أي «رسالة» أو «نبض» في القصة ليس اكتشافًا علميًا ولا ادعاءً بوجود إشارة فضائية.
-
-الحملة تجربة لعب مستقلة عن المهمات الحرة، وتبدأ عام 2041 بعد عاصفة شمسية فائقة تعطّل الاتصالات العميقة وتكشف عن إشارة متكررة. تتكون من **ستة فصول متتابعة**:
-
-| # | الفصل | السنة | الهدف | نوع المهمة |
-| --- | --- | --- | --- | --- |
-| 01 | صدى القمر / Echo of the Moon | 2041 | القمر | مدار |
-| 02 | غبار المريخ / Dust of Mars | 2043 | المريخ | مدار |
-| 03 | رسالة بنّو / The Bennu Letter | 2045 | بينو | إرجاع عينات |
-| 04 | محاكمة الزهرة / The Venus Trial | 2047 | الزهرة | هبوط |
-| 05 | عين المشتري / Eye of Jupiter | 2049 | المشتري | مدار |
-| 06 | أفق سيريس / The Ceres Horizon | 2051 | سيريس | مدار |
-
-### كيف تُلعب الحملة؟
-
-1. افتح **الحملة** من شاشة الترحيب أو القائمة العلوية، واقرأ ملف الفصل وإحاطته.
-2. يبدأ الفصل بتوجيه ثابت: **الهدف ونوع المهمة والصعوبة ومعيار النجاح والبذرة** مقفلة. يبقى لك اختيار المنصة والأجهزة والصاروخ والطاقة والاتصالات والمدار بالكامل.
-3. صمّم المهمة عبر المعالج نفسه، ثم شغّل المحاكاة بالبذرة الثابتة.
-4. تُقيَّم النتيجة وفق معيار الفصل، وتُمنح حتى **3 نجوم**: نجاح المعيار، وهدف أو أكثر إضافي، ودرجة عالية. يُسجَّل أفضل نتيجة لكل فصل، ويُفتح الفصل التالي عند إتمام الفصل الحالي.
-5. يعرض تقرير الحملة الإيبيلوغ السردي، النجوم والأهداف، وزر الانتقال إلى الفصل التالي أو إعادة المحاولة.
-6. بعد الفصل السادس تُفتح **شهادة الحملة** مع ملخص النجوم والدرجات.
-
-### نموذج بيانات الحملة
-
-| الملف | المسؤولية |
-| --- | --- |
-| `src/data/campaign.ts` | `CAMPAIGN`، `CAMPAIGN_CHAPTERS`، النصوص ثنائية اللغة، التوجيهات، الواصفات المرجعية، الأهداف الإضافية، الإيبيلوغ، ودوال `campaignChoices()` و`campaignProgress()` |
-| `src/engine/campaign.ts` | `evaluateCampaignChapter` (نجاح المعيار + النجوم + الأهداف)، `isChapterUnlocked`، `mergeCampaignCompletion`، `normalizeCampaignState`، `emptyCampaignState` |
-| `src/store/useMissionStore.ts` | `campaign` (الفصل النشط + السجلات)، بدء/إنهاء الفصل، الإكمال التلقائي بعد كل محاكاة، حماية التوجيهات من التعديل والاستيراد، ترحيل المخطط |
-| `src/store/useCampaign.ts` | `useActiveChapter` و`useCampaignProgress` |
-| `src/components/Campaign*.tsx` | لافتة الفصل، ملف الحملة السينمائي، تقرير الفصل، والفنون والأوسمة والنجوم |
-
-### الواصفات المرجعية والفصول متوازنة
-
-كل فصل في `CAMPAIGN_CHAPTERS` يحمل `preset` كاملًا (منصة، أجهزة، دافعة، صاروخ، طاقة، اتصالات، مدار، أيام عمليات وأيام انتقال). هذه الواصفات **تُختبر آليًا** في `src/engine/campaign.test.ts`: يجب ألا تحمل أي خطأ مانع، وأن تنجح المحاكاة، وأن تحقق كل هدف و3 نجوم. الواصفة الحالية لكل فصل:
-
-| الفصل | الدرجة | التكلفة / الميزانية | ملاحظة |
-| --- | --- | --- | --- |
-| القمر | S · 92.9 | 347.5 / 850 | واصفة تمهيدية مريحة |
-| المريخ | S · 99.3 | 350.6 / 600 | بذرة `6KC5N8MD` |
-| بينو | S · 90.1 | 484.9 / 600 | إرجاع عينات |
-| الزهرة | A · 80.4 | 483.7 / 600 | بيانات 18.8 GB |
-| المشتري | A · 87.9 | 579.8 / 600 | ميزانية ضيقة |
-| سيريس | S · 99.1 | — / — | تحذير `SOLAR_FAR` فقط |
-
-> عند تعديل واصفة أو معيار فصل، شغّل `npm test`؛ اختبار الفصول سيفشل إن أصبح الفصل غير قابل للنجاح أو فقد نجمته الثالثة.
-
-### إضافة فصل جديد
-
-1. أضف `CampaignChapter` إلى `CAMPAIGN_CHAPTERS` بترتيب `number` تصاعدي، مع `id` فريد وكل النصوص بالعربية والإنجليزية.
-2. أضف `preset` كاملًا متوافقًا مع `DesignChoices`، و`targetId` و`missionType` و`difficulty` و`successTier` و`seed` متسقة مع التوجيه.
-3. أضف `objectives` (معرّفات فريدة) و`epilogue` و`debrief` ونصوص `unlock`.
-4. وسّع لون `accent` من `CAMPAIGN_ACCENTS` أو أضف لونًا جديدًا في `CampaignArt.tsx`.
-5. شغّل `npm test` ليتحقق اختبار الفصول من الجدوى والنجوم، ثم راجع شاشة الحملة والملف الشخصي.
-
----
-
-## الحفظ والتصدير والاستيراد / Save, export, import
-
-- يُحفظ كل تغيير تلقائيًا في `localStorage` تحت المفتاح `amun-mission-v1`.
-- مخطط الحالة يحمل `schemaVersion = 3` مع دالة ترحيل تبني ملف القائد من المحاولات القديمة، وتهيئ حالة الحملة الفارغة، وتحمي سجلات الفصول غير الصالحة.
-- **تصدير التصميم** ينزّل JSON بالشكل:
-
-```json
-{
-  "version": 3,
-  "exportedAt": "2026-11-12T...",
-  "choices": { "...": "..." }
-}
-```
-
-- **الاستيراد** يتحقق من وجود `choices`، ينظف القيم الرقمية ويحدها، يتحقق من الهدف، ويستبدل نوع المهمة غير المتوافق بأول نوع مسموح، ويحذف الأجهزة غير المتوافقة مع إشعار.
-- **مهمة جديدة** تصفر المحاكاة والنتيجة الحالية وتعيد إلى الخطوة 1 مع الاحتفاظ بسجل المحاولات ولوحة الصدارة وملف القائد وتقدم الحملة.
-- **إعادة تعيين كاملة** تحذف الحالة والمفتاح المحلي بالكامل، بما في ذلك الملف والإنجازات وتقدم الحملة، وتعيد شاشة الترحيب.
-- **الحملة** تحفظ `activeChapterId` وسجلات `completed` داخل الحالة نفسها. الفصل النشط يقفل التوجيهات في التصدير والاستيراد وإعادة اللعب، بينما تبقى بقية الخيارات قابلة للتعديل.
-- لوحة الصدارة محلية للمتصفح فقط: لا خادم ولا حسابات ولا مزامنة.
-
----
-
-## الوصولية والجوال / Accessibility and mobile
-
-- الغلاف يدعم `dir="rtl"` للعربية و`dir="ltr"` للإنجليزية، مع تبديل كامل للنصوص.
-- رابط «تجاوز إلى محتوى المهمة» في بداية الصفحة.
-- الحوارات (لوحة القيادة، تعلّم، ملف القائد، ملف الحملة، التصدير/الاستيراد، إعادة التعيين) دلالية وتُغلق بمفتاح Escape.
-- أزرار وأهداف لمس كبيرة، وحقول بعلامات `label` مرتبطة.
-- لوحة الجوال ثابتة أسفل الشاشة وتحترم `env(safe-area-inset-bottom)`.
-- `prefers-reduced-motion` يوقف الانتقالات والحركات الزخرفية.
-- الأرقام اللاتينية داخل الواجهة العربية معزولة بـ`dir="ltr"` لمنع انقلاب المقارنات.
-
----
-
-## الاختبارات / Tests
+AMUN enforces 100% test pass rates across its pure mathematical engine and state stores using **Vitest**:
 
 ```bash
 npm test
 ```
 
-**41 اختبارًا في أربعة ملفات:**
+### Test Suite Overview (41 Passing Tests):
+* **`engine.test.ts` (18 tests)**: Verifies closed-form propellant mass equation, rocket capacity ceilings, solar flux $1/r^2$ decay, DSN bitrate decay, Hohmann transfer times, $C_3$ interpolation, and deterministic seed reproducibility.
+* **`campaign.test.ts` (8 tests)**: Asserts that all 6 campaign reference presets are physically viable, error-free, and capable of earning 3 stars.
+* **`achievements.test.ts` (8 tests)**: Validates achievement unlocking logic, pilot stat tracking, and migration resilience.
+* **`useMissionStore.test.ts` (7 tests)**: Confirms state persistence, import/export sanitization, and campaign directive locking.
 
-`src/engine/engine.test.ts` (**18 اختبارًا**):
+---
 
-- الحل المغلق لكتلة الوقود مع الخزان واتساق معادلة الصاروخ.
-- احتياطي الوقود وحد سعة الصاروخ وΔv المتاح.
-- التدفق الشمسي `S = 1361/r²` والتدهور السنوي.
-- سقوط معدل البيانات مع المسافة.
-- زمن انتقال Hohmann.
-- مقارنة Δv المطلوب والمتاح.
-- استيفاء أداء الصاروخ بين نقاط C3.
-- التكلفة مقابل الميزانية.
-- التحقق من الأخطاء المانعة.
-- حتمية البذرة: نفس التصميم + نفس البذرة = نفس النتيجة.
-- تركيب الدرجة من الأوزان الأربعة.
+## Extensibility Guide
 
-`src/store/useMissionStore.test.ts` (**7 اختبارات**):
+AMUN's content architecture is entirely data-driven (`src/data/`). Adding new targets, launch vehicles, or instruments requires no modifications to the physics engine.
 
-- دورة تصدير/استيراد كاملة تعيد كل الخيارات وتعيد المعالج إلى الخطوة 1.
-- رفض JSON التالف، والكائن بلا `choices`، والهدف غير المعروف.
-- تنظيف القيم خارج النطاق وحذف الأجهزة غير المتوافقة.
-- تسجيل محاولة فريدة مرة واحدة، والاحتفاظ بملف القائد عند بدء مهمة جديدة، ومسحه عند التصفير.
-- بدء فصل حملة، تثبيت التوجيهات أمام كل محاولات التعديل، وإكمال الفصل وفتح التالي.
-- الحفاظ على توجيهات الحملة أثناء الاستيراد وإعادة اللعب بالخيارات أو بالبذرة.
-- الخروج من الحملة دون فقدان سجلات الفصول المكتملة.
+### Adding a New Celestial Target (`src/data/targets.ts`)
 
-`src/engine/achievements.test.ts` (**8 اختبارات**):
-
-- تفرّد معرّفات الإنجازات وعدم فتح أي وسام على ملف فارغ.
-- فتح إنجازات أول تشغيل وأول نجاح والهدف والتقدير الأعلى.
-- منع احتساب المحاولة نفسها مرتين.
-- تتبع سلسلة النجاحات وفتح «ثلاثية النجاح».
-- تسجيل الفشل دون فقدان أفضل سلسلة وفتح «الفشل بيانات».
-- حصر إنجازات الهندسة في المهمات الناجحة.
-- بناء الإحصاءات من المحاولات القديمة أثناء الترحيل.
-- تنظيف الإنجازات والأنواع والقيم غير الصالحة عند التحميل.
-
-`src/engine/campaign.test.ts` (**8 اختبارات**):
-
-- كل واصفة فصل مرجعية بلا أخطاء مانعة، وتنجح المحاكاة، وتحقق المعيار و3 نجوم.
-- استخدام لغة الواجهة مع تثبيت توجيهات الفصل، وعدم مشاركة الواصفة بين اللغات.
-- فتح الفصل الأول فقط، ثم فتح فصل واحد إضافي لكل إتمام.
-- حساب النجوم والإتمام والفصل التالي والشهادة النهائية.
-- الحفاظ على تاريخ أول إتمام وأفضل سجل عند إعادة اللعب.
-- تسجيل أول إتمام وترقية النتيجة الأفضل.
-- رفض حالة حملة تالفة أو غير معروفة عند التحميل.
-- تنظيف السجلات، حدّ الدرجة والنجوم، وإسقاط الأهداف غير المعروفة.
-
-```bash
-npm run build    # يتحقق TypeScript ثم يبني حزمة الإنتاج
+```typescript
+export const NEW_TARGET: MissionTarget = {
+  id: 'europa',
+  name: { ar: 'أوروبا', en: 'Europa' },
+  kind: 'moon',
+  horizonsId: '502',
+  sunDistanceAU: 5.20,
+  earthDistanceAU: 4.28,
+  semiMajorAxisAU: 5.20,
+  eccentricity: 0.009,
+  orbitalPeriodYears: 11.86,
+  inclinationDeg: 1.79,
+  diameterKm: 3121,
+  gravityMS2: 1.315,
+  rotationHours: 85.2,
+  captureDvMS: 850,
+  landingDvMS: 2100,
+  returnDvMS: 4200,
+  hazardFactor: 1.4,
+  sampleReturnCapable: true,
+  landingCapable: true,
+  allowedMissions: ['flyby', 'orbiter', 'lander', 'sampleReturn'],
+  image: {
+    url: 'https://images-assets.nasa.gov/image/PIA00502/PIA00502~orig.jpg',
+    credit: 'NASA/JPL',
+    nasaId: 'PIA00502'
+  },
+  sourceKeys: ['horizons', 'nasaFact']
+};
 ```
 
 ---
 
-## الحدود والتبسيطات / Limits and simplifications
+## Scientific Scope & Pedagogical Limits
 
-هذه لعبة تعليمية وليست أداة تصميم مهام حقيقية:
+AMUN is designed as an educational bridge between introductory science and professional systems engineering. To maintain engaging browser playability, deliberate modeling boundaries were chosen:
 
-- **ليست محسّن مسارات**: تستخدم Hohmann تقريبيًا وميزانية Δv مجمعة، ولا تحل مسألة N-body أو تحسينًا عدديًا للمسار.
-- **مساعدة الجاذبية** ممثلة بمعامل تبسيطي، وليست هندسة مسارات فعلية.
-- **نوافذ الإطلاق** مشتقة من الدور التزامني وتاريخ مرساة، وليست نوافذ وكالة دقيقة.
-- **معدل البيانات** يتجاهل المطر والتغطية والترميز وكفاءة الهوائي والتوجيه؛ إنه نموذج تخطيط مبسّط.
-- **الطاقة** تتجاهل الحرارة وزاوية الشمس وتظليل الألواح وتفاصيل تنظيم الجهد.
-- **التكلفة** بارامترية وليست نموذج تكلفة وكالة؛ الأرقام بالمليون دولار أمريكي تقريبي.
-- **الأحداث** احتمالاتها مصممة للعب، وليست إحصاءات حوادث حقيقية.
-- **لوحة الصدارة** محلية ولا تُقارن بين أجهزة أو لاعبين.
-- **الحملة القصصية** خيال علمي تعليمي. إشارة 1420.405 MHz ورقمها الفلكي حقيقيان كخط هيدروجين، لكن القصة والأحداث والشخصيات والأهداف السردية من تأليف اللعبة وليست اكتشافًا علميًا.
-- **ملف القائد والإنجازات** طبقة لعب تحفيزية؛ شروطها مصممة للتعلّم ولا تعكس تقييمًا مهنيًا.
-- **الصور** تعتمد على شبكة NASA؛ البديل الفني يضمن عمل الواجهة دون اتصال.
-- لا توجد محاكاة حرارية أو إشعاعية أو هيكلية أو تحليل إجهاد.
+* **Trajectory Modeling**: Utilizes analytical Hohmann transfers with synodic window approximations; does not solve numerical $N$-body differential equations.
+* **Gravity Assists**: Modeled via analytical velocity transfer bonuses rather than patched conic numerical optimization.
+* **Telecommunications**: Link budgets model space loss and antenna gain while simplifying atmospheric weather attenuation and pointing jitter.
+* **Thermal & Radiation**: Radiation shielding modifies probability weights in the stochastic simulator rather than simulating particle transport physics.
+* **Story Narrative**: The 1420.405 MHz pulse in the campaign is based on the genuine neutral hydrogen radio line ($21\text{cm}$), while the narrative lore is an original educational fiction.
 
 ---
 
-## بيانات ووسائط NASA
+## License & NASA Media Compliance
 
-- البيانات الرقمية من مصادر NASA/JPL المذكورة أعلاه، مع وقت لقطة موثق.
-- صور NASA ملك للعامة وفق إرشادات NASA؛ تظهر أسماء المصورين/الجهات في الائتمان.
-- شعار AMUN وريشتاه عنصر أصلي في المشروع (`src/components/AmunLogo.tsx` و`amun-feather.svg`).
-- أضف ملف ترخيص مناسبًا قبل إعادة نشر الكود أو توزيعه تجاريًا.
+* **Software**: Distributed under the [MIT License](LICENSE).
+* **NASA Data & Imagery**: NASA imagery, audio, video, and data used in this project are public domain under NASA Media Usage Guidelines. Spacecraft and planetary assets remain the property of NASA/JPL-Caltech.
+* **Brand Identity**: The AMUN name, twin-plume emblem, and custom iconography are original assets created for this project.
 
----
+<div align="center">
 
-## مسار سريع للتجربة
+```
+=============================================================
+  "From the Nile to the Stars — Designed for NASA Space Apps"
+=============================================================
+```
 
-1. شغّل `npm run dev` وافتح `http://localhost:5173`.
-2. من شاشة الترحيب، افتح **الحملة القصصية** واقرأ ملف «أفق آمون»، أو اختر **ابدأ تصميم المهمة** للعب الحر.
-3. **لعب حر:** اضبط المهمة، وجرّب التصميم الافتراضي (المريخ، مدارية، PSLV-XL)، ثم شغّل المحاكاة.
-4. في التقييم، افتح «لماذا هذه الدرجة؟» و«قرارات تحتاج إصلاحًا».
-5. غيّر بذرة واحدة فقط وأعد التشغيل لمقارنة أثر الحظ، ثم أعد اللعب بالخيارات نفسها.
-6. **حملة:** ابدأ الفصل الأول «صدى القمر»، لاحظ التوجيهات المقفلة في الخطوة 1، ثم استخدم الواصفة المرجعية أو عدّلها، وشغّل المحاكاة واقرأ تقرير الفصل وانتقل إلى الفصل التالي.
-7. صدّر التصميم، استورده، وأعد تحميل الصفحة للتأكد من الحفظ المحلي وتقدم الحملة.
+</div>
