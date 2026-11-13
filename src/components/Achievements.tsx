@@ -1,70 +1,67 @@
-import {
-  Award,
-  CheckCircle2,
-  Coins,
-  Compass,
-  Crown,
-  Database,
-  Feather,
-  Flame,
-  FlaskConical,
-  Gem,
-  Globe,
-  History,
-  Layers,
-  Lightbulb,
-  Lock,
-  Moon,
-  Orbit,
-  Package,
-  Rocket,
-  Scale,
-  Shield,
-  ShieldCheck,
-  ShieldOff,
-  Sparkles,
-  Sun,
-  Target,
-  Trophy,
-  UserRound,
-  Zap,
-} from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 import type { AchievementDef, AchievementTier } from '../data/types';
 import { ACHIEVEMENT_BY_ID, ACHIEVEMENT_COUNT, rankFor } from '../data/achievements';
 import { useL, useLang, useT } from '../i18n';
 import { fmtDateTime } from '../lib/format';
 import { useMissionStore } from '../store/useMissionStore';
 import { Bar } from './StepBits';
+import {
+  IconAlert,
+  IconBolt,
+  IconBook,
+  IconBulb,
+  IconCheck,
+  IconCoins,
+  IconCompass,
+  IconCrown,
+  IconDatabase,
+  IconFeather,
+  IconFlame,
+  IconFlask,
+  IconGem,
+  IconGlobe,
+  IconHistory,
+  IconLayers,
+  IconLock,
+  IconMedal,
+  IconMoon,
+  IconOrbit,
+  IconPackage,
+  IconRocket,
+  IconScale,
+  IconShield,
+  IconStar,
+  IconSun,
+  IconTarget,
+} from './Icons';
 
-const ICONS: Record<string, LucideIcon> = {
-  Award,
-  CheckCircle2,
-  Coins,
-  Compass,
-  Crown,
-  Database,
-  Feather,
-  Flame,
-  FlaskConical,
-  Gem,
-  Globe,
-  History,
-  Layers,
-  Lightbulb,
-  Moon,
-  Orbit,
-  Package,
-  Rocket,
-  Scale,
-  Shield,
-  ShieldCheck,
-  ShieldOff,
-  Sparkles,
-  Sun,
-  Target,
-  Trophy,
-  Zap,
+const ICONS: Record<string, typeof IconRocket> = {
+  Award: IconMedal,
+  CheckCircle2: IconCheck,
+  Coins: IconCoins,
+  Compass: IconCompass,
+  Crown: IconCrown,
+  Database: IconDatabase,
+  Feather: IconFeather,
+  Flame: IconFlame,
+  FlaskConical: IconFlask,
+  Gem: IconGem,
+  Globe: IconGlobe,
+  History: IconHistory,
+  Layers: IconLayers,
+  Lightbulb: IconBulb,
+  Moon: IconMoon,
+  Orbit: IconOrbit,
+  Package: IconPackage,
+  Rocket: IconRocket,
+  Scale: IconScale,
+  Shield: IconShield,
+  ShieldCheck: IconShield,
+  ShieldOff: IconAlert,
+  Sparkles: IconStar,
+  Sun: IconSun,
+  Target: IconTarget,
+  Trophy: IconMedal,
+  Zap: IconBolt,
 };
 
 export function AchievementGlyph({
@@ -74,14 +71,14 @@ export function AchievementGlyph({
   name: string;
   className?: string;
 }) {
-  const Icon = ICONS[name] ?? Award;
-  return <Icon className={className} aria-hidden="true" />;
+  const Icon = ICONS[name] ?? IconMedal;
+  return <Icon className={className} />;
 }
 
-const tierStyle: Record<AchievementTier, string> = {
-  gold: 'border-gold-400/30 bg-gold-400/[0.075] text-gold-200',
-  silver: 'border-slate-300/20 bg-white/[0.045] text-slate-100',
-  bronze: 'border-amber-600/30 bg-amber-600/[0.065] text-amber-300',
+const tierStyle: Record<AchievementTier, { edge: string; icon: string }> = {
+  gold: { edge: 'border-s-ochre-400', icon: 'text-ochre-300' },
+  silver: { edge: 'border-s-limestone-300', icon: 'text-limestone-200' },
+  bronze: { edge: 'border-s-amber', icon: 'text-amber' },
 };
 
 export function AchievementCard({
@@ -95,40 +92,39 @@ export function AchievementCard({
   const lang = useLang();
   const t = useT();
   const unlocked = Boolean(unlockedAt);
+  const tier = tierStyle[achievement.tier];
 
   return (
     <article
-      className={`rounded-xl border p-3 ${
-        unlocked
-          ? tierStyle[achievement.tier]
-          : 'border-white/[0.06] bg-white/[0.015] text-slate-500'
+      className={`border border-s-2 border-royal-700 p-3 ${
+        unlocked ? `${tier.edge} bg-royal-700/15` : 'border-s-royal-600 bg-lapis-950/30'
       }`}
     >
       <div className="flex items-start gap-2.5">
         <span
-          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border ${
-            unlocked ? 'border-white/10 bg-void-950/35' : 'border-white/[0.07] bg-white/[0.03]'
+          className={`flex h-8 w-8 shrink-0 items-center justify-center border border-royal-700 bg-lapis-950/40 ${
+            unlocked ? tier.icon : 'text-limestone-400'
           }`}
         >
           <AchievementGlyph name={achievement.icon} className="h-4 w-4" />
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h3 className={`text-[11px] font-bold leading-snug ${unlocked ? 'text-white' : 'text-slate-300'}`}>
+            <h3 className={`text-sm leading-snug ${unlocked ? 'text-limestone-50' : 'text-limestone-200'}`}>
               {l(achievement.title)}
             </h3>
             {unlocked ? (
-              <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-good" aria-label={t('مفتوح', 'Unlocked')} />
+              <IconCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-malachite" aria-label={t('مفتوح', 'Unlocked')} />
             ) : (
-              <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-600" aria-label={t('مقفل', 'Locked')} />
+              <IconLock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-limestone-400" aria-label={t('مقفل', 'Locked')} />
             )}
           </div>
-          <p className="mt-1 text-[10px] leading-relaxed text-slate-400">
+          <p className="mt-1 text-xs leading-relaxed text-limestone-300">
             {unlocked ? l(achievement.description) : l(achievement.hint)}
           </p>
-          <div className="mt-1.5 text-[9px] font-semibold text-slate-500">
+          <div className="mt-1.5 text-[10px] text-limestone-400">
             {unlockedAt ? (
-              <span className="font-latin" dir="ltr">
+              <span className="font-latin tabular-nums" dir="ltr">
                 {fmtDateTime(unlockedAt, lang)}
               </span>
             ) : (
@@ -157,11 +153,11 @@ export function AchievementsHighlight({ onOpenProfile }: { onOpenProfile: () => 
     : 1;
 
   return (
-    <section className={`card card-pad ${newlyUnlocked.length > 0 ? 'border-gold-400/25' : ''}`}>
+    <section className={`border border-royal-700 border-t-2 p-4 ${newlyUnlocked.length > 0 ? 'border-t-ochre-400' : 'border-t-royal-700'}`}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="eyebrow flex items-center gap-1.5">
-            <Trophy className="h-3.5 w-3.5 text-gold-300" aria-hidden="true" />
+          <div className="flex items-center gap-1.5 text-[11px] text-limestone-300">
+            <IconMedal className="h-4 w-4 text-ochre-300" />
             {newlyUnlocked.length > 0
               ? t('إنجازات جديدة', 'New achievements')
               : t('ملف القائد', 'Pilot profile')}
@@ -174,7 +170,7 @@ export function AchievementsHighlight({ onOpenProfile }: { onOpenProfile: () => 
                 )
               : t(`رتبتك الحالية: ${l(current.title)}`, `Current rank: ${l(current.title)}`)}
           </h2>
-          <p className="mt-1 max-w-xl text-[11px] leading-relaxed text-slate-400">
+          <p className="mt-1 max-w-xl text-xs leading-[1.8] text-limestone-300">
             {newlyUnlocked.length > 0
               ? t(
                   'تُحفظ الإنجازات محليًا وتُرافق كل مهمة جديدة. افتح الملف لترى كل الأوسمة وشروط فتحها.',
@@ -191,13 +187,12 @@ export function AchievementsHighlight({ onOpenProfile }: { onOpenProfile: () => 
                   )}
           </p>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-xl border border-gold-400/20 bg-gold-400/[0.06] px-2.5 py-1.5 font-latin text-[10px] font-bold text-gold-200" dir="ltr">
-            <Trophy className="h-3.5 w-3.5" aria-hidden="true" />
+        <div className="flex shrink-0 items-center gap-3">
+          <span className="font-latin text-[11px] tabular-nums text-ochre-300" dir="ltr">
             {count}/{ACHIEVEMENT_COUNT}
           </span>
-          <button type="button" onClick={onOpenProfile} className="btn-secondary !px-3 !py-1.5 text-[10px]">
-            <UserRound className="h-3.5 w-3.5" aria-hidden="true" />
+          <button type="button" onClick={onOpenProfile} className="btn-secondary text-xs">
+            <IconBook className="h-3.5 w-3.5" />
             {t('افتح الملف', 'Open profile')}
           </button>
         </div>
@@ -221,11 +216,11 @@ export function AchievementsHighlight({ onOpenProfile }: { onOpenProfile: () => 
             className="min-w-[140px] flex-1"
             aria-label={t('التقدم إلى الرتبة التالية', 'Progress to the next rank')}
           />
-          <span className="text-[10px] font-semibold text-slate-500">
+          <span className="text-[11px] text-limestone-400">
             {next
               ? t(
-                  `${l(current.title)} → ${l(next.title)}`,
-                  `${l(current.title)} → ${l(next.title)}`,
+                  `${l(current.title)} إلى ${l(next.title)}`,
+                  `${l(current.title)} to ${l(next.title)}`,
                 )
               : t('أعلى رتبة', 'Highest rank')}
           </span>

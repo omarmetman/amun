@@ -1,4 +1,3 @@
-import { Check, Radiation, Rocket, Satellite, ShieldCheck } from 'lucide-react';
 import { BUSES } from '../data/buses';
 import { PROPULSION } from '../data/propulsion';
 import type { LocalizedText, Redundancy } from '../data/types';
@@ -8,7 +7,14 @@ import { useDesign } from '../store/useDesign';
 import { useMissionStore } from '../store/useMissionStore';
 import { DataSourceBadges, GameBadge, SimplifiedNote, StatusPill } from '../components/Badges';
 import { Section } from '../components/StepShell';
-import { Bar, InlineNote, Stat } from '../components/StepBits';
+import { Bar, InlineNote, SpecTable, Stat } from '../components/StepBits';
+import {
+  IconBus,
+  IconLock,
+  IconRadiation,
+  IconShield,
+  IconThruster,
+} from '../components/Icons';
 
 const REDUNDANCY: Array<{
   id: Redundancy;
@@ -59,8 +65,52 @@ export function Step02Spacecraft() {
     design.bus.payloadCapacityKg > 0 ? design.instrumentMassKg / design.bus.payloadCapacityKg : 0;
   const reliability = design.bus.reliability * design.propulsion.reliability * design.launcher.reliability;
 
+  const busOptions = BUSES.map((bus) => ({
+    id: bus.id,
+    title: l(bus.name),
+    icon: <IconBus className="h-4 w-4" />,
+    note: (
+      <>
+        {l(bus.description)}
+        <span className="mt-0.5 block text-[10px] text-limestone-400">
+          {t('موثوقية', 'Reliability')}{' '}
+          <span className="font-latin tabular-nums" dir="ltr">{fmtPct(bus.reliability, 1)}</span>
+        </span>
+      </>
+    ),
+    cells: {
+      dry: `${fmt(bus.dryMassKg)} kg`,
+      payload: `${fmt(bus.payloadCapacityKg)} kg`,
+      power: `${fmt(bus.basePowerW)} W`,
+      storage: `${fmt(bus.storageGb)} GB`,
+      cost: fmtMoney(bus.costM),
+    },
+  }));
+
+  const propulsionOptions = PROPULSION.map((system) => ({
+    id: system.id,
+    title: l(system.name),
+    icon: <IconThruster className="h-4 w-4" />,
+    note: l(system.description),
+    cells: {
+      isp: `${fmt(system.ispS)} s`,
+      dry: `${fmt(system.dryMassKg)} kg`,
+      power: `${fmt(system.powerW)} W`,
+      time: `×${fmt(system.tripTimeFactor, 2)}`,
+      cost: fmtMoney(system.costM),
+    },
+  }));
+
+  const redundancyOptions = REDUNDANCY.map((option) => ({
+    id: option.id,
+    title: l(option.name),
+    icon: <IconShield className="h-4 w-4" />,
+    note: l(option.detail),
+    cells: { risk: l(option.risk) },
+  }));
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <Section
         title={t('منصة المركبة', 'Spacecraft bus')}
         description={t(
@@ -69,56 +119,31 @@ export function Step02Spacecraft() {
         )}
         action={<GameBadge />}
       >
-        <div className="grid gap-2 md:grid-cols-3">
-          {BUSES.map((bus) => {
-            const active = design.choices.busId === bus.id;
-            return (
-              <button
-                key={bus.id}
-                type="button"
-                onClick={() => setChoice('busId', bus.id)}
-                aria-pressed={active}
-                className={`selectable p-3.5 text-start ${active ? 'selectable-on' : ''}`}
-              >
-                <div className="mb-2 flex items-start justify-between gap-2">
-                  <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${active ? 'bg-gold-400/15 text-gold-300' : 'bg-white/[0.05] text-slate-400'}`}>
-                    <Satellite className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  {active ? (
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gold-400 text-void-950">
-                      <Check className="h-3 w-3" aria-hidden="true" />
-                    </span>
-                  ) : null}
-                </div>
-                <div className="text-sm font-bold text-white">{l(bus.name)}</div>
-                <p className="mt-1 min-h-[3.2rem] text-[10px] leading-relaxed text-slate-400">{l(bus.description)}</p>
-                <div className="mt-3 grid grid-cols-2 gap-1.5 text-[10px]">
-                  <span className="rounded-lg bg-white/[0.04] px-2 py-1 text-slate-400">
-                    {t('جافة', 'Dry')}: <span className="num font-bold text-slate-200">{fmt(bus.dryMassKg)}</span> kg
-                  </span>
-                  <span className="rounded-lg bg-white/[0.04] px-2 py-1 text-slate-400">
-                    {t('حمولة', 'Payload')}: <span className="num font-bold text-slate-200">{fmt(bus.payloadCapacityKg)}</span> kg
-                  </span>
-                  <span className="rounded-lg bg-white/[0.04] px-2 py-1 text-slate-400">
-                    <span className="num font-bold text-slate-200">{fmt(bus.basePowerW)}</span> W
-                  </span>
-                  <span className="rounded-lg bg-white/[0.04] px-2 py-1 text-slate-400">
-                    <span className="num font-bold text-slate-200">{fmt(bus.storageGb)}</span> GB
-                  </span>
-                </div>
-                <div className="mt-2 flex items-center justify-between text-[10px]">
-                  <span className="font-bold text-gold-300">{fmtMoney(bus.costM)}</span>
-                  <span className="text-slate-500">
-                    {t('موثوقية', 'Reliability')} <span className="num text-slate-300">{fmtPct(bus.reliability, 1)}</span>
-                  </span>
-                </div>
-              </button>
-            );
-          })}
+        <SpecTable
+          label={t('المنصة', 'Bus')}
+          columns={[
+            { key: 'dry', label: t('جافة', 'Dry') },
+            { key: 'payload', label: t('حمولة', 'Payload') },
+            { key: 'power', label: t('طاقة', 'Power') },
+            { key: 'storage', label: t('ذاكرة', 'Storage') },
+            { key: 'cost', label: t('الكلفة', 'Cost') },
+          ]}
+          options={busOptions}
+          selectedId={design.choices.busId}
+          onSelect={(id) => {
+            const bus = BUSES.find((entry) => entry.id === id);
+            if (bus) setChoice('busId', bus.id);
+          }}
+        />
+        <div className="mt-3 flex flex-wrap items-baseline justify-between gap-2 border-t border-royal-700 pt-2">
+          <DataSourceBadges sources={['ntrs', 'launchApprox', 'game']} />
+          <span className="text-[10px] text-limestone-400">
+            {t('قيم الفئة تقديرية للعبة.', 'Class values are game estimates.')}
+          </span>
         </div>
       </Section>
 
-      <div className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+      <div className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
         <Section
           title={t('نظام الدفع', 'Propulsion system')}
           description={t(
@@ -127,94 +152,80 @@ export function Step02Spacecraft() {
           )}
           action={<GameBadge />}
         >
-          <div className="space-y-2">
-            {PROPULSION.map((system) => {
-              const active = design.choices.propulsionId === system.id;
-              return (
-                <button
-                  key={system.id}
-                  type="button"
-                  onClick={() => setChoice('propulsionId', system.id)}
-                  aria-pressed={active}
-                  className={`selectable flex w-full items-start gap-3 p-3 text-start ${active ? 'selectable-on' : ''}`}
-                >
-                  <span className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-gold-400/15 text-gold-300' : 'bg-white/[0.05] text-slate-400'}`}>
-                    <Rocket className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="flex flex-wrap items-center justify-between gap-1">
-                      <span className="text-xs font-bold text-white">{l(system.name)}</span>
-                      <span className="font-latin text-[10px] font-bold text-gold-300" dir="ltr">
-                        Isp {fmt(system.ispS)} s
-                      </span>
-                    </span>
-                    <span className="mt-1 block text-[10px] leading-relaxed text-slate-400">{l(system.description)}</span>
-                    <span className="mt-2 flex flex-wrap gap-1">
-                      <span className="chip !px-2 !py-0.5 !text-[9px]">{fmt(system.dryMassKg)} kg</span>
-                      <span className="chip !px-2 !py-0.5 !text-[9px]">{fmt(system.powerW)} W</span>
-                      <span className="chip !px-2 !py-0.5 !text-[9px]">{fmtMoney(system.costM)}</span>
-                      <span className="chip !px-2 !py-0.5 !text-[9px]">
-                        {t('زمن ×', 'time ×')}
-                        <span className="num">{fmt(system.tripTimeFactor, 2)}</span>
-                      </span>
-                    </span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <SpecTable
+            label={t('نظام الدفع', 'Propulsion')}
+            columns={[
+              { key: 'isp', label: 'Isp' },
+              { key: 'dry', label: t('كتلة', 'Mass') },
+              { key: 'power', label: t('طاقة', 'Power') },
+              { key: 'time', label: t('الزمن', 'Time') },
+              { key: 'cost', label: t('الكلفة', 'Cost') },
+            ]}
+            options={propulsionOptions}
+            selectedId={design.choices.propulsionId}
+            onSelect={(id) => {
+              const system = PROPULSION.find((entry) => entry.id === id);
+              if (system) setChoice('propulsionId', system.id);
+            }}
+          />
+          <InlineNote tone="royal" className="mt-3">
+            {t(
+              'الدفع الكيميائي يحسم الرحلة سريعًا. الأيوني يوفّر الكتلة لكنه يحوّل الطاقة إلى وقت.',
+              'Chemical propulsion settles the trip quickly. Ion saves mass but turns power into time.',
+            )}
+          </InlineNote>
         </Section>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           <Section title={t('مستوى التكرار', 'Redundancy')} action={<GameBadge />}>
-            <div className="space-y-2">
-              {REDUNDANCY.map((option) => {
-                const active = design.choices.redundancy === option.id;
-                return (
-                  <button
-                    key={option.id}
-                    type="button"
-                    onClick={() => setChoice('redundancy', option.id)}
-                    aria-pressed={active}
-                    className={`selectable flex w-full items-start gap-2.5 p-2.5 text-start ${active ? 'selectable-on' : ''}`}
-                  >
-                    <ShieldCheck className={`mt-0.5 h-4 w-4 shrink-0 ${active ? 'text-gold-300' : 'text-slate-500'}`} aria-hidden="true" />
-                    <span className="min-w-0 flex-1">
-                      <span className="flex items-center justify-between gap-2">
-                        <span className="text-[11px] font-bold text-white">{l(option.name)}</span>
-                        <span className={`text-[9px] font-bold ${option.id === 'none' ? 'text-danger' : option.id === 'singleFault' ? 'text-warn' : 'text-good'}`}>
-                          {l(option.risk)}
-                        </span>
-                      </span>
-                      <span className="mt-0.5 block text-[10px] leading-relaxed text-slate-400">{l(option.detail)}</span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+            <SpecTable
+              label={t('مستوى التكرار', 'Redundancy level')}
+              columns={[{ key: 'risk', label: t('المخاطرة', 'Risk'), numeric: false }]}
+              options={redundancyOptions}
+              selectedId={design.choices.redundancy}
+              onSelect={(id) => {
+                const option = REDUNDANCY.find((entry) => entry.id === id);
+                if (option) setChoice('redundancy', option.id);
+              }}
+            />
+
             <button
               type="button"
               onClick={() => setChoice('radHard', !design.choices.radHard)}
               aria-pressed={design.choices.radHard}
-              className={`selectable mt-3 flex w-full items-start gap-2.5 p-2.5 text-start ${design.choices.radHard ? 'selectable-on' : ''}`}
+              className={`mt-3 flex w-full items-start gap-2.5 border border-royal-700 p-2.5 text-start transition-colors hover:bg-royal-700/20 ${
+                design.choices.radHard ? 'selectable-on' : ''
+              }`}
             >
-              <Radiation className={`mt-0.5 h-4 w-4 shrink-0 ${design.choices.radHard ? 'text-gold-300' : 'text-slate-500'}`} aria-hidden="true" />
+              <IconRadiation
+                className={`mt-0.5 h-4 w-4 shrink-0 ${
+                  design.choices.radHard ? 'text-ochre-300' : 'text-limestone-400'
+                }`}
+              />
               <span className="min-w-0 flex-1">
-                <span className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-bold text-white">{t('إلكترونيات مقاومة للإشعاع', 'Radiation-hard electronics')}</span>
-                  <span className={`text-[9px] font-bold ${design.choices.radHard ? 'text-good' : 'text-slate-500'}`}>
+                <span className="flex flex-wrap items-baseline justify-between gap-2">
+                  <span className="text-xs text-limestone-50">
+                    {t('إلكترونيات مقاومة للإشعاع', 'Radiation-hard electronics')}
+                  </span>
+                  <span className={`text-[10px] ${design.choices.radHard ? 'text-malachite' : 'text-limestone-400'}`}>
                     {design.choices.radHard ? t('مفعّلة', 'Enabled') : t('معطلة', 'Off')}
                   </span>
                 </span>
-                <span className="mt-0.5 block text-[10px] leading-relaxed text-slate-400">
-                  {t('تضيف كتلة وكلفة، لكنها تخفض أثر العواصف الشمسية وإشعاع المشتري.', 'Adds mass and cost, but reduces solar-storm and Jovian radiation effects.')}
+                <span className="mt-0.5 block text-[11px] leading-relaxed text-limestone-300">
+                  {t(
+                    'تضيف كتلة وكلفة، لكنها تخفض أثر العواصف الشمسية وإشعاع المشتري.',
+                    'Adds mass and cost, but reduces solar-storm and Jovian radiation effects.',
+                  )}
                 </span>
               </span>
             </button>
           </Section>
 
-          <Section title={t('أثر الاختيار الحالي', 'Current choice impact')} action={<StatusPill tone="info">{t('حي', 'Live')}</StatusPill>}>
-            <div className="grid grid-cols-2 gap-2">
+          <Section
+            title={t('أثر الاختيار الحالي', 'Current choice impact')}
+            action={<StatusPill tone="info">{t('حي', 'Live')}</StatusPill>}
+          >
+            <div className="grid grid-cols-2 gap-x-4">
               <Stat label={t('الكتلة الجافة', 'Dry mass')} value={<>{fmt(design.mass.dryMassKg)} <span className="text-[10px]">kg</span></>} />
               <Stat label={t('الكتلة الرطبة', 'Wet mass')} value={<>{fmt(design.mass.wetMassKg)} <span className="text-[10px]">kg</span></>} />
               <Stat
@@ -224,28 +235,35 @@ export function Step02Spacecraft() {
               />
               <Stat label={t('موثوقية تقريبية', 'Approx. reliability')} value={fmtPct(reliability)} tone="royal" />
             </div>
-            <div className="mt-3 space-y-2">
-              <div>
-                <div className="mb-1 flex items-center justify-between text-[10px]">
-                  <span className="text-slate-500">{t('استخدام سعة الحمولة', 'Payload capacity used')}</span>
-                  <span className="num text-slate-300">{fmtPct(payloadUse)}</span>
-                </div>
-                <Bar ratio={payloadUse} tone={payloadUse > 1 ? 'danger' : payloadUse > 0.85 ? 'warn' : 'good'} />
+
+            <div className="mt-3 border-t border-royal-700 pt-2">
+              <div className="mb-1 flex items-baseline justify-between gap-2 text-[10px]">
+                <span className="text-limestone-400">{t('استخدام سعة الحمولة', 'Payload capacity used')}</span>
+                <span className="font-latin tabular-nums text-limestone-200" dir="ltr">{fmtPct(payloadUse)}</span>
               </div>
-              <div className="flex flex-wrap gap-1">
-                <span className="chip !px-2 !py-0.5 !text-[10px]">
-                  {t('تكرار', 'Redundancy')} <span className="num">{fmt(design.redundancyMassKg)} kg</span>
-                </span>
-                <span className="chip !px-2 !py-0.5 !text-[10px]">
-                  {t('إشعاع', 'Rad-hard')} <span className="num">{fmt(design.radHardMassKg)} kg</span>
-                </span>
-                <span className="chip !px-2 !py-0.5 !text-[10px]">
-                  <span className="num">{fmtMoney(design.redundancyCostM + design.radHardCostM)}</span>
+              <Bar ratio={payloadUse} tone={payloadUse > 1 ? 'danger' : payloadUse > 0.85 ? 'warn' : 'good'} />
+            </div>
+
+            <div className="mt-2">
+              <div className="table-row">
+                <span className="text-xs text-limestone-300">{t('كتلة التكرار', 'Redundancy mass')}</span>
+                <span className="font-latin text-xs tabular-nums text-limestone-100" dir="ltr">{fmt(design.redundancyMassKg)} kg</span>
+              </div>
+              <div className="table-row">
+                <span className="text-xs text-limestone-300">{t('كتلة الحصانة الإشعاعية', 'Rad-hard mass')}</span>
+                <span className="font-latin text-xs tabular-nums text-limestone-100" dir="ltr">{fmt(design.radHardMassKg)} kg</span>
+              </div>
+              <div className="table-row">
+                <span className="text-xs text-limestone-300">{t('كلفة التكرار والحصانة', 'Redundancy and hardening cost')}</span>
+                <span className="font-latin text-xs tabular-nums text-ochre-300" dir="ltr">
+                  {fmtMoney(design.redundancyCostM + design.radHardCostM)}
                 </span>
               </div>
             </div>
+
             {payloadUse > 1 ? (
               <InlineNote tone="danger" className="mt-3">
+                <IconLock className="me-1 inline h-3.5 w-3.5" />
                 {t('كتلة الأجهزة تتجاوز سعة هذه المنصة. اختر منصة أكبر أو احذف أجهزة.', 'Instrument mass exceeds this bus’s capacity. Choose a larger bus or remove instruments.')}
               </InlineNote>
             ) : (
@@ -257,9 +275,8 @@ export function Step02Spacecraft() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <DataSourceBadges sources={['ntrs', 'launchApprox', 'game']} />
-        <SimplifiedNote className="max-w-2xl">
+      <div className="flex flex-col gap-2 border-t border-royal-700 pt-3">
+        <SimplifiedNote>
           {t(
             'قيم الكتلة والكلفة والموثوقية مبسطة للعبة. أنظمة الدفع الحقيقية تُختار بعد تحليل مفصل للمهمة والبيئة.',
             'Bus mass, cost and reliability values are game-simplified. Real propulsion choices follow a detailed mission and environment analysis.',

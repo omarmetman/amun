@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { Orbit, Wallet, Weight, Zap } from 'lucide-react';
 import { useT } from '../i18n';
 import { fmt, fmtPct, fmtMoney, marginTone, type MarginTone } from '../lib/format';
 import { useDesign } from '../store/useDesign';
@@ -10,10 +9,10 @@ interface Metric {
   key: string;
   label: string;
   value: string;
+  marginLabel: string;
   sub: ReactNode;
   tone: MarginTone;
   ratio: number;
-  icon: ReactNode;
   step: number;
 }
 
@@ -22,66 +21,66 @@ export function DashboardGrid({ compact = false, onJump }: { compact?: boolean; 
   const t = useT();
   const setStep = useMissionStore((state) => state.setStep);
 
-  const minPower = Math.min(
-    design.power.modes.cruise.margin,
-    design.power.modes.science.margin,
-    design.power.modes.safe.margin,
-  );
-  const worstMode =
-    minPower === design.power.modes.cruise.margin
-      ? t('الإبحار', 'cruise')
-      : minPower === design.power.modes.science.margin
-        ? t('العلم', 'science')
-        : t('آمن', 'safe');
-  const used = design.cost.budgetM > 0 ? design.cost.totalM / design.cost.budgetM : 1;
+  const modes = design.power.modes;
+  const minPower = Math.min(modes.cruise.margin, modes.science.margin, modes.safe.margin);
+  const worst =
+    minPower === modes.cruise.margin
+      ? { name: t('الإبحار', 'cruise'), data: modes.cruise }
+      : minPower === modes.science.margin
+        ? { name: t('العلم', 'science'), data: modes.science }
+        : { name: t('آمن', 'safe'), data: modes.safe };
+
+  const budget = design.cost.budgetM;
+  const budgetMargin = budget > 0 ? design.cost.remainingM / budget : -1;
 
   const metrics: Metric[] = [
     {
       key: 'mass',
-      label: t('هامش الكتلة', 'Mass margin'),
-      value: fmtPct(design.mass.massMargin),
-      sub: (
-        <span dir="ltr" className="font-latin">
-          {fmt(design.mass.wetMassKg)} / {fmt(design.mass.launcherCapacityKg)} kg
-        </span>
+      label: t('كتلة الإطلاق', 'Launch mass'),
+      value: `${fmt(design.mass.wetMassKg)} kg`,
+      marginLabel: t(`هامش ${fmtPct(design.mass.massMargin)}`, `${fmtPct(design.mass.massMargin)} margin`),
+      sub: t(
+        `سعة الصاروخ ${fmt(design.mass.launcherCapacityKg)} kg`,
+        `launcher capacity ${fmt(design.mass.launcherCapacityKg)} kg`,
       ),
       tone: marginTone(design.mass.massMargin),
-      ratio: Math.min(1, Math.max(0, design.mass.massMargin / 0.4)),
-      icon: <Weight className="h-4 w-4" aria-hidden="true" />,
+      ratio: design.mass.massMargin / 0.4,
       step: 7,
     },
     {
       key: 'power',
-      label: t('هامش الطاقة', 'Power margin'),
-      value: fmtPct(minPower),
-      sub: t(`أدنى نمط: ${worstMode}`, `worst mode: ${worstMode}`),
+      label: t('حمل الطاقة', 'Power load'),
+      value: `${fmt(worst.data.loadW)} W`,
+      marginLabel: t(`هامش ${fmtPct(minPower)}`, `${fmtPct(minPower)} margin`),
+      sub: t(
+        `أدنى نمط: ${worst.name}، توليد ${fmt(worst.data.generatedW)} W`,
+        `worst mode: ${worst.name}, ${fmt(worst.data.generatedW)} W generated`,
+      ),
       tone: marginTone(minPower),
-      ratio: Math.min(1, Math.max(0, minPower / 0.4)),
-      icon: <Zap className="h-4 w-4" aria-hidden="true" />,
+      ratio: minPower / 0.4,
       step: 6,
     },
     {
       key: 'dv',
-      label: t('هامش Δv', 'Δv margin'),
-      value: fmtPct(design.orbit.dvMargin),
-      sub: (
-        <span dir="ltr" className="font-latin">
-          {fmt(design.orbit.availableDvMS)} / {fmt(design.orbit.requiredDvMS)} m/s
-        </span>
+      label: t('دلتا-في المتاحة', 'Available Δv'),
+      value: `${fmt(design.orbit.availableDvMS)} m/s`,
+      marginLabel: t(`هامش ${fmtPct(design.orbit.dvMargin)}`, `${fmtPct(design.orbit.dvMargin)} margin`),
+      sub: t(
+        `المطلوب ${fmt(design.orbit.requiredDvMS)} m/s`,
+        `${fmt(design.orbit.requiredDvMS)} m/s required`,
       ),
       tone: marginTone(design.orbit.dvMargin),
-      ratio: Math.min(1, Math.max(0, design.orbit.dvMargin / 0.4)),
-      icon: <Orbit className="h-4 w-4" aria-hidden="true" />,
+      ratio: design.orbit.dvMargin / 0.4,
       step: 9,
     },
     {
       key: 'budget',
-      label: t('الميزانية', 'Budget'),
-      value: fmtPct(used),
-      sub: t(`${fmtMoney(design.cost.remainingM)} متبقٍ`, `${fmtMoney(design.cost.remainingM)} left`),
-      tone: used > 1 ? 'negative' : used > 0.92 ? 'low' : 'ideal',
-      ratio: Math.min(1, Math.max(0, used)),
-      icon: <Wallet className="h-4 w-4" aria-hidden="true" />,
+      label: t('الميزانية المتبقية', 'Remaining budget'),
+      value: fmtMoney(design.cost.remainingM),
+      marginLabel: t(`هامش ${fmtPct(budgetMargin)}`, `${fmtPct(budgetMargin)} margin`),
+      sub: t(`من ${fmtMoney(budget)}`, `of ${fmtMoney(budget)}`),
+      tone: budgetMargin < 0 ? 'negative' : marginTone(budgetMargin),
+      ratio: budgetMargin / 0.4,
       step: 5,
     },
   ];
@@ -92,16 +91,17 @@ export function DashboardGrid({ compact = false, onJump }: { compact?: boolean; 
   };
 
   return (
-    <div className={compact ? 'grid grid-cols-2 gap-2' : 'grid gap-2 sm:grid-cols-2'}>
-      {metrics.map((metric) => (
+    <div className={compact ? 'grid grid-cols-2 gap-x-4' : 'grid gap-x-5'}>
+      {metrics.map((metric, index) => (
         <Gauge
           key={metric.key}
           ratio={metric.ratio}
           tone={metric.tone}
           label={metric.label}
           value={metric.value}
+          marginLabel={metric.marginLabel}
           sub={metric.sub}
-          icon={metric.icon}
+          index={`0${index + 1}`}
           size={compact ? 'sm' : 'md'}
           onClick={() => jump(metric.step)}
         />

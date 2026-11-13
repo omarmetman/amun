@@ -7,7 +7,7 @@ import type {
 } from './types';
 
 /**
- * AMUN Horizon — the game's six-chapter story campaign.
+ * AMUN Horizon: the game's six-chapter story campaign.
  *
  * The campaign is deliberately data-driven: chapters fix only the target,
  * mission type, difficulty, success tier and seed. Every engineering decision
@@ -41,14 +41,14 @@ export interface CampaignMeta {
 export const CAMPAIGN: CampaignMeta = {
   title: { ar: 'أفق آمون', en: 'AMUN Horizon' },
   englishTitle: 'AMUN HORIZON',
-  years: '2041 — 2051',
+  years: '2041–2051',
   tagline: {
     ar: 'ستة فصول. إشارة واحدة. أفق لا يعود منه من يصل إليه كما كان.',
     en: 'Six chapters. One signal. A horizon that changes everyone who reaches it.',
   },
   overview: {
-    ar: 'في عام 2041، ضربت العاصفة الشمسية الكبرى شبكة الاتصال العميق. من بين الأنقاض، بدأت نبضة غامضة تتكرر كل 26 شهرًا من ستة مواقع في النظام الشمسي. أنت قائد برنامج آمون. مهمتك: إعادة بناء سلسلة المرسلات، وتتبع الإشارة من القمر إلى سيريس، واكتشاف من — أو ما — ينتظر عند الأفق.',
-    en: 'In 2041, the Great Solar Storm struck the deep-space communications lattice. From the wreckage, a mysterious pulse began repeating every 26 months from six locations across the solar system. You command the AMUN programme. Your mission: rebuild the relay chain, follow the signal from the Moon to Ceres, and discover who — or what — is waiting at the horizon.',
+    ar: 'في عام 2041، ضربت العاصفة الشمسية الكبرى شبكة الاتصال العميق. من بين الأنقاض، بدأت نبضة غامضة تتكرر كل 26 شهرًا من ستة مواقع في النظام الشمسي. أنت قائد برنامج آمون. مهمتك: إعادة بناء سلسلة المرسلات، وتتبع الإشارة من القمر إلى سيريس، واكتشاف ما ينتظر عند الأفق.',
+    en: 'In 2041, the Great Solar Storm struck the deep-space communications lattice. From the wreckage, a mysterious pulse began repeating every 26 months from six locations across the solar system. You command the AMUN programme. Your mission: rebuild the relay chain, follow the signal from the Moon to Ceres, and discover who, or what, is waiting at the horizon.',
   },
   hook: {
     ar: 'لم تكن الإشارة دعوة. كانت اختبارًا. ومن يجيب، عليه أن يبني الطريق بيديه.',
@@ -56,7 +56,7 @@ export const CAMPAIGN: CampaignMeta = {
   },
   finale: {
     ar: 'لم تكن الإشارة نداءً من كائنات بعيدة. كانت بنية تحتية لم تبنها البشرية، تركتها حضارة سبقتنا بملايين السنين كي تختبر من يصل. في 2051، وقفت البشرية على حافة سيريس، ونظرت إلى ما وراء الأفق. لم تعد الأرض مركز الكون. صارت أول جسر إليه.',
-    en: 'The signal was not a call from distant beings. It was infrastructure humanity did not build — left by a civilisation millions of years ahead of us to test who would arrive. In 2051, humanity stood at the edge of Ceres and looked beyond the horizon. Earth was no longer the centre of the universe. It became its first bridge.',
+    en: 'The signal was not a call from distant beings. It was infrastructure humanity did not build, left by a civilisation millions of years ahead of us to test who would arrive. In 2051, humanity stood at the edge of Ceres and looked beyond the horizon. Earth was no longer the centre of the universe. It became its first bridge.',
   },
   disclaimer: {
     ar: 'القصة والخط الزمني والاكتشافات خيال علمي. التردد 1420.405 ميغاهرتز هو خط الهيدروجين، قيمة فيزيائية حقيقية استخدمناها لأنها أشهر تردد في علم الفلك الراديوي. تصميم المهمة نفسه يخضع لقواعد البيانات والمحاكاة نفسها في اللعب الحر.',
@@ -89,7 +89,7 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
     icon: 'Moon',
     prologue: {
       ar: 'في الثالث من آذار 2041، مزّقت العاصفة الشمسية الكبرى شبكة الاتصال بين الأرض والمدار. عندما عادت الكهرباء إلى غرفة التحكم، كان القمر يبث نبضة لا يعرف أحد كيف بدأت: 1420.405 ميغاهرتز، كل 26 شهرًا، تمامًا كخط الهيدروجين الذي يكتب به الكون صمته.',
-      en: 'On 3 March 2041, the Great Solar Storm tore the communication lattice between Earth and orbit. When the control room came back online, the Moon was broadcasting a pulse no one could explain: 1420.405 MHz, every 26 months — the hydrogen line with which the universe writes its silence.',
+      en: 'On 3 March 2041, the Great Solar Storm tore the communication lattice between Earth and orbit. When the control room came back online, the Moon was broadcasting a pulse no one could explain: 1420.405 MHz, every 26 months; the hydrogen line with which the universe writes its silence.',
     },
     briefing: {
       ar: 'مهمتك: إعادة تشغيل مِرساة الاتصال القمرية، ورسم مصدر النبضة على الوجه البعيد. لا نطلب منك مطاردة شبح؛ نطلب أن تثبت أننا ما زلنا نسمع.',
@@ -104,8 +104,8 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
       en: '“If you can hear this, the horizon is not the end of the road. The horizon is where the road begins.”',
     },
     epilogue: {
-      ar: 'خلف القمر، وجدت المركبة هوائيًا أقدم من برنامج آمون نفسه، يعيد بث شيفرة على شكل خريطة. الخريطة لا تشير إلى القمر. تشير إلى المريخ — وإلى نقطة ثانية على الكوكب الأحمر لم تكن في أي سجل.',
-      en: 'Behind the Moon, the spacecraft found an antenna older than the AMUN programme itself, rebroadcasting a map-shaped code. The map did not point to the Moon. It pointed to Mars — and to a second site on the Red Planet absent from every record.',
+      ar: 'خلف القمر، وجدت المركبة هوائيًا أقدم من برنامج آمون نفسه، يعيد بث شيفرة على شكل خريطة. الخريطة لا تشير إلى القمر. تشير إلى المريخ، وإلى نقطة ثانية على الكوكب الأحمر لم تكن في أي سجل.',
+      en: 'Behind the Moon, the spacecraft found an antenna older than the AMUN programme itself, rebroadcasting a map-shaped code. The map did not point to the Moon. It pointed to Mars, and to a second site on the Red Planet absent from every record.',
     },
     bonusObjectives: [
       {
@@ -233,7 +233,7 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
     icon: 'Package',
     prologue: {
       ar: 'بنّو ليس مجرد كويكب. إنه كبسولة زمنية من بداية النظام الشمسي، يمر قرب الأرض كل ست سنوات. عندما حللنا الغبار الذي جمعته بعثة سابقة، وجدنا نظائر لا توجد في أي جسم معروف. كأن قطعة من السماء سقطت في جيب أحدهم.',
-      en: 'Bennu is not just an asteroid. It is a time capsule from the birth of the solar system, passing near Earth every six years. When we analysed dust from an earlier mission, we found isotopes that exist on no known body — as if a piece of the sky had fallen into someone’s pocket.',
+      en: 'Bennu is not just an asteroid. It is a time capsule from the birth of the solar system, passing near Earth every six years. When we analysed dust from an earlier mission, we found isotopes that exist on no known body, as if a piece of the sky had fallen into someone’s pocket.',
     },
     briefing: {
       ar: 'أعد عينات من بنّو قبل أن يبتعد. نحتاج المادة نفسها، لا صورة عنها. كل غرام يعود إلى الأرض قد يحمل مفتاح الحلقة الثالثة.',
@@ -248,8 +248,8 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
       en: '“What you think is ancient may be a message that arrived before we learned to read.”',
     },
     epilogue: {
-      ar: 'في مختبر العينات، تحت المجهر، لم تكن الصخرة صخرة. كانت طبقات من مادة تعيد ترتيب نفسها عند تسليط الضوء عليها. وفي قلبها، بصمة زمنية عمرها 4.5 مليار سنة — وبصمة ثانية عمرها 26 شهرًا فقط.',
-      en: 'In the sample lab, under the microscope, the rock was not a rock. It was layers of material rearranging themselves when light touched them. At its heart lay a 4.5-billion-year-old time signature — and a second signature only 26 months old.',
+      ar: 'في مختبر العينات، تحت المجهر، لم تكن الصخرة صخرة. كانت طبقات من مادة تعيد ترتيب نفسها عند تسليط الضوء عليها. وفي قلبها، بصمة زمنية عمرها 4.5 مليار سنة، وبصمة ثانية عمرها 26 شهرًا فقط.',
+      en: 'In the sample lab, under the microscope, the rock was not a rock. It was layers of material rearranging themselves when light touched them. At its heart lay a 4.5-billion-year-old time signature, and a second signature only 26 months old.',
     },
     bonusObjectives: [
       {

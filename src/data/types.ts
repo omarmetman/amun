@@ -471,7 +471,7 @@ export interface DesignSnapshot {
 }
 
 // ---------------------------------------------------------------------------
-// Campaign: “AMUN Horizon” — a six-chapter narrative chain that reuses the
+// Campaign: “AMUN Horizon”, a six-chapter narrative chain that reuses the
 // same deterministic mission engine. Directives are fixed per chapter; every
 // engineering choice remains with the player.
 // ---------------------------------------------------------------------------

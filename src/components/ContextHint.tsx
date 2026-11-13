@@ -1,8 +1,8 @@
-import { AlertTriangle, CheckCircle2, Info } from 'lucide-react';
 import { useL, useT } from '../i18n';
 import { fmt, fmtMoney, fmtPct } from '../lib/format';
 import { useDesign } from '../store/useDesign';
 import { useMissionStore } from '../store/useMissionStore';
+import { IconAlert, IconCheck, IconInfo } from './Icons';
 
 /**
  * A live line under the step hint. Unlike the static hint, this reads the
@@ -149,13 +149,13 @@ export function ContextHint({ step }: { step: number }) {
       message = '';
   }
 
-  const Icon = tone === 'good' ? CheckCircle2 : tone === 'warn' ? AlertTriangle : Info;
-  const color = tone === 'good' ? 'text-good' : tone === 'warn' ? 'text-warn' : 'text-royal-300';
+  const Icon = tone === 'good' ? IconCheck : tone === 'warn' ? IconAlert : IconInfo;
+  const color = tone === 'good' ? 'text-malachite' : tone === 'warn' ? 'text-amber' : 'text-royal-300';
 
   return (
     <span className="inline-flex items-start gap-1.5">
-      <Icon className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${color}`} aria-hidden="true" />
-      <span className="text-slate-300">{message}</span>
+      <Icon className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${color}`} />
+      <span className="text-limestone-300">{message}</span>
     </span>
   );
 }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { AlertTriangle, Download, RotateCcw, Upload } from 'lucide-react';
 import { STEPS } from './data/steps';
 import { dirOf } from './i18n';
 import { useLang } from './i18n';
 import { useMissionStore } from './store/useMissionStore';
 import { ContextHint } from './components/ContextHint';
+import { IconAlert, IconDownload, IconReset, IconUpload } from './components/Icons';
 import { CampaignBanner } from './components/CampaignBanner';
 import { CampaignModal } from './components/CampaignModal';
 import { Header } from './components/Header';
@@ -14,6 +14,7 @@ import { MobileDashboard } from './components/MobileDashboard';
 import { Modal } from './components/Modal';
 import { ProfileModal } from './components/ProfileModal';
 import { Sidebar } from './components/Sidebar';
+import { Stepper } from './components/Stepper';
 import { StepIntro, StepNav } from './components/StepShell';
 import { Toasts } from './components/Toasts';
 import { InlineNote } from './components/StepBits';
@@ -52,7 +53,7 @@ export default function App() {
     const root = document.documentElement;
     root.lang = lang;
     root.dir = dirOf(lang);
-    document.title = lang === 'ar' ? 'AMUN — مصمم المهام الفضائية' : 'AMUN — Space Mission Designer';
+    document.title = lang === 'ar' ? 'AMUN: مصمم المهام الفضائية' : 'AMUN: Space Mission Designer';
   }, [lang]);
 
   const openLearn = (focusKey?: string) => {
@@ -148,7 +149,7 @@ export default function App() {
     <>
       <a
         href="#mission-content"
-        className="sr-only z-[100] rounded-lg bg-gold-400 px-3 py-2 text-xs font-bold text-void-950 focus:not-sr-only focus:fixed focus:start-3 focus:top-3"
+        className="sr-only z-[100] rounded-data bg-ochre-400 px-3 py-2 text-xs font-semibold text-lapis-950 focus:not-sr-only focus:fixed focus:start-3 focus:top-3"
       >
         {lang === 'ar' ? 'تخطَّ إلى محتوى المهمة' : 'Skip to mission content'}
       </a>
@@ -167,7 +168,9 @@ export default function App() {
             onReset={() => setModal('reset')}
           />
 
-          <main id="mission-content" className="mx-auto w-full max-w-[1180px] px-3 pb-32 pt-4 sm:px-5 sm:pt-5 lg:px-7 lg:pb-10">
+          <Stepper variant="mini" />
+
+          <main id="mission-content" className="mx-auto w-full max-w-[1180px] px-3 pb-40 pt-4 sm:px-5 sm:pt-5 lg:px-7 lg:pb-10">
             <CampaignBanner onOpen={() => setModal('campaign')} />
             <StepIntro step={step} onLearn={() => openLearn()} contextHint={<ContextHint step={step} />} />
             <IssuesPanel />
@@ -228,20 +231,20 @@ export default function App() {
           }
         >
           <InlineNote tone="warn">
-            <AlertTriangle className="me-1 inline h-3.5 w-3.5" aria-hidden="true" />
+            <IconAlert className="me-1 inline h-3.5 w-3.5" />
             {lang === 'ar'
               ? 'ستفقد المحاكاة الحالية، لكن المحاولات المحفوظة ولوحة الصدارة ستبقيان على هذا الجهاز.'
               : 'The current run will be lost, but saved attempts and the local leaderboard stay on this device.'}
           </InlineNote>
           {activeChapterId ? (
             <InlineNote tone="warn" className="mt-2">
-              <AlertTriangle className="me-1 inline h-3.5 w-3.5" aria-hidden="true" />
+              <IconAlert className="me-1 inline h-3.5 w-3.5" />
               {lang === 'ar'
                 ? 'أنت داخل حملة «أفق آمون». بدء مهمة جديدة سيخرجك من الفصل النشط، لكن تقدم الحملة ونجومها ونهايات الفصول ستبقى محفوظة.'
                 : 'You are inside the AMUN Horizon campaign. Starting a new mission exits the active chapter, but campaign progress, stars and unlocked endings stay saved.'}
             </InlineNote>
           ) : null}
-          <div className="mt-3 space-y-1.5 text-[11px] leading-relaxed text-slate-400">
+          <div className="mt-3 space-y-1.5 text-[11px] leading-relaxed text-limestone-300">
             <p>
               {lang === 'ar'
                 ? 'ستحصل على تصميم افتراضي جديد وبذرة عشوائية جديدة. المستوى واللغة الحاليان محفوظان.'
@@ -289,28 +292,27 @@ export default function App() {
                   closeLearn();
                   window.scrollTo({ top: 0 });
                 }}
-                className="btn text-xs text-white"
-                style={{ background: 'linear-gradient(180deg, #e26a6a, #b33c3c)' }}
+                className="btn border-carnelian bg-carnelian text-limestone-50 hover:bg-[#bf3a25]"
               >
-                <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+                <IconReset className="h-3.5 w-3.5" />
                 {lang === 'ar' ? 'امسح كل شيء' : 'Erase everything'}
               </button>
             </>
           }
         >
           <InlineNote tone="danger">
-            <AlertTriangle className="me-1 inline h-3.5 w-3.5" aria-hidden="true" />
+            <IconAlert className="me-1 inline h-3.5 w-3.5" />
             {lang === 'ar'
               ? 'سيُحذف التصميم والمحاكاة وكل المحاولات ولوحة الصدارة وملف القائد وإنجازاته وحملة أفق آمون نهائيًا من هذا المتصفح.'
               : 'The design, simulation, every attempt, the leaderboard, the pilot profile, its achievements and the AMUN Horizon campaign will be permanently removed from this browser.'}
           </InlineNote>
-          <p className="mt-3 text-[11px] leading-relaxed text-slate-400">
+          <p className="mt-3 text-[11px] leading-relaxed text-limestone-300">
             {lang === 'ar'
               ? 'لا يوجد حساب أو نسخة سحابية لاستعادة البيانات. صدّر التصميم أولًا إذا أردت الاحتفاظ به.'
               : 'There is no account or cloud backup. Export the design first if you want to keep it.'}
           </p>
-          <div className="mt-3 flex items-center gap-2 rounded-xl border border-white/[0.07] bg-void-900/40 px-3 py-2 font-latin text-[10px] text-slate-500" dir="ltr">
-            <Download className="h-3.5 w-3.5" aria-hidden="true" />
+          <div className="mt-3 flex items-center gap-2 rounded-data border border-royal-700 bg-lapis-900/40 px-3 py-2 font-latin text-[10px] text-limestone-400" dir="ltr">
+            <IconDownload className="h-3.5 w-3.5" />
             amun-design-{choices.seed.replace(/[^a-zA-Z0-9_-]+/g, '-').slice(0, 24) || 'mission'}.json
           </div>
         </Modal>
@@ -374,7 +376,7 @@ function ImportModal({
             {lang === 'ar' ? 'إلغاء' : 'Cancel'}
           </button>
           <button type="button" onClick={submit} disabled={!text.trim()} className="btn-primary text-xs">
-            <Upload className="h-3.5 w-3.5" aria-hidden="true" />
+            <IconUpload className="h-3.5 w-3.5" />
             {lang === 'ar' ? 'استورد وراجع' : 'Import & review'}
           </button>
         </>
@@ -394,10 +396,10 @@ function ImportModal({
           setText(await file.text());
           setError(null);
         }}
-        className="field file:me-3 file:rounded-lg file:border-0 file:bg-royal-500/20 file:px-2 file:py-1 file:text-[11px] file:font-bold file:text-royal-200"
+        className="field file:me-3 file:rounded-data file:border-0 file:bg-royal-500/20 file:px-2 file:py-1 file:text-[11px] file:font-bold file:text-royal-200"
       />
       {fileName ? (
-        <p className="mt-1.5 font-latin text-[10px] text-slate-500" dir="ltr">
+        <p className="mt-1.5 font-latin text-[10px] text-limestone-400" dir="ltr">
           {fileName}
         </p>
       ) : null}
@@ -421,7 +423,7 @@ function ImportModal({
 
       {error ? (
         <InlineNote tone="danger" className="mt-3">
-          <AlertTriangle className="me-1 inline h-3.5 w-3.5" aria-hidden="true" />
+          <IconAlert className="me-1 inline h-3.5 w-3.5" />
           {error}
         </InlineNote>
       ) : (

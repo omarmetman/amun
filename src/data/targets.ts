@@ -224,8 +224,8 @@ export const TARGETS: MissionTarget[] = [
     },
     image: {
       url: '',
-      credit: 'Illustration — AMUN (no NASA library image in snapshot)',
-      title: 'Ryugu — illustrative rendering',
+      credit: 'Illustration: AMUN (no NASA library image in snapshot)',
+      title: 'Ryugu: illustrative rendering',
       illustrative: true,
     },
     captureDvMS: 1000,
@@ -265,7 +265,7 @@ export const TARGETS: MissionTarget[] = [
     image: {
       url: 'https://images-assets.nasa.gov/image/PIA18177/PIA18177~medium.jpg',
       credit: 'NASA',
-      title: 'NEAR Shoemaker at Eros — artist concept',
+      title: 'NEAR Shoemaker at Eros, artist concept',
       nasaId: 'PIA18177',
     },
     captureDvMS: 1300,

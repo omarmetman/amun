@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, ChevronLeft, ChevronRight, Lightbulb, Lock } from 'lucide-react';
 import { STEPS } from '../data/steps';
 import { useLang, useT } from '../i18n';
 import { useMissionStore } from '../store/useMissionStore';
+import { IconBook, IconChevron } from './Icons';
 
 export function StepIntro({
   step,
@@ -22,63 +22,70 @@ export function StepIntro({
   const hint = fullHints ? meta.hint : meta.hintShort;
 
   return (
-    <div className="mb-4">
-      <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
+    <div className="mb-5 border-b border-royal-700 pb-4">
+      <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_230px]">
         <div className="min-w-0">
-          <div className="mb-1 flex items-center gap-2">
-            <span className="eyebrow">{t('الخطوة', 'Step')} <span className="num">{String(step).padStart(2, '0')}</span> / 11</span>
-            <span className="h-px w-8 bg-gold-400/40" aria-hidden="true" />
+          <div className="mb-2 flex items-baseline gap-2 text-xs text-limestone-400">
+            <span>{t('الخطوة', 'Step')}</span>
+            <span className="font-latin tabular-nums text-ochre-400" dir="ltr">
+              {String(step).padStart(2, '0')} / 11
+            </span>
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{lang === 'ar' ? meta.title.ar : meta.title.en}</h1>
-          <p className="mt-1 max-w-2xl text-xs leading-relaxed text-slate-400 sm:text-sm">{lang === 'ar' ? meta.subtitle.ar : meta.subtitle.en}</p>
+          <h1 className="font-display text-[26px] leading-tight text-limestone-50 sm:text-[30px]">
+            {lang === 'ar' ? meta.title.ar : meta.title.en}
+          </h1>
+          <p className="mt-2 text-sm text-limestone-300">
+            {lang === 'ar' ? meta.subtitle.ar : meta.subtitle.en}
+          </p>
         </div>
-        <button type="button" onClick={onLearn} className="btn-ghost !px-3 !py-2 text-[11px]">
-          <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
-          {t('اشرح لي', 'Explain')}
-        </button>
-      </div>
 
-      {noHints ? (
-        <div className="flex items-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[11px] text-slate-500">
-          <Lock className="h-3.5 w-3.5" aria-hidden="true" />
-          {t('وضع الخبير: التلميحات مخفية. القرار لك.', 'Expert mode: hints are disabled. The decision is yours.')}
-        </div>
-      ) : (
-        <div className="rounded-xl border border-royal-400/15 bg-royal-500/[0.045] px-3 py-2.5">
-          <div className="flex items-start gap-2">
-            <Lightbulb className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold-300" aria-hidden="true" />
-            <div className="min-w-0 text-[11px] leading-relaxed text-slate-300">
-              <span className="me-1 font-bold text-gold-200">{t('تلميح', 'Hint')}:</span>
-              {lang === 'ar' ? hint.ar : hint.en}
+        <div className="md:border-s md:border-royal-700 md:ps-4">
+          <div className="flex items-center justify-between gap-2 md:block">
+            <span className="text-[10px] text-limestone-400">{t('ملاحظة الهامش', 'Margin note')}</span>
+            <button type="button" onClick={onLearn} className="inline-flex items-center gap-1.5 text-xs text-limestone-200 underline decoration-royal-400 underline-offset-4 hover:text-limestone-50 md:mt-2">
+              <IconBook className="h-4 w-4" />
+              {t('اشرح لي', 'Explain')}
+            </button>
+          </div>
+          {noHints ? (
+            <p className="mt-2 text-xs leading-relaxed text-limestone-400">
+              {t(
+                'وضع الخبير: التلميحات مخفية. القرار لك.',
+                'Expert mode: hints are hidden. The decision is yours.',
+              )}
+            </p>
+          ) : (
+            <div className="mt-2">
+              <p className="text-xs leading-relaxed text-limestone-200">
+                {lang === 'ar' ? hint.ar : hint.en}
+              </p>
               {!fullHints ? (
-                <span className="ms-1 text-[10px] text-slate-500">({t('مختصر في الوضع العادي', 'shortened on normal')})</span>
+                <p className="mt-1 text-[10px] text-limestone-400">
+                  {t('مختصر في الوضع العادي', 'shortened on normal')}
+                </p>
+              ) : null}
+              {contextHint ? (
+                <div className="mt-2 border-t border-royal-700 pt-2 text-xs leading-relaxed text-limestone-300">
+                  {contextHint}
+                </div>
               ) : null}
             </div>
-          </div>
-          {contextHint ? <div className="mt-2 border-t border-white/[0.07] pt-2 text-[11px] leading-relaxed text-slate-300">{contextHint}</div> : null}
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
-const NextIcon = () => {
-  const lang = useLang();
-  return lang === 'ar' ? <ChevronLeft className="h-4 w-4" aria-hidden="true" /> : <ChevronRight className="h-4 w-4" aria-hidden="true" />;
-};
-
-const BackIcon = () => {
-  const lang = useLang();
-  return lang === 'ar' ? <ChevronRight className="h-4 w-4" aria-hidden="true" /> : <ChevronLeft className="h-4 w-4" aria-hidden="true" />;
-};
-
 export function StepNav({ step }: { step: number }) {
   const t = useT();
+  const lang = useLang();
   const setStep = useMissionStore((state) => state.setStep);
   const next = STEPS[step] ?? null;
+  const nextChevron = lang === 'ar' ? 'start' : 'end';
 
   return (
-    <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.07] pt-4">
+    <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-royal-700 pt-4">
       <button
         type="button"
         onClick={() => {
@@ -88,15 +95,16 @@ export function StepNav({ step }: { step: number }) {
         disabled={step <= 1}
         className="btn-ghost text-xs"
       >
-        <BackIcon />
+        <IconChevron dir={lang === 'ar' ? 'end' : 'start'} className="h-4 w-4" />
         {t('السابق', 'Back')}
       </button>
-      <div className="flex items-center gap-2">
-        <span className="hidden items-center gap-1 text-[10px] font-semibold text-slate-500 sm:flex">
-          {t('الخطوة التالية', 'Next')}
-          <ArrowLeft className="h-3 w-3 opacity-0" aria-hidden="true" />
-          <span className="text-slate-400">{next ? t(next.short.ar, next.short.en) : ''}</span>
-        </span>
+      <div className="flex items-center gap-3">
+        {next ? (
+          <span className="hidden text-[11px] text-limestone-400 sm:inline">
+            {t('التالي', 'Next')}
+            <span className="ms-1 text-limestone-200">{t(next.short.ar, next.short.en)}</span>
+          </span>
+        ) : null}
         {next ? (
           <button
             type="button"
@@ -107,7 +115,7 @@ export function StepNav({ step }: { step: number }) {
             className="btn-primary text-xs"
           >
             {t('متابعة', 'Continue')}
-            <NextIcon />
+            <IconChevron dir={nextChevron} className="h-4 w-4" />
           </button>
         ) : (
           <button
@@ -118,7 +126,6 @@ export function StepNav({ step }: { step: number }) {
             }}
             className="btn-secondary text-xs"
           >
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
             {t('العودة للبداية', 'Back to start')}
           </button>
         )}
@@ -133,22 +140,22 @@ export function Section({
   action,
   children,
   className = '',
+  id,
 }: {
   title: ReactNode;
   description?: ReactNode;
   action?: ReactNode;
   children: ReactNode;
   className?: string;
+  id?: string;
 }) {
   return (
-    <section className={`card card-pad ${className}`}>
-      <div className="section-head">
-        <div className="min-w-0">
-          <h2 className="card-title">{title}</h2>
-          {description ? <p className="mt-1 text-[11px] leading-relaxed text-slate-400">{description}</p> : null}
-        </div>
+    <section id={id} className={`border-t border-royal-700 pt-3 ${className}`}>
+      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="font-display text-lg leading-tight text-limestone-50">{title}</h2>
         {action}
       </div>
+      {description ? <p className="margin-note mb-3">{description}</p> : null}
       {children}
     </section>
   );

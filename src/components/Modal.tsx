@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react';
-import { X } from 'lucide-react';
 import { useT } from '../i18n';
+import { IconCross } from './Icons';
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -76,7 +76,7 @@ export function Modal({
       <button
         type="button"
         aria-label={t('إغلاق', 'Close')}
-        className="absolute inset-0 bg-void-950/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-lapis-950/80"
         onClick={onClose}
       />
       <div
@@ -84,19 +84,23 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-void-900/95 shadow-2xl ${extraWide ? 'max-w-4xl' : wide ? 'max-w-2xl' : 'max-w-md'}`}
+        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-window border border-royal-600 bg-lapis-900 ${
+          extraWide ? 'max-w-4xl' : wide ? 'max-w-2xl' : 'max-w-md'
+        }`}
       >
-        <div className="flex items-start justify-between gap-3 border-b border-white/[0.08] px-5 py-4">
+        <div className="flex items-start justify-between gap-3 border-b border-royal-700 px-5 py-4">
           <div>
-            <h2 className="text-base font-bold text-white">{title}</h2>
-            {description ? <p className="mt-1 text-[11px] leading-relaxed text-slate-400">{description}</p> : null}
+            <h2 className="font-display text-base text-limestone-50">{title}</h2>
+            {description ? <p className="mt-1 text-xs leading-relaxed text-limestone-400">{description}</p> : null}
           </div>
-          <button type="button" onClick={onClose} className="btn-icon !h-8 !w-8" aria-label={t('إغلاق', 'Close')}>
-            <X className="h-4 w-4" aria-hidden="true" />
+          <button type="button" onClick={onClose} className="btn-icon" aria-label={t('إغلاق', 'Close')}>
+            <IconCross className="h-4 w-4" />
           </button>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">{children}</div>
-        {footer ? <div className="flex flex-wrap items-center justify-end gap-2 border-t border-white/[0.08] px-5 py-3">{footer}</div> : null}
+        {footer ? (
+          <div className="flex flex-wrap items-center justify-end gap-2 border-t border-royal-700 px-5 py-3">{footer}</div>
+        ) : null}
       </div>
     </div>
   );

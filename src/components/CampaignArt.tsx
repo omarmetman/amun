@@ -1,24 +1,10 @@
-import { useId } from 'react';
-import { Flame, Gem, Moon, Orbit, Package, Star, Sun } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 import type { CampaignAccent, CampaignChapter } from '../data/types';
-
-export const CAMPAIGN_ICONS: Record<string, LucideIcon> = {
-  Moon,
-  Orbit,
-  Package,
-  Flame,
-  Sun,
-  Gem,
-};
 
 export interface AccentStyle {
   border: string;
   bg: string;
   text: string;
   soft: string;
-  gradient: string;
-  ring: string;
   dot: string;
   hex: string;
 }
@@ -26,66 +12,99 @@ export interface AccentStyle {
 /** Static class strings so Tailwind can see every accent at build time. */
 export const CAMPAIGN_ACCENTS: Record<CampaignAccent, AccentStyle> = {
   gold: {
-    border: 'border-gold-400/35',
-    bg: 'bg-gold-400/10',
-    text: 'text-gold-200',
-    soft: 'bg-gold-400/[0.055]',
-    gradient: 'from-gold-400/[0.16] via-gold-400/[0.04] to-transparent',
-    ring: 'ring-gold-400/25',
-    dot: 'bg-gold-400',
-    hex: '#e8b949',
+    border: 'border-ochre-400/60',
+    bg: 'bg-ochre-400/10',
+    text: 'text-ochre-200',
+    soft: 'bg-royal-700/20',
+    dot: 'bg-ochre-400',
+    hex: '#E3A92F',
   },
   royal: {
-    border: 'border-royal-400/35',
-    bg: 'bg-royal-500/10',
-    text: 'text-royal-200',
-    soft: 'bg-royal-500/[0.055]',
-    gradient: 'from-royal-500/[0.16] via-royal-500/[0.04] to-transparent',
-    ring: 'ring-royal-400/25',
-    dot: 'bg-royal-400',
-    hex: '#6b93ff',
+    border: 'border-royal-400/60',
+    bg: 'bg-royal-700/30',
+    text: 'text-limestone-100',
+    soft: 'bg-royal-700/25',
+    dot: 'bg-royal-300',
+    hex: '#6F8FD8',
   },
   good: {
-    border: 'border-good/35',
-    bg: 'bg-good/10',
-    text: 'text-good',
-    soft: 'bg-good/[0.055]',
-    gradient: 'from-good/[0.15] via-good/[0.035] to-transparent',
-    ring: 'ring-good/25',
-    dot: 'bg-good',
-    hex: '#38d6a4',
+    border: 'border-malachite/50',
+    bg: 'bg-malachite/10',
+    text: 'text-malachite',
+    soft: 'bg-royal-700/20',
+    dot: 'bg-malachite',
+    hex: '#3FA878',
   },
   danger: {
-    border: 'border-danger/35',
-    bg: 'bg-danger/10',
-    text: 'text-danger',
-    soft: 'bg-danger/[0.055]',
-    gradient: 'from-danger/[0.14] via-danger/[0.035] to-transparent',
-    ring: 'ring-danger/25',
-    dot: 'bg-danger',
-    hex: '#ff5d6c',
+    border: 'border-carnelian/50',
+    bg: 'bg-carnelian/10',
+    text: 'text-carnelian-300',
+    soft: 'bg-royal-700/20',
+    dot: 'bg-carnelian',
+    hex: '#D8452F',
   },
   violet: {
-    border: 'border-violet-400/35',
-    bg: 'bg-violet-500/10',
-    text: 'text-violet-200',
-    soft: 'bg-violet-500/[0.055]',
-    gradient: 'from-violet-500/[0.16] via-violet-500/[0.04] to-transparent',
-    ring: 'ring-violet-400/25',
-    dot: 'bg-violet-400',
-    hex: '#a78bfa',
+    border: 'border-limestone-400/50',
+    bg: 'bg-royal-700/20',
+    text: 'text-limestone-200',
+    soft: 'bg-royal-700/20',
+    dot: 'bg-limestone-300',
+    hex: '#BDB39C',
   },
   cyan: {
-    border: 'border-cyan-400/35',
-    bg: 'bg-cyan-500/10',
-    text: 'text-cyan-200',
-    soft: 'bg-cyan-500/[0.055]',
-    gradient: 'from-cyan-500/[0.16] via-cyan-500/[0.04] to-transparent',
-    ring: 'ring-cyan-400/25',
-    dot: 'bg-cyan-400',
-    hex: '#22d3ee',
+    border: 'border-royal-300/50',
+    bg: 'bg-royal-700/25',
+    text: 'text-royal-300',
+    soft: 'bg-royal-700/20',
+    dot: 'bg-royal-300',
+    hex: '#9FB6E8',
   },
 };
+
+/** Drawn chapter marks: crescent, orbit, sample, flame, sun, crystal. */
+function ChapterGlyph({ name, className = '' }: { name: string; className?: string }) {
+  const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.75, strokeLinecap: 'square' as const };
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      {name === 'Moon' ? (
+        <g {...common}>
+          <path d="M16 4a9 9 0 1 0 4 14A9.5 9.5 0 0 1 16 4Z" />
+          <circle cx="10" cy="10" r="1.4" />
+        </g>
+      ) : null}
+      {name === 'Orbit' ? (
+        <g {...common}>
+          <circle cx="12" cy="12" r="3" />
+          <ellipse cx="12" cy="12" rx="9" ry="4.5" transform="rotate(-28 12 12)" />
+          <circle cx="18.5" cy="7" r="1.2" fill="currentColor" stroke="none" />
+        </g>
+      ) : null}
+      {name === 'Package' ? (
+        <g {...common}>
+          <path d="M4 8l8-4 8 4v8l-8 4-8-4Z" />
+          <path d="M4 8l8 4 8-4M12 12v8" />
+        </g>
+      ) : null}
+      {name === 'Flame' ? (
+        <g {...common}>
+          <path d="M12 21c3.5 0 6-2.3 6-5.5 0-3-2-4.8-3.4-7.3-1 1.7-2 2.4-2.6 3.7C11 9 10.2 7 9.2 5 8 6.8 6 9.5 6 13.5 6 18 8.5 21 12 21Z" />
+        </g>
+      ) : null}
+      {name === 'Sun' ? (
+        <g {...common}>
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8" />
+        </g>
+      ) : null}
+      {name === 'Gem' ? (
+        <g {...common}>
+          <path d="M7 3h10l4 6-9 12L3 9Z" />
+          <path d="M3 9h18M9 3l-1 6 4 12 4-12-1-6" />
+        </g>
+      ) : null}
+    </svg>
+  );
+}
 
 export function ChapterPatch({
   chapter,
@@ -97,20 +116,32 @@ export function ChapterPatch({
   className?: string;
 }) {
   const accent = CAMPAIGN_ACCENTS[chapter.accent];
-  const Icon = CAMPAIGN_ICONS[chapter.icon] ?? Orbit;
-  const box = size === 'lg' ? 'h-20 w-20 rounded-[1.6rem]' : size === 'sm' ? 'h-11 w-11 rounded-xl' : 'h-14 w-14 rounded-2xl';
+  const box =
+    size === 'lg' ? 'h-16 w-16' : size === 'sm' ? 'h-10 w-10' : 'h-12 w-12';
   const icon = size === 'lg' ? 'h-8 w-8' : size === 'sm' ? 'h-4 w-4' : 'h-5 w-5';
   return (
     <div
-      className={`relative flex shrink-0 items-center justify-center border ${accent.border} ${accent.bg} ${box} ${className}`}
+      className={`relative flex shrink-0 items-center justify-center rounded-data border ${accent.border} ${accent.bg} ${box} ${className}`}
       aria-hidden="true"
     >
-      <div className={`absolute inset-1.5 rounded-[inherit] border border-current opacity-[0.16] ${accent.text}`} />
-      <Icon className={`relative ${icon} ${accent.text}`} />
-      <span className="absolute -bottom-1.5 -end-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border border-white/15 bg-void-950 px-1 font-latin text-[9px] font-black text-white">
+      <ChapterGlyph name={chapter.icon} className={`${icon} ${accent.text}`} />
+      <span className="absolute -bottom-1.5 -end-1.5 bg-lapis-900 px-1 font-latin text-[10px] tabular-nums text-limestone-200">
         {String(chapter.number).padStart(2, '0')}
       </span>
     </div>
+  );
+}
+
+function RatingStar({ filled, className = '' }: { filled: boolean; className?: string }) {
+  return (
+    <svg viewBox="0 0 12 12" className={className} aria-hidden="true">
+      <path
+        d="M6 0l1.6 4.4L12 6 7.6 7.6 6 12 4.4 7.6 0 6l4.4-1.6Z"
+        fill={filled ? '#E3A92F' : 'none'}
+        stroke={filled ? '#E3A92F' : '#948C79'}
+        strokeWidth="1"
+      />
+    </svg>
   );
 }
 
@@ -123,60 +154,13 @@ export function CampaignStarRating({
   size?: 'sm' | 'md' | 'lg';
   label?: string;
 }) {
-  const dims = size === 'lg' ? 'h-5 w-5' : size === 'sm' ? 'h-3 w-3' : 'h-3.5 w-3.5';
+  const dims = size === 'lg' ? 'h-5 w-5' : size === 'sm' ? 'h-2.5 w-2.5' : 'h-3 w-3';
   return (
-    <span
-      className="inline-flex items-center gap-0.5"
-      role="img"
-      aria-label={label ?? `${stars} / 3`}
-    >
+    <span className="inline-flex items-center gap-1" role="img" aria-label={label ?? `${stars} / 3`}>
       {[0, 1, 2].map((index) => (
-        <Star
-          key={index}
-          className={`${dims} ${index < stars ? 'fill-gold-300 text-gold-300' : 'text-slate-700'}`}
-          aria-hidden="true"
-        />
+        <RatingStar key={index} filled={index < stars} className={dims} />
       ))}
     </span>
   );
 }
 
-export function SignalRings({ className = '' }: { className?: string }) {
-  const id = useId().replace(/:/g, '');
-  return (
-    <svg viewBox="0 0 260 260" className={className} aria-hidden="true">
-      <defs>
-        <radialGradient id={`signal-core-${id}`} cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#e8b949" stopOpacity="0.55" />
-          <stop offset="45%" stopColor="#4f7cff" stopOpacity="0.22" />
-          <stop offset="100%" stopColor="#4f7cff" stopOpacity="0" />
-        </radialGradient>
-        <linearGradient id={`signal-line-${id}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#93b4ff" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#e8b949" stopOpacity="0.08" />
-        </linearGradient>
-      </defs>
-      <circle cx="130" cy="130" r="74" fill={`url(#signal-core-${id})`} />
-      <circle cx="130" cy="130" r="30" fill="#050814" stroke={`url(#signal-line-${id})`} strokeWidth="1.2" />
-      <circle cx="130" cy="130" r="7" fill="#e8b949" />
-      {[56, 84, 112].map((radius, index) => (
-        <circle
-          key={radius}
-          cx="130"
-          cy="130"
-          r={radius}
-          fill="none"
-          stroke={index === 1 ? '#e8b949' : '#6b93ff'}
-          strokeOpacity={0.2 - index * 0.04}
-          strokeWidth="1"
-          strokeDasharray={index === 2 ? '2 8' : undefined}
-        />
-      ))}
-      <circle className="campaign-signal-pulse" cx="130" cy="130" r="56" fill="none" stroke="#e8b949" strokeOpacity="0.28" />
-      <ellipse cx="130" cy="130" rx="112" ry="49" fill="none" stroke="#93b4ff" strokeOpacity="0.16" transform="rotate(-22 130 130)" />
-      <circle cx="204" cy="83" r="3.2" fill="#e8b949" />
-      <circle cx="53" cy="171" r="2.3" fill="#93b4ff" />
-      <circle cx="196" cy="190" r="2" fill="#ffffff" opacity="0.5" />
-    </svg>
-  );
-}

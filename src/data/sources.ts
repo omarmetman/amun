@@ -8,7 +8,7 @@ import type { SourceDef, SourceKey } from './types';
 export const SOURCES: Record<SourceKey, SourceDef> = {
   horizons: {
     key: 'horizons',
-    name: { ar: 'JPL Horizons — نظام البيانات الفلكية', en: 'JPL Horizons — Solar System Dynamics' },
+    name: { ar: 'JPL Horizons: نظام البيانات الفلكية', en: 'JPL Horizons: Solar System Dynamics' },
     publisher: 'NASA/JPL-Caltech',
     url: 'https://ssd.jpl.nasa.gov/api/horizons.api',
     note: {
@@ -78,7 +78,7 @@ export const SOURCES: Record<SourceKey, SourceDef> = {
   },
   launchApprox: {
     key: 'launchApprox',
-    name: { ar: 'بيانات إطلاق منشورة — تقريبية', en: 'Published launch data — approximate' },
+    name: { ar: 'بيانات إطلاق منشورة، تقريبية', en: 'Published launch data, approximate' },
     publisher: 'NASA / launch providers',
     url: 'https://www.nasa.gov/nasa-missions/',
     note: {

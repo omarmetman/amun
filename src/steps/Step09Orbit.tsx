@@ -1,4 +1,3 @@
-import { CalendarDays, Check, Compass, Orbit, Route, TriangleAlert } from 'lucide-react';
 import type { TransferType } from '../data/types';
 import { useL, useT } from '../i18n';
 import { fmt, fmtDate, fmtPct, marginTone } from '../lib/format';
@@ -6,7 +5,8 @@ import { useDesign } from '../store/useDesign';
 import { useMissionStore } from '../store/useMissionStore';
 import { DataSourceBadges, FormulaBadge, GameBadge, SimplifiedNote, StatusPill } from '../components/Badges';
 import { Section } from '../components/StepShell';
-import { Bar, InlineNote, Stat } from '../components/StepBits';
+import { Bar, InlineNote, SpecTable, Stat } from '../components/StepBits';
+import { IconAlert, IconCalendar, IconCompass, IconFlyby, IconOrbit, IconRoute } from '../components/Icons';
 
 const TRANSFERS: Array<{
   id: TransferType;
@@ -15,6 +15,7 @@ const TRANSFERS: Array<{
   c3: string;
   time: string;
   dv: string;
+  icon: typeof IconRoute;
 }> = [
   {
     id: 'hohmann',
@@ -26,6 +27,7 @@ const TRANSFERS: Array<{
     c3: '×1.00',
     time: '×1.00',
     dv: '×1.00',
+    icon: IconRoute,
   },
   {
     id: 'fast',
@@ -37,6 +39,7 @@ const TRANSFERS: Array<{
     c3: '×1.90',
     time: '×0.72',
     dv: '×1.15',
+    icon: IconFlyby,
   },
   {
     id: 'assist',
@@ -48,6 +51,7 @@ const TRANSFERS: Array<{
     c3: '×0.55',
     time: '×1.45',
     dv: '×1.02',
+    icon: IconCompass,
   },
 ];
 
@@ -70,23 +74,38 @@ export function Step09Orbit() {
   const tone = marginTone(orbit.dvMargin);
   const activeWindowId = design.choices.launchWindowId;
 
+  const transferOptions = TRANSFERS.map((transfer) => {
+    const Icon = transfer.icon;
+    return {
+      id: transfer.id,
+      title: l(transfer.name),
+      icon: <Icon className="h-4 w-4" />,
+      note: l(transfer.detail),
+      cells: {
+        c3: `C₃ ${transfer.c3}`,
+        time: `${t('زمن', 'time')} ${transfer.time}`,
+        dv: `Δv ${transfer.dv}`,
+      },
+    };
+  });
+
   return (
-    <div className="space-y-4">
-      <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="space-y-5">
+      <div className="grid grid-cols-2 gap-x-5 sm:grid-cols-4">
         <Stat
           label={t('طاقة الإطلاق', 'Launch energy')}
-          value={<>{fmt(orbit.c3, 2)} <span className="text-[10px]">km²/s²</span></>}
+          value={<>{fmt(orbit.c3, 2)} <span className="text-[11px]">km²/s²</span></>}
           hint={t('C₃ يحدد الحمولة المتاحة', 'C₃ sets available payload')}
           tone="royal"
         />
         <Stat
           label={t('مدة الرحلة', 'Transfer time')}
-          value={<>{fmt(orbit.transferDays, 0)} <span className="text-[10px]">{t('يوم', 'days')}</span></>}
+          value={<>{fmt(orbit.transferDays, 0)} <span className="text-[11px]">{t('يوم', 'days')}</span></>}
           hint={`${fmt(orbit.transferYears, 2)} ${t('سنة', 'years')}`}
         />
         <Stat
           label={t('دلتا-في المطلوبة', 'Required Δv')}
-          value={<>{fmt(orbit.requiredDvMS)} <span className="text-[10px]">m/s</span></>}
+          value={<>{fmt(orbit.requiredDvMS)} <span className="text-[11px]">m/s</span></>}
           hint={t('الالتقاط والتصحيح والمستوى', 'Capture, correction and plane')}
         />
         <Stat
@@ -105,80 +124,72 @@ export function Step09Orbit() {
         )}
         action={<GameBadge />}
       >
-        <div className="grid gap-2 md:grid-cols-3">
-          {TRANSFERS.map((transfer) => {
-            const active = design.choices.transferType === transfer.id;
-            return (
-              <button
-                key={transfer.id}
-                type="button"
-                onClick={() => setChoice('transferType', transfer.id)}
-                aria-pressed={active}
-                className={`selectable p-3.5 text-start ${active ? 'selectable-on' : ''}`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${active ? 'bg-gold-400/15 text-gold-300' : 'bg-white/[0.05] text-slate-400'}`}>
-                    {transfer.id === 'assist' ? <Compass className="h-4 w-4" aria-hidden="true" /> : <Route className="h-4 w-4" aria-hidden="true" />}
-                  </span>
-                  {active ? <Check className="h-4 w-4 text-gold-300" aria-hidden="true" /> : null}
-                </div>
-                <div className="mt-2 text-sm font-bold text-white">{l(transfer.name)}</div>
-                <p className="mt-1 min-h-[3rem] text-[10px] leading-relaxed text-slate-400">{l(transfer.detail)}</p>
-                <div className="mt-2 flex flex-wrap gap-1">
-                  <span className="chip !px-1.5 !py-0.5 !text-[9px]">C₃ {transfer.c3}</span>
-                  <span className="chip !px-1.5 !py-0.5 !text-[9px]">{t('زمن', 'time')} {transfer.time}</span>
-                  <span className="chip !px-1.5 !py-0.5 !text-[9px]">Δv {transfer.dv}</span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
+        <SpecTable
+          label={t('المسار', 'Transfer')}
+          columns={[
+            { key: 'c3', label: 'C₃' },
+            { key: 'time', label: t('الزمن', 'Time') },
+            { key: 'dv', label: 'Δv' },
+          ]}
+          options={transferOptions}
+          selectedId={design.choices.transferType}
+          onSelect={(id) => setChoice('transferType', id as TransferType)}
+        />
       </Section>
 
-      <div className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+      <div className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
         <Section
           title={t('ميزانية دلتا-في', 'Δv budget')}
           description={t('المتاح من الوقود المحمّل يجب أن يغطي كل بنود المهمة مع هامش.', 'Available propellant must cover every mission term with margin.')}
           action={<FormulaBadge label="Δv_req = Σ Δv_terms" />}
         >
-          <div className="space-y-1.5">
+          <div>
             {BREAKDOWN.map((term) => {
               const value = orbit.breakdown[term.key];
               if (value <= 0) return null;
               return (
-                <div key={term.key}>
-                  <div className="mb-0.5 flex items-center justify-between gap-2">
-                    <span className="text-[10px] text-slate-400">{t(term.ar, term.en)}</span>
-                    <span className="num text-[10px] font-bold text-slate-200">{fmt(value)} m/s</span>
+                <div key={term.key} className="border-b border-royal-700 py-1.5 last:border-b-0">
+                  <div className="mb-1 flex items-baseline justify-between gap-3">
+                    <span className="text-xs text-limestone-300">{t(term.ar, term.en)}</span>
+                    <span className="font-latin text-xs tabular-nums text-limestone-100" dir="ltr">{fmt(value)} m/s</span>
                   </div>
-                  <Bar ratio={value / total} tone="royal" className="h-1.5" />
+                  <Bar ratio={value / total} tone="royal" className="h-1" />
                 </div>
               );
             })}
-            <div className="mt-2 flex items-center justify-between border-t border-white/[0.08] pt-2">
-              <span className="text-[11px] font-bold text-white">{t('المجموع المطلوب', 'Total required')}</span>
-              <span className="num text-[11px] font-bold text-gold-200">{fmt(orbit.requiredDvMS)} m/s</span>
+          </div>
+          <div className="mt-2 border-t border-royal-700 pt-2">
+            <div className="flex items-baseline justify-between gap-3 border-b border-royal-700 py-1.5">
+              <span className="text-sm text-limestone-50">{t('المجموع المطلوب', 'Total required')}</span>
+              <span className="font-latin text-sm tabular-nums text-ochre-300" dir="ltr">{fmt(orbit.requiredDvMS)} m/s</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] text-slate-400">{t('المتاح من الوقود', 'Available from propellant')}</span>
-              <span className={`num text-[11px] font-bold ${orbit.dvMargin < 0 ? 'text-danger' : 'text-good'}`}>{fmt(orbit.availableDvMS)} m/s</span>
+            <div className="flex items-baseline justify-between gap-3 py-1.5">
+              <span className="text-xs text-limestone-300">{t('المتاح من الوقود', 'Available from propellant')}</span>
+              <span className={`font-latin text-xs tabular-nums ${orbit.dvMargin < 0 ? 'text-carnelian-300' : 'text-malachite'}`} dir="ltr">
+                {fmt(orbit.availableDvMS)} m/s
+              </span>
             </div>
           </div>
           <div className="mt-3">
-            <div className="mb-1 flex items-center justify-between text-[10px]">
-              <span className="text-slate-500">{t('تغطية المتطلبات', 'Requirement coverage')}</span>
-              <span className={`num font-bold ${orbit.dvMargin < 0 ? 'text-danger' : 'text-good'}`}>{fmtPct(orbit.availableDvMS / Math.max(1, orbit.requiredDvMS))}</span>
+            <div className="mb-1 flex items-baseline justify-between gap-2 text-[11px]">
+              <span className="text-limestone-400">{t('تغطية المتطلبات', 'Requirement coverage')}</span>
+              <span className={`font-latin tabular-nums ${orbit.dvMargin < 0 ? 'text-carnelian-300' : 'text-malachite'}`} dir="ltr">
+                {fmtPct(orbit.availableDvMS / Math.max(1, orbit.requiredDvMS))}
+              </span>
             </div>
             <Bar
               ratio={orbit.availableDvMS / Math.max(1, orbit.requiredDvMS)}
               tone={orbit.dvMargin < 0 ? 'danger' : orbit.dvMargin < 0.1 ? 'warn' : 'good'}
-              className="h-3"
+              className="h-2.5"
             />
           </div>
           {orbit.dvMargin < 0 ? (
             <InlineNote tone="danger" className="mt-3">
-              <TriangleAlert className="me-1 inline h-3.5 w-3.5" aria-hidden="true" />
-              {t('الوقود المتاح أقل من المطلوب. زد احتياطي الوقود أو اختر مسارًا أقل استهلاكًا.', 'Available propellant is below requirement. Add propellant reserve or choose a cheaper trajectory.')}
+              <IconAlert className="me-1 inline h-3.5 w-3.5" />
+              {t(
+                'الوقود المتاح أقل من المطلوب. زد احتياطي الوقود أو اختر مسارًا أقل استهلاكًا.',
+                'Available propellant is below requirement. Add propellant reserve or choose a cheaper trajectory.',
+              )}
             </InlineNote>
           ) : (
             <InlineNote tone={orbit.dvMargin < 0.1 ? 'warn' : 'good'} className="mt-3">
@@ -187,7 +198,7 @@ export function Step09Orbit() {
                 : t('المتاح يغطي المطلوب مع هامش لتصحيح المسار.', 'Available Δv covers the requirement with correction margin.')}
             </InlineNote>
           )}
-          <div className="mt-3 rounded-xl border border-white/[0.07] bg-void-900/40 p-3 text-[10px] leading-relaxed text-slate-400">
+          <div className="mt-3 border-s-2 border-royal-400 py-1 ps-3 text-xs leading-relaxed text-limestone-300">
             {t(
               `نوع المهمة «${design.missionType.name.ar}» ${design.missionType.requiresCapture ? 'يتطلب التقاطًا مداريًا' : 'لا يتطلب التقاطًا'}${design.missionType.requiresLanding ? ' وهبوطًا' : ''}${design.missionType.requiresSampleReturn ? ' وإرجاع عينة' : ''}.`,
               `The ${design.missionType.name.en} mission ${design.missionType.requiresCapture ? 'requires orbital capture' : 'does not require capture'}${design.missionType.requiresLanding ? ' and landing' : ''}${design.missionType.requiresSampleReturn ? ' and sample return' : ''}.`,
@@ -195,25 +206,35 @@ export function Step09Orbit() {
           </div>
         </Section>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           <Section
             title={t('نافذة الإطلاق', 'Launch window')}
-            description={t('النوافذ تقريبية من الدور التزامني. النافذة الأولى عادة أقل عقوبة.', 'Windows are approximated from the synodic period. The first usually carries the lowest penalty.')}
-            action={<CalendarDays className="h-4 w-4 text-royal-300" aria-hidden="true" />}
+            description={t(
+              'النوافذ تقريبية من الدور التزامني. النافذة الأولى عادة أقل عقوبة.',
+              'Windows are approximated from the synodic period. The first usually carries the lowest penalty.',
+            )}
+            action={<IconCalendar className="h-5 w-5 text-royal-300" />}
           >
             <button
               type="button"
               onClick={() => setChoice('launchWindowId', 'auto')}
               aria-pressed={activeWindowId === 'auto'}
-              className={`mb-2 flex w-full items-center justify-between rounded-xl border px-3 py-2 text-start transition ${activeWindowId === 'auto' ? 'border-gold-400/60 bg-gold-400/[0.08]' : 'border-white/10 bg-white/[0.03] hover:border-white/25'}`}
+              className={`selectable mb-2 flex w-full items-baseline justify-between gap-3 px-3 py-2 text-start ${
+                activeWindowId === 'auto' ? 'selectable-on' : ''
+              }`}
             >
-              <span>
-                <span className="block text-[11px] font-bold text-white">{t('تلقائي — أفضل نافذة', 'Automatic — best window')}</span>
-                <span className="block text-[9px] text-slate-500">{t('يختار النافذة الأولى المتاحة', 'Selects the first available window')}</span>
+              <span className="min-w-0">
+                <span className="block text-sm text-limestone-50">{t('تلقائي، أفضل نافذة', 'Automatic, best window')}</span>
+                <span className="block text-[11px] text-limestone-400">
+                  {t('يختار النافذة الأولى المتاحة', 'Selects the first available window')}
+                </span>
               </span>
-              {activeWindowId === 'auto' ? <Check className="h-4 w-4 text-gold-300" aria-hidden="true" /> : null}
+              {activeWindowId === 'auto' ? (
+                <span className="shrink-0 text-[11px] text-ochre-300">{t('مختار', 'Selected')}</span>
+              ) : null}
             </button>
-            <div className="space-y-1.5">
+
+            <div>
               {design.windowOptions.map((window, index) => {
                 const active = activeWindowId === window.id || (activeWindowId === 'auto' && index === 0);
                 return (
@@ -222,35 +243,56 @@ export function Step09Orbit() {
                     type="button"
                     onClick={() => setChoice('launchWindowId', window.id)}
                     aria-pressed={active}
-                    className={`flex w-full items-center justify-between gap-2 rounded-xl border px-3 py-2 text-start transition ${active ? 'border-gold-400/50 bg-gold-400/[0.06]' : 'border-white/[0.07] bg-white/[0.02] hover:border-white/20'}`}
+                    className={`flex w-full items-baseline justify-between gap-3 border-t border-royal-700 px-3 py-2 text-start transition-colors hover:bg-royal-700/20 ${
+                      active ? 'bg-royal-700/40' : ''
+                    }`}
+                    style={active ? { boxShadow: 'inset 0 0 0 1px #E3A92F' } : undefined}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-[10px] font-bold text-slate-200">{fmtDate(window.dateISO, design.choices.language)}</span>
-                      <span className="block text-[9px] text-slate-500">{l(window.label)}</span>
+                      <span className="block truncate font-latin text-xs tabular-nums text-limestone-100" dir="ltr">
+                        {fmtDate(window.dateISO, design.choices.language)}
+                      </span>
+                      <span className="block text-[11px] text-limestone-400">{l(window.label)}</span>
                     </span>
-                    <span className={`shrink-0 text-[9px] font-bold ${window.penalty > 0.1 ? 'text-warn' : window.penalty > 0 ? 'text-slate-300' : 'text-good'}`}>
+                    <span
+                      className={`shrink-0 font-latin text-[11px] tabular-nums ${
+                        window.penalty > 0.1 ? 'text-amber' : window.penalty > 0 ? 'text-limestone-200' : 'text-malachite'
+                      }`}
+                      dir="ltr"
+                    >
                       {window.penalty === 0 ? t('بلا عقوبة', 'No penalty') : `+${fmtPct(window.penalty, 0)}`}
                     </span>
                   </button>
                 );
               })}
             </div>
-            <div className="mt-2 text-[9px] leading-relaxed text-slate-600">
-              {t('العقوبة ترفع C3 ودلتا-في المطلوبة. التواريخ توضيحية وليست نافذة إطلاق محسوبة رقميًا.', 'Penalty raises C3 and required Δv. Dates are illustrative, not numerically optimised launch opportunities.')}
-            </div>
+            <p className="mt-2 text-[11px] leading-relaxed text-limestone-400">
+              {t(
+                'العقوبة ترفع C3 ودلتا-في المطلوبة. التواريخ توضيحية وليست نافذة إطلاق محسوبة رقميًا.',
+                'Penalty raises C3 and required Δv. Dates are illustrative, not numerically optimised launch opportunities.',
+              )}
+            </p>
           </Section>
 
-          <div className="grid grid-cols-2 gap-2">
-            <Stat label={t('عقوبة النافذة', 'Window penalty')} value={fmtPct(orbit.windowPenalty)} tone={orbit.windowPenalty > 0.1 ? 'warn' : 'default'} />
-            <Stat label={t('حمولة الصاروخ', 'Launcher payload')} value={<>{fmt(design.mass.launcherCapacityKg)} <span className="text-[10px]">kg</span></>} tone={design.mass.massMargin < 0 ? 'danger' : 'good'} />
-            <Stat label={t('الالتقاط', 'Capture')} value={<>{fmt(orbit.breakdown.insertion)} <span className="text-[10px]">m/s</span></>} />
-            <Stat label={t('الهبوط', 'Landing')} value={<>{fmt(orbit.breakdown.landing)} <span className="text-[10px]">m/s</span></>} />
+          <div className="grid grid-cols-2 gap-x-4">
+            <Stat
+              label={t('عقوبة النافذة', 'Window penalty')}
+              value={fmtPct(orbit.windowPenalty)}
+              tone={orbit.windowPenalty > 0.1 ? 'warn' : 'default'}
+            />
+            <Stat
+              label={t('حمولة الصاروخ', 'Launcher payload')}
+              value={<>{fmt(design.mass.launcherCapacityKg)} <span className="text-[11px]">kg</span></>}
+              tone={design.mass.massMargin < 0 ? 'danger' : 'good'}
+            />
+            <Stat label={t('الالتقاط', 'Capture')} value={<>{fmt(orbit.breakdown.insertion)} <span className="text-[11px]">m/s</span></>} />
+            <Stat label={t('الهبوط', 'Landing')} value={<>{fmt(orbit.breakdown.landing)} <span className="text-[11px]">m/s</span></>} />
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-royal-700 pt-3">
             <DataSourceBadges sources={['horizons', 'sbdb', 'basics', 'game']} />
             <StatusPill tone={orbit.dvMargin < 0 ? 'danger' : orbit.dvMargin < 0.1 ? 'warn' : 'good'}>
-              <Orbit className="h-3 w-3" aria-hidden="true" />
+              <IconOrbit className="h-3.5 w-3.5" />
               {orbit.dvMargin < 0 ? t('عجز', 'Deficit') : t('مدار جاهز', 'Orbit ready')}
             </StatusPill>
           </div>

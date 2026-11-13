@@ -1,4 +1,3 @@
-import { Check, Rocket, TriangleAlert } from 'lucide-react';
 import { LAUNCHERS } from '../data/launchers';
 import { payloadCapacityAtC3 } from '../engine/orbit';
 import { useL, useT } from '../i18n';
@@ -7,7 +6,8 @@ import { useDesign } from '../store/useDesign';
 import { useMissionStore } from '../store/useMissionStore';
 import { DataSourceBadges, GameBadge, SimplifiedNote, StatusPill } from '../components/Badges';
 import { Section } from '../components/StepShell';
-import { Bar, InlineNote, Stat } from '../components/StepBits';
+import { Bar, InlineNote, SpecTable, Stat } from '../components/StepBits';
+import { IconRocket } from '../components/Icons';
 
 export function Step04Launch() {
   const design = useDesign();
@@ -19,9 +19,38 @@ export function Step04Launch() {
   const launchShare = design.cost.totalM > 0 ? design.launcher.costM / design.cost.totalM : 0;
   const fitTone = margin < 0 ? 'danger' : margin < 0.1 ? 'warn' : margin > 0.3 ? 'warn' : 'good';
 
+  const launcherOptions = LAUNCHERS.map((launcher) => {
+    const cap = payloadCapacityAtC3(launcher, design.orbit.c3);
+    const difference = cap - design.mass.wetMassKg;
+    const fits = difference >= 0;
+    return {
+      id: launcher.id,
+      title: l(launcher.name),
+      icon: <IconRocket className="h-4 w-4" />,
+      note: (
+        <>
+          <span className="block text-[10px] text-royal-300">{launcher.country}</span>
+          {l(launcher.description)}
+        </>
+      ),
+      cells: {
+        capacity: `${fmt(cap)} kg`,
+        cost: fmtMoney(launcher.costM),
+        reliability: fmtPct(launcher.reliability),
+        fit: (
+          <span className={fits ? 'text-malachite' : 'text-carnelian-300'}>
+            {fits
+              ? t(`فائض ${fmt(difference)}`, `${fmt(difference)} spare`)
+              : t(`عجز ${fmt(Math.abs(difference))}`, `${fmt(Math.abs(difference))} short`)}
+          </span>
+        ),
+      },
+    };
+  });
+
   return (
-    <div className="space-y-4">
-      <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="space-y-5">
+      <div className="grid grid-cols-2 gap-x-4 sm:grid-cols-4">
         <Stat
           label={t('طاقة الإطلاق C₃', 'Launch energy C₃')}
           value={<>{fmt(design.orbit.c3, 2)} <span className="text-[10px]">km²/s²</span></>}
@@ -55,107 +84,77 @@ export function Step04Launch() {
         )}
         action={<GameBadge />}
       >
-        <div className="grid gap-2 md:grid-cols-2">
-          {LAUNCHERS.map((launcher) => {
-            const active = design.choices.launcherId === launcher.id;
-            const cap = payloadCapacityAtC3(launcher, design.orbit.c3);
-            const difference = cap - design.mass.wetMassKg;
-            const fits = difference >= 0;
-            const utilization = cap > 0 ? design.mass.wetMassKg / cap : 2;
-            return (
-              <button
-                key={launcher.id}
-                type="button"
-                onClick={() => setChoice('launcherId', launcher.id)}
-                aria-pressed={active}
-                className={`selectable p-3 text-start ${active ? 'selectable-on' : ''}`}
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex min-w-0 items-center gap-2">
-                    <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-gold-400/15 text-gold-300' : 'bg-white/[0.05] text-slate-400'}`}>
-                      <Rocket className="h-4 w-4" aria-hidden="true" />
-                    </span>
-                    <div className="min-w-0">
-                      <div className="truncate text-xs font-bold text-white">{l(launcher.name)}</div>
-                      <div className="text-[9px] font-semibold text-slate-500">{launcher.country}</div>
-                    </div>
-                  </div>
-                  {active ? (
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-400 text-void-950">
-                      <Check className="h-3 w-3" aria-hidden="true" />
-                    </span>
-                  ) : null}
-                </div>
-
-                <p className="mt-2 min-h-[2.4rem] text-[10px] leading-relaxed text-slate-400">{l(launcher.description)}</p>
-
-                <div className="mt-2 grid grid-cols-2 gap-1.5">
-                  <span className="rounded-lg bg-white/[0.04] px-2 py-1 text-[10px] text-slate-400">
-                    {t('سعة عند C₃', 'Capacity at C₃')}:{' '}
-                    <span className="num font-bold text-slate-200">{fmt(cap)}</span> kg
-                  </span>
-                  <span className="rounded-lg bg-white/[0.04] px-2 py-1 text-[10px] text-slate-400">
-                    {t('الكلفة', 'Cost')}: <span className="num font-bold text-gold-300">{fmtMoney(launcher.costM)}</span>
-                  </span>
-                  <span className="rounded-lg bg-white/[0.04] px-2 py-1 text-[10px] text-slate-400">
-                    {t('موثوقية', 'Reliability')}: <span className="num font-bold text-slate-200">{fmtPct(launcher.reliability)}</span>
-                  </span>
-                  <span className={`rounded-lg px-2 py-1 text-[10px] font-bold ${fits ? 'bg-good/[0.06] text-good' : 'bg-danger/[0.06] text-danger'}`}>
-                    {fits
-                      ? t(`فائض ${fmt(difference)} كغ`, `${fmt(difference)} kg spare`)
-                      : t(`عجز ${fmt(Math.abs(difference))} كغ`, `${fmt(Math.abs(difference))} kg short`)}
-                  </span>
-                </div>
-
-                <div className="mt-2">
-                  <div className="mb-1 flex items-center justify-between text-[9px] text-slate-500">
-                    <span>{t('استخدام السعة', 'Capacity used')}</span>
-                    <span className="num">{fmtPct(utilization)}</span>
-                  </div>
-                  <Bar ratio={utilization} tone={!fits ? 'danger' : utilization > 0.9 ? 'warn' : 'good'} />
-                </div>
-              </button>
-            );
-          })}
-        </div>
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+        <SpecTable
+          label={t('الصاروخ', 'Launcher')}
+          columns={[
+            { key: 'capacity', label: t('السعة', 'Capacity') },
+            { key: 'cost', label: t('الكلفة', 'Cost') },
+            { key: 'reliability', label: t('الموثوقية', 'Reliability') },
+            { key: 'fit', label: t('الهامش', 'Fit'), numeric: false },
+          ]}
+          options={launcherOptions}
+          selectedId={design.choices.launcherId}
+          onSelect={(id) => {
+            const launcher = LAUNCHERS.find((entry) => entry.id === id);
+            if (launcher) setChoice('launcherId', launcher.id);
+          }}
+        />
+        <div className="mt-3 flex flex-wrap items-baseline justify-between gap-2 border-t border-royal-700 pt-2">
           <DataSourceBadges sources={['launchApprox', 'game']} />
-          <span className="text-[10px] text-slate-500">
+          <span className="text-[10px] text-limestone-400">
             {t('الجداول تقريبية ومُستوفاة بين نقاط C₃ المنشورة.', 'Tables are approximate and linearly interpolated between published C₃ points.')}
           </span>
         </div>
       </Section>
 
-      <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
-        <Section title={t('ملاءمة الصاروخ', 'Launcher fit')} action={<StatusPill tone={margin < 0 ? 'danger' : margin < 0.1 ? 'warn' : 'good'}>{margin < 0 ? t('لا يتسع', 'Does not fit') : t('يتسع', 'Fits')}</StatusPill>}>
-          <div className="space-y-2">
-            <div>
-              <div className="mb-1 flex items-center justify-between text-[10px]">
-                <span className="text-slate-500">{t('الكتلة الرطبة مقابل السعة', 'Wet mass vs capacity')}</span>
-                <span className="num text-slate-300">{fmt(design.mass.wetMassKg)} / {fmt(capacity)} kg</span>
-              </div>
-              <Bar ratio={capacity > 0 ? design.mass.wetMassKg / capacity : 1} tone={margin < 0 ? 'danger' : margin < 0.1 ? 'warn' : 'good'} />
+      <div className="grid gap-5 xl:grid-cols-[0.9fr_1.1fr]">
+        <Section
+          title={t('ملاءمة الصاروخ', 'Launcher fit')}
+          action={
+            <StatusPill tone={margin < 0 ? 'danger' : margin < 0.1 ? 'warn' : 'good'}>
+              {margin < 0 ? t('لا يتسع', 'Does not fit') : t('يتسع', 'Fits')}
+            </StatusPill>
+          }
+        >
+          <div className="border-t border-royal-700 pt-2">
+            <div className="mb-1 flex items-baseline justify-between gap-2 text-[10px]">
+              <span className="text-limestone-400">{t('الكتلة الرطبة مقابل السعة', 'Wet mass vs capacity')}</span>
+              <span className="font-latin tabular-nums text-limestone-200" dir="ltr">
+                {fmt(design.mass.wetMassKg)} / {fmt(capacity)} kg
+              </span>
+            </div>
+            <Bar
+              ratio={capacity > 0 ? design.mass.wetMassKg / capacity : 1}
+              tone={margin < 0 ? 'danger' : margin < 0.1 ? 'warn' : 'good'}
+            />
+          </div>
+          <div className="mt-2">
+            <div className="table-row">
+              <span className="text-xs text-limestone-300">{t('كلفة الإطلاق', 'Launch cost')}</span>
+              <span className="font-latin text-xs tabular-nums text-ochre-300" dir="ltr">{fmtMoney(design.launcher.costM)}</span>
             </div>
             <div className="table-row">
-              <span className="text-[11px] text-slate-400">{t('كلفة الإطلاق', 'Launch cost')}</span>
-              <span className="num text-[11px] font-bold text-gold-200">{fmtMoney(design.launcher.costM)}</span>
+              <span className="text-xs text-limestone-300">{t('نسبة من التكلفة', 'Share of total cost')}</span>
+              <span className={`font-latin text-xs tabular-nums ${launchShare > 0.45 ? 'text-amber' : 'text-limestone-100'}`} dir="ltr">
+                {fmtPct(launchShare)}
+              </span>
             </div>
             <div className="table-row">
-              <span className="text-[11px] text-slate-400">{t('نسبة من التكلفة', 'Share of total cost')}</span>
-              <span className={`num text-[11px] font-bold ${launchShare > 0.45 ? 'text-warn' : 'text-slate-200'}`}>{fmtPct(launchShare)}</span>
+              <span className="text-xs text-limestone-300">{t('هامش الكتلة المتوقع', 'Expected mass margin')}</span>
+              <span className={`font-latin text-xs tabular-nums ${margin < 0.1 ? 'text-amber' : 'text-malachite'}`} dir="ltr">
+                {fmtPct(margin)}
+              </span>
             </div>
             <div className="table-row">
-              <span className="text-[11px] text-slate-400">{t('هامش الكتلة المتوقع', 'Expected mass margin')}</span>
-              <span className={`num text-[11px] font-bold ${margin < 0.1 ? 'text-warn' : 'text-good'}`}>{fmtPct(margin)}</span>
-            </div>
-            <div className="table-row">
-              <span className="text-[11px] text-slate-400">{t('طاقة الإطلاق', 'Launch energy')}</span>
-              <span className="num text-[11px] font-bold text-royal-200">{fmt(design.orbit.c3, 2)} km²/s²</span>
+              <span className="text-xs text-limestone-300">{t('طاقة الإطلاق', 'Launch energy')}</span>
+              <span className="font-latin text-xs tabular-nums text-royal-200" dir="ltr">
+                {fmt(design.orbit.c3, 2)} km²/s²
+              </span>
             </div>
           </div>
+
           {margin < 0 ? (
             <InlineNote tone="danger" className="mt-3">
-              <TriangleAlert className="me-1 inline h-3.5 w-3.5" aria-hidden="true" />
               {t('المركبة أثقل من الحمولة المتاحة. صاروخ أكبر أو تصميم أخف مطلوب قبل المحاكاة.', 'The spacecraft is heavier than available payload. A larger vehicle or lighter design is required before simulation.')}
             </InlineNote>
           ) : margin < 0.1 ? (
@@ -174,25 +173,30 @@ export function Step04Launch() {
         </Section>
 
         <Section title={t('كيف تُحسب السعة؟', 'How capacity is calculated')} action={<GameBadge />}>
-          <p className="text-[11px] leading-relaxed text-slate-400">
+          <p className="text-xs leading-[1.8] text-limestone-300">
             {t(
               'لكل صاروخ جدول حمولة مقابل C₃. نستوفي خطيًا عند الطاقة الحالية، ثم نقارن الناتج بالكتلة الرطبة المحسوبة من معادلة الصاروخ.',
               'Each vehicle has a payload-vs-C3 table. We interpolate linearly at the current energy, then compare the result with the wet mass from the rocket equation.',
             )}
           </p>
-          <div className="mt-3 overflow-hidden rounded-xl border border-white/[0.07]">
-            <table className="w-full text-start text-[10px]">
-              <thead className="bg-white/[0.04] text-slate-500">
-                <tr>
-                  <th className="px-2 py-1.5 text-start font-semibold">C₃ (km²/s²)</th>
-                  <th className="px-2 py-1.5 text-start font-semibold">{t('الحمولة', 'Payload')} (kg)</th>
+          <div className="mt-3 border-t border-royal-700">
+            <table className="w-full text-start text-[11px]">
+              <thead>
+                <tr className="border-b border-limestone-400/40 text-limestone-400">
+                  <th className="py-1.5 pe-2 text-start font-medium">C₃ (km²/s²)</th>
+                  <th className="py-1.5 ps-2 text-start font-medium">{t('الحمولة', 'Payload')} (kg)</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/[0.06]">
+              <tbody>
                 {design.launcher.payloadAtC3.map((point) => (
-                  <tr key={point.c3} className={Math.abs(point.c3 - design.orbit.c3) < 5 ? 'bg-royal-500/[0.06]' : ''}>
-                    <td className="px-2 py-1.5 font-latin text-slate-400" dir="ltr">{point.c3}</td>
-                    <td className="px-2 py-1.5 font-latin font-semibold text-slate-200" dir="ltr">{fmt(point.kg)}</td>
+                  <tr
+                    key={point.c3}
+                    className={`border-b border-royal-700 last:border-b-0 ${
+                      Math.abs(point.c3 - design.orbit.c3) < 5 ? 'bg-royal-700/40' : ''
+                    }`}
+                  >
+                    <td className="py-1.5 pe-2 font-latin tabular-nums text-limestone-300" dir="ltr">{point.c3}</td>
+                    <td className="py-1.5 ps-2 font-latin font-medium tabular-nums text-limestone-100" dir="ltr">{fmt(point.kg)}</td>
                   </tr>
                 ))}
               </tbody>

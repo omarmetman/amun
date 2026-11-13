@@ -4,62 +4,104 @@ export default {
   theme: {
     extend: {
       colors: {
+        /* Egyptian wall-pigment palette. Legacy token names are kept so the
+           rest of the interface keeps working while it is re-skinned. */
+        lapis: {
+          950: '#081531',
+          900: '#0D1F4C',
+          800: '#12295F',
+          700: '#1A3A85',
+          600: '#234A9E',
+        },
+        limestone: {
+          50: '#F7F3E9',
+          100: '#EDE7D8',
+          200: '#D9D1BE',
+          300: '#BDB39C',
+          400: '#948C79',
+        },
+        ochre: {
+          200: '#F3D08A',
+          300: '#EFC163',
+          400: '#E3A92F',
+          500: '#C48F1F',
+          600: '#96700F',
+        },
+        malachite: '#3FA878',
+        carnelian: {
+          DEFAULT: '#D8452F',
+          300: '#EE8A76',
+        },
+        amber: '#F28C28',
+
         void: {
-          950: '#050814',
-          900: '#070b1a',
-          850: '#0a1024',
-          800: '#0d1530',
-          700: '#121c3d',
-          600: '#1a2750',
-          500: '#253568',
+          950: '#081531',
+          900: '#0D1F4C',
+          850: '#102454',
+          800: '#12295F',
+          700: '#1A3A85',
+          600: '#234A9E',
+          500: '#2C57B4',
         },
         royal: {
-          300: '#93b4ff',
-          400: '#6b93ff',
-          500: '#4f7cff',
-          600: '#3560e0',
-          700: '#2647b0',
+          300: '#9FB6E8',
+          400: '#6F8FD8',
+          500: '#4A6DC4',
+          600: '#31509F',
+          700: '#1A3A85',
         },
         gold: {
-          300: '#f4d58a',
-          400: '#e8b949',
-          500: '#d4a02e',
-          600: '#a97a1b',
+          300: '#F3D08A',
+          400: '#E3A92F',
+          500: '#C48F1F',
+          600: '#96700F',
         },
-        danger: '#ff5d6c',
-        warn: '#ffc857',
-        good: '#38d6a4',
+        danger: '#D8452F',
+        warn: '#F28C28',
+        good: '#3FA878',
       },
       fontFamily: {
-        sans: ['Cairo', 'Tajawal', 'Inter', 'system-ui', 'sans-serif'],
-        latin: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"IBM Plex Sans Arabic"', '"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Reem Kufi"', '"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
+        latin: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        base: ['17px', { lineHeight: '1.8' }],
+        sm: ['15px', { lineHeight: '1.75' }],
+        xs: ['13px', { lineHeight: '1.65' }],
+      },
+      borderRadius: {
+        data: '2px',
+        window: '8px',
       },
       boxShadow: {
-        glow: '0 0 0 1px rgba(79,124,255,.22), 0 10px 40px -18px rgba(79,124,255,.55)',
-        gold: '0 0 30px -10px rgba(232,185,73,.5)',
+        sheet: '0 1px 0 0 #1A3A85',
       },
       backgroundImage: {
-        'star-field':
-          'radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.55) 50%, transparent 51%), radial-gradient(1px 1px at 70% 15%, rgba(255,255,255,.4) 50%, transparent 51%), radial-gradient(1.5px 1.5px at 45% 70%, rgba(255,255,255,.35) 50%, transparent 51%), radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,.45) 50%, transparent 51%), radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,.3) 50%, transparent 51%)',
+        'drawing-grid':
+          'linear-gradient(rgba(237,231,216,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(237,231,216,0.04) 1px, transparent 1px)',
+      },
+      backgroundSize: {
+        grid8: '8px 8px',
       },
       keyframes: {
-        drift: {
-          '0%,100%': { backgroundPosition: '0% 0%' },
-          '50%': { backgroundPosition: '100% 60%' },
+        trace: {
+          from: { strokeDashoffset: '1' },
+          to: { strokeDashoffset: '0' },
         },
-        pulseSoft: {
-          '0%,100%': { opacity: '0.45' },
-          '50%': { opacity: '1' },
+        launch: {
+          '0%': { opacity: '0', transform: 'translateY(6px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        scan: {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(400%)' },
+        settle: {
+          '0%': { opacity: '0', transform: 'translateY(-3px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       animation: {
-        drift: 'drift 60s ease-in-out infinite',
-        pulseSoft: 'pulseSoft 2.4s ease-in-out infinite',
-        scan: 'scan 3s linear infinite',
+        trace: 'trace 1400ms cubic-bezier(.4,0,.2,1) both',
+        launch: 'launch 420ms ease-out both',
+        settle: 'settle 220ms ease-out both',
       },
     },
   },
