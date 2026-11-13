@@ -1,0 +1,94 @@
+{
+  "fetchedAt": "2026-11-12T07:08:00Z",
+  "source": "JPL Horizons API (ssd.jpl.nasa.gov/api/horizons.api), geocentric observer 500@399, quantities 19,20",
+  "epoch": "2026-11-12",
+  "status": "snapshot",
+  "objects": {
+    "moon": {
+      "target": "Moon (301)",
+      "rSunAU": 0.9877,
+      "rEarthAU": 0.002702,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "mars": {
+      "target": "Mars (499)",
+      "rSunAU": 1.6058,
+      "rEarthAU": 1.3413,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "venus": {
+      "target": "Venus (299)",
+      "rSunAU": 0.7217,
+      "rEarthAU": 0.3163,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "jupiter": {
+      "target": "Jupiter (599)",
+      "rSunAU": 5.3204,
+      "rEarthAU": 5.3301,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "bennu": {
+      "target": "101955 Bennu (2101955)",
+      "rSunAU": 1.3445,
+      "rEarthAU": 2.2354,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "ryugu": {
+      "target": "162173 Ryugu (162173)",
+      "rSunAU": 1.4184,
+      "rEarthAU": 2.1544,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "eros": {
+      "target": "433 Eros (433)",
+      "rSunAU": 1.7532,
+      "rEarthAU": 2.4638,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "vesta": {
+      "target": "4 Vesta (2000004)",
+      "rSunAU": 2.4915,
+      "rEarthAU": 1.6303,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "ceres": {
+      "target": "1 Ceres (2000001)",
+      "rSunAU": 2.6421,
+      "rEarthAU": 2.0539,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "67p": {
+      "target": "67P/Churyumov-Gerasimenko",
+      "rSunAU": 3.46,
+      "rEarthAU": 2.9,
+      "date": "2026-11-12",
+      "exact": false,
+      "note": "Estimated from SBDB semi-major axis; comet ephemeris unavailable in the snapshot window."
+    },
+    "halley": {
+      "target": "1P/Halley",
+      "rSunAU": 35.37,
+      "rEarthAU": 35.16,
+      "date": "2026-11-12",
+      "exact": true
+    },
+    "tempel1": {
+      "target": "9P/Tempel 1",
+      "rSunAU": 3.15,
+      "rEarthAU": 2.7,
+      "date": "2026-11-12",
+      "exact": false,
+      "note": "Estimated from SBDB semi-major axis; comet ephemeris unavailable in the snapshot window."
+    }
+  }
+}
