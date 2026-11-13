@@ -47,7 +47,7 @@ export function MobileDashboard({ onLearn }: { onLearn: () => void }) {
   return (
     <>
       <div className="fixed inset-x-0 bottom-0 z-50 lg:hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
-        <div className="border-t border-white/10 bg-void-950/92 backdrop-blur-2xl">
+        <div className="border-t border-white/10 bg-void-950/90 backdrop-blur-2xl">
           <button
             type="button"
             onClick={() => setOpen(true)}
@@ -95,10 +95,10 @@ export function MobileDashboard({ onLearn }: { onLearn: () => void }) {
             role="dialog"
             aria-modal="true"
             aria-label={t('لوحة القيادة', 'Dashboard')}
-            className="absolute inset-x-0 bottom-0 max-h-[84vh] overflow-y-auto rounded-t-3xl border-t border-white/15 bg-void-900/98 shadow-2xl"
+            className="absolute inset-x-0 bottom-0 max-h-[84vh] overflow-y-auto rounded-t-3xl border-t border-white/15 bg-void-900/95 shadow-2xl"
             style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 8px)' }}
           >
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/[0.08] bg-void-900/98 px-4 py-3 backdrop-blur-xl">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/[0.08] bg-void-900/95 px-4 py-3 backdrop-blur-xl">
               <div className="flex items-center gap-2">
                 <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-royal-500/15 text-royal-300">
                   <LayoutDashboard className="h-4 w-4" aria-hidden="true" />

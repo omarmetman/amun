@@ -122,7 +122,7 @@ export function DataSourceBadge({ sourceKey }: { sourceKey: SourceKey }) {
       {open && coords
         ? createPortal(
             <div
-              className="fixed z-[90] rounded-2xl border border-white/15 bg-void-900/98 p-4 text-start shadow-2xl backdrop-blur-2xl"
+              className="fixed z-[90] rounded-2xl border border-white/15 bg-void-900/95 p-4 text-start shadow-2xl backdrop-blur-2xl"
               style={{ top: coords.top, left: coords.left, width: coords.width }}
               role="dialog"
               aria-label={l(source.name)}

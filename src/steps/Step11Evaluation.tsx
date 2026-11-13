@@ -615,7 +615,7 @@ export function Step11Evaluation({
             onClick={replaySameChoices}
             className="selectable p-3.5 text-start"
           >
-            <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-royal-500/12 text-royal-300">
+            <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-royal-500/15 text-royal-300">
               <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
             </span>
             <div className="text-xs font-bold text-white">{t('عدّل نفس التصميم', 'Tweak this design')}</div>
@@ -632,7 +632,7 @@ export function Step11Evaluation({
             onClick={replaySameSeed}
             className="selectable border-gold-400/25 p-3.5 text-start hover:border-gold-400/50"
           >
-            <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-gold-400/12 text-gold-300">
+            <span className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl bg-gold-400/15 text-gold-300">
               <Dices className="h-4 w-4" aria-hidden="true" />
             </span>
             <div className="flex flex-wrap items-center gap-1.5">

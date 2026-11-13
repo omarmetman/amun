@@ -63,7 +63,7 @@ export function LearnPanel({ open, focusKey, onClose }: LearnPanelProps) {
         role="dialog"
         aria-modal="true"
         aria-label={t('لوحة تعلّم', 'Learn panel')}
-        className="absolute inset-y-0 end-0 flex w-full max-w-xl flex-col border-s border-white/10 bg-void-900/98 shadow-2xl"
+        className="absolute inset-y-0 end-0 flex w-full max-w-xl flex-col border-s border-white/10 bg-void-900/95 shadow-2xl"
       >
         <header className="flex items-center justify-between gap-3 border-b border-white/[0.08] px-4 py-4 sm:px-5">
           <div className="flex items-center gap-2.5">

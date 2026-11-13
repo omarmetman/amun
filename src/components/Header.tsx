@@ -101,13 +101,13 @@ export function Header({ onLearn, onProfile, onCampaign, onNew, onExport, onImpo
     <header className="sticky top-0 z-40 border-b border-white/[0.07] bg-void-950/80 backdrop-blur-xl">
       <div className="flex h-14 items-center justify-between gap-2 px-3 sm:h-16 sm:px-5">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="lg:hidden">
+          <div className="shrink-0 lg:hidden">
             <AmunLogo className="h-9 w-9" />
           </div>
           <div className="min-w-0">
-            <div className="flex items-center gap-2 lg:hidden">
-              <span className="font-latin text-sm font-extrabold tracking-[0.18em] text-white">AMUN</span>
-              <span className="rounded-md bg-royal-500/15 px-1.5 py-0.5 text-[9px] font-bold text-royal-300" dir="ltr">
+            <div className="flex min-w-0 items-center gap-2 lg:hidden">
+              <span className="hidden shrink-0 font-latin text-sm font-extrabold tracking-[0.18em] text-white sm:inline">AMUN</span>
+              <span className="shrink-0 rounded-md bg-royal-500/15 px-1.5 py-0.5 text-[9px] font-bold text-royal-300" dir="ltr">
                 <span className="num">{step}</span>/11
               </span>
             </div>
@@ -128,9 +128,6 @@ export function Header({ onLearn, onProfile, onCampaign, onNew, onExport, onImpo
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <div className="hidden sm:block">
             <LanguageToggle />
-          </div>
-          <div className="sm:hidden">
-            <LanguageToggle compact />
           </div>
           <button
             type="button"
@@ -186,8 +183,15 @@ export function Header({ onLearn, onProfile, onCampaign, onNew, onExport, onImpo
             {menu ? (
               <div
                 role="menu"
-                className="absolute end-0 top-12 z-50 w-52 rounded-2xl border border-white/15 bg-void-900/98 p-1.5 shadow-2xl backdrop-blur-2xl"
+                className="absolute end-0 top-12 z-50 w-52 rounded-2xl border border-white/15 bg-void-900 p-1.5 shadow-2xl backdrop-blur-2xl"
               >
+                <div className="flex items-center justify-between gap-2 px-1 py-1 sm:hidden">
+                  <span className="px-1 text-[9px] font-bold uppercase tracking-widest text-slate-500">
+                    {t('اللغة', 'Language')}
+                  </span>
+                  <LanguageToggle compact />
+                </div>
+                <div className="my-1 h-px bg-white/[0.07] sm:hidden" />
                 <div className="px-2 py-1.5 text-[9px] font-bold uppercase tracking-widest text-slate-500">
                   {t('إدارة المهمة', 'Mission control')}
                 </div>

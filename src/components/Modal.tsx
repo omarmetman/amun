@@ -84,7 +84,7 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-void-900/98 shadow-2xl ${extraWide ? 'max-w-4xl' : wide ? 'max-w-2xl' : 'max-w-md'}`}
+        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-void-900/95 shadow-2xl ${extraWide ? 'max-w-4xl' : wide ? 'max-w-2xl' : 'max-w-md'}`}
       >
         <div className="flex items-start justify-between gap-3 border-b border-white/[0.08] px-5 py-4">
           <div>
