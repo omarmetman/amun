@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="t-crew d-crew">
+  <title id="t-crew">AMUN Mission Flight Crew &amp; Core Architects</title>
+  <desc id="d-crew">3D isometric command consoles showcasing the four mission architects and engineers</desc>
+
+  <defs>
+    <linearGradient id="bg-crew" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#040816"/>
+      <stop offset="50%" stop-color="#091436"/>
+      <stop offset="100%" stop-color="#0e1f4f"/>
+    </linearGradient>
+    <linearGradient id="card-cad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#142654"/>
+      <stop offset="100%" stop-color="#08132d"/>
+    </linearGradient>
+    <filter id="badge-glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4"/></filter>
+    <clipPath id="crew-clip"><rect width="1200" height="360" rx="16"/></clipPath>
+  </defs>
+
+  <style>
+    text { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; }
+    .mono { font-family: 'Fira Code', monospace; }
+    @keyframes card-hover {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    .crew-1 { animation: card-hover 5.5s ease-in-out infinite; }
+    .crew-2 { animation: card-hover 5.5s ease-in-out -1.4s infinite; }
+    .crew-3 { animation: card-hover 5.5s ease-in-out -2.8s infinite; }
+    .crew-4 { animation: card-hover 5.5s ease-in-out -4.2s infinite; }
+  </style>
+
+  <g clip-path="url(#crew-clip)">
+    <!-- Base Background -->
+    <rect width="1200" height="360" fill="url(#bg-crew)"/>
+
+    <!-- Perspective Grid Lines -->
+    <g stroke="#1A3A85" stroke-opacity="0.3" stroke-width="1">
+      <line x1="0" y1="60" x2="1200" y2="60"/>
+      <line x1="0" y1="300" x2="1200" y2="300"/>
+      <line x1="300" y1="60" x2="300" y2="300" stroke-dasharray="4 4"/>
+      <line x1="600" y1="60" x2="600" y2="300" stroke-dasharray="4 4"/>
+      <line x1="900" y1="60" x2="900" y2="300" stroke-dasharray="4 4"/>
+    </g>
+
+    <!-- Header Section Badge -->
+    <g transform="translate(40, 22)">
+      <rect width="360" height="30" rx="4" fill="#0D1F4C" stroke="#E3A92F" stroke-width="1.2"/>
+      <circle cx="16" cy="15" r="4" fill="#E3A92F"/>
+      <text class="mono" x="32" y="20" font-size="12" font-weight="700" fill="#EDE7D8" letter-spacing="1.2">MISSION FLIGHT CREW &amp; ARCHITECTS</text>
+    </g>
+
+    <text class="mono" x="1160" y="42" font-size="11" fill="#3FA878" text-anchor="end">
+      FLIGHT ROSTER ◆ 4 CORE SPECIALISTS
+    </text>
+
+    <!-- 4 CREW CONSOLE CARDS -->
+
+    <!-- MEMBER 1: Omar Mohammed Etman (Lead Software Architect) -->
+    <g class="crew-1" transform="translate(40, 75)">
+      <!-- Drop Shadow -->
+      <rect x="0" y="8" width="260" height="235" rx="8" fill="#02040b" opacity="0.6"/>
+      <!-- Main Console Card -->
+      <rect width="260" height="235" rx="8" fill="url(#card-cad)" stroke="#E3A92F" stroke-width="1.5"/>
+      <!-- Top Status Banner -->
+      <rect width="260" height="28" rx="8" fill="#182d61"/>
+      <circle cx="16" cy="14" r="3.5" fill="#3FA878"/>
+      <text class="mono" x="28" y="18" font-size="10" font-weight="700" fill="#EDE7D8">COMMANDER · CREW 01</text>
+
+      <!-- Avatar / Emblem Icon -->
+      <g transform="translate(130, 68)">
+        <circle cx="0" cy="0" r="26" fill="#0D1F4C" stroke="#E3A92F" stroke-width="1.5"/>
+        <!-- Astronaut Helmet / Terminal Icon -->
+        <path d="M -12,-8 C -12,-18 12,-18 12,-8 C 12,8 -12,8 -12,-8 Z" fill="#38bdf8" opacity="0.8"/>
+        <circle cx="0" cy="-6" r="3" fill="#ffffff"/>
+      </g>
+
+      <text x="130" y="122" font-size="15" font-weight="700" fill="#FFF5D1" text-anchor="middle">Omar M. Etman</text>
+      <text class="mono" x="130" y="142" font-size="10.5" font-weight="600" fill="#E3A92F" text-anchor="middle">SYSTEMS ARCHITECT</text>
+      <text class="mono" x="130" y="160" font-size="10" fill="#7dd3fc" text-anchor="middle">Physics Engine &amp; Full Stack</text>
+
+      <!-- Divider -->
+      <line x1="20" y1="175" x2="240" y2="175" stroke="#1A3A85" stroke-width="1"/>
+
+      <!-- Specs / Duty -->
+      <text x="130" y="196" font-size="11" fill="#C2B89E" text-anchor="middle">Tsiolkovsky Engine &amp; State Core</text>
+      <rect x="25" y="206" width="210" height="18" rx="3" fill="#04091a" stroke="#1A3A85"/>
+      <text class="mono" x="130" y="219" font-size="9" fill="#3FA878" text-anchor="middle">LinkedIn ◆ @omar-m-etman</text>
+    </g>
+
+    <!-- MEMBER 2: Elshimaa Sayed Mohamed (Creative Director & Visual Lead) -->
+    <g class="crew-2" transform="translate(330, 75)">
+      <rect x="0" y="8" width="260" height="235" rx="8" fill="#02040b" opacity="0.6"/>
+      <rect width="260" height="235" rx="8" fill="url(#card-cad)" stroke="#1A3A85" stroke-width="1.5"/>
+      <rect width="260" height="28" rx="8" fill="#182d61"/>
+      <circle cx="16" cy="14" r="3.5" fill="#E3A92F"/>
+      <text class="mono" x="28" y="18" font-size="10" font-weight="700" fill="#EDE7D8">CREATIVE LEAD · CREW 02</text>
+
+      <!-- Avatar / Palette Icon -->
+      <g transform="translate(130, 68)">
+        <circle cx="0" cy="0" r="26" fill="#0D1F4C" stroke="#E3A92F" stroke-width="1.5"/>
+        <!-- Feather / Design Stylus -->
+        <path d="M 0,-16 C -6,-4 -3,10 0,16 C 3,10 6,-4 0,-16 Z" fill="#E3A92F"/>
+        <circle cx="0" cy="-6" r="2.5" fill="#FFF5D1"/>
+      </g>
+
+      <text x="130" y="122" font-size="15" font-weight="700" fill="#FFF5D1" text-anchor="middle">Elshimaa Sayed</text>
+      <text class="mono" x="130" y="142" font-size="10.5" font-weight="600" fill="#E3A92F" text-anchor="middle">CREATIVE DIRECTOR</text>
+      <text class="mono" x="130" y="160" font-size="10" fill="#fca5a5" text-anchor="middle">UI/UX &amp; Visual Identity</text>
+
+      <line x1="20" y1="175" x2="240" y2="175" stroke="#1A3A85" stroke-width="1"/>
+
+      <text x="130" y="196" font-size="11" fill="#C2B89E" text-anchor="middle">Egyptian Mural Pigments &amp; UX</text>
+      <rect x="25" y="206" width="210" height="18" rx="3" fill="#04091a" stroke="#1A3A85"/>
+      <text class="mono" x="130" y="219" font-size="9" fill="#3FA878" text-anchor="middle">LinkedIn ◆ @oshsayeddesigner</text>
+    </g>
+
+    <!-- MEMBER 3: Abdullah Azb (Aerospace Systems & Flight Dynamics) -->
+    <g class="crew-3" transform="translate(620, 75)">
+      <rect x="0" y="8" width="260" height="235" rx="8" fill="#02040b" opacity="0.6"/>
+      <rect width="260" height="235" rx="8" fill="url(#card-cad)" stroke="#1A3A85" stroke-width="1.5"/>
+      <rect width="260" height="28" rx="8" fill="#182d61"/>
+      <circle cx="16" cy="14" r="3.5" fill="#38bdf8"/>
+      <text class="mono" x="28" y="18" font-size="10" font-weight="700" fill="#EDE7D8">FLIGHT DYNAMICS · CREW 03</text>
+
+      <!-- Avatar / Orbit Icon -->
+      <g transform="translate(130, 68)">
+        <circle cx="0" cy="0" r="26" fill="#0D1F4C" stroke="#38bdf8" stroke-width="1.5"/>
+        <ellipse cx="0" cy="0" rx="16" ry="7" fill="none" stroke="#38bdf8" stroke-width="1.5" transform="rotate(-20)"/>
+        <circle cx="0" cy="0" r="6" fill="#E3A92F"/>
+      </g>
+
+      <text x="130" y="122" font-size="15" font-weight="700" fill="#FFF5D1" text-anchor="middle">Abdullah Azb</text>
+      <text class="mono" x="130" y="142" font-size="10.5" font-weight="600" fill="#E3A92F" text-anchor="middle">AEROSPACE SYSTEMS</text>
+      <text class="mono" x="130" y="160" font-size="10" fill="#7dd3fc" text-anchor="middle">Flight Dynamics &amp; Orbits</text>
+
+      <line x1="20" y1="175" x2="240" y2="175" stroke="#1A3A85" stroke-width="1"/>
+
+      <text x="130" y="196" font-size="11" fill="#C2B89E" text-anchor="middle">Orbital Constraints &amp; Trajectories</text>
+      <rect x="25" y="206" width="210" height="18" rx="3" fill="#04091a" stroke="#1A3A85"/>
+      <text class="mono" x="130" y="219" font-size="9" fill="#3FA878" text-anchor="middle">LinkedIn ◆ @abdullah-azb</text>
+    </g>
+
+    <!-- MEMBER 4: Mahmoud Abdelhamid (Software Engineer & Telemetry) -->
+    <g class="crew-4" transform="translate(910, 75)">
+      <rect x="0" y="8" width="250" height="235" rx="8" fill="#02040b" opacity="0.6"/>
+      <rect width="250" height="235" rx="8" fill="url(#card-cad)" stroke="#1A3A85" stroke-width="1.5"/>
+      <rect width="250" height="28" rx="8" fill="#182d61"/>
+      <circle cx="16" cy="14" r="3.5" fill="#3FA878"/>
+      <text class="mono" x="28" y="18" font-size="10" font-weight="700" fill="#EDE7D8">SOFTWARE ENG · CREW 04</text>
+
+      <!-- Avatar / Radar Code Icon -->
+      <g transform="translate(125, 68)">
+        <circle cx="0" cy="0" r="26" fill="#0D1F4C" stroke="#3FA878" stroke-width="1.5"/>
+        <path d="M -10,-8 L -4,0 L -10,8 M 10,-8 L 4,0 L 10,8" fill="none" stroke="#3FA878" stroke-width="2"/>
+        <line x1="-3" y1="8" x2="3" y2="-8" stroke="#E3A92F" stroke-width="1.5"/>
+      </g>
+
+      <text x="125" y="122" font-size="15" font-weight="700" fill="#FFF5D1" text-anchor="middle">Mahmoud Abdelhamid</text>
+      <text class="mono" x="125" y="142" font-size="10.5" font-weight="600" fill="#E3A92F" text-anchor="middle">SOFTWARE ENGINEER</text>
+      <text class="mono" x="125" y="160" font-size="10" fill="#7dd3fc" text-anchor="middle">Telemetry &amp; Simulation Logic</text>
+
+      <line x1="20" y1="175" x2="230" y2="175" stroke="#1A3A85" stroke-width="1"/>
+
+      <text x="125" y="196" font-size="11" fill="#C2B89E" text-anchor="middle">Simulation Telemetry &amp; Link Budget</text>
+      <rect x="20" y="206" width="210" height="18" rx="3" fill="#04091a" stroke="#1A3A85"/>
+      <text class="mono" x="125" y="219" font-size="9" fill="#3FA878" text-anchor="middle">LinkedIn ◆ @mahmoud-abdel-hamid</text>
+    </g>
+
+    <!-- Outer Structural Border -->
+    <rect x="1" y="1" width="1198" height="358" rx="15" fill="none" stroke="#1A3A85" stroke-width="1.5"/>
+  </g>
+</svg>

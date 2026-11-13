@@ -44,6 +44,7 @@
 - [Automated Testing & Verification](#automated-testing--verification)
 - [Extensibility Guide](#extensibility-guide)
 - [Scientific Scope & Pedagogical Limits](#scientific-scope--pedagogical-limits)
+- [Mission Flight Crew & Core Architects](#mission-flight-crew--core-architects)
 - [License & NASA Media Compliance](#license--nasa-media-compliance)
 
 ---
@@ -436,6 +437,25 @@ AMUN is designed as an educational bridge between introductory science and profe
 * **Telecommunications**: Link budgets model space loss and antenna gain while simplifying atmospheric weather attenuation and pointing jitter.
 * **Thermal & Radiation**: Radiation shielding modifies probability weights in the stochastic simulator rather than simulating particle transport physics.
 * **Story Narrative**: The 1420.405 MHz pulse in the campaign is based on the genuine neutral hydrogen radio line ($21\text{cm}$), while the narrative lore is an original educational fiction.
+
+---
+
+## Mission Flight Crew & Core Architects
+
+<div align="center">
+  <img src="./assets/team-3d.svg" alt="AMUN Mission Flight Crew & Core Architects" width="100%" />
+</div>
+
+<br />
+
+The AMUN mission design simulator was brought to life by an interdisciplinary team bridging software systems architecture, aerospace engineering, and authentic visual design:
+
+| Specialist | Mission Role & Technical Ownership | Direct Profile |
+| :--- | :--- | :---: |
+| **Omar Mohammed Etman** | **Mission Commander & Systems Architect**<br>• Core closed-form astrodynamic engine (`src/engine`)<br>• Closed-form Tsiolkovsky propellant & mass sizing pipeline<br>• Full-stack React 18, TypeScript, and state architecture | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/omar-m-etman) |
+| **Elshimaa Sayed Mohamed** | **Creative Director & Visual Identity Lead**<br>• Authentic Ancient Egyptian mural pigment palette design<br>• Bespoke 24px stroke iconography, Cartouche, and Lotus Frieze<br>• Mobile-first UI/UX architecture & 360px viewport experience | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](http://linkedin.com/in/oshsayeddesigner) |
+| **Abdullah Azb** | **Aerospace Systems & Flight Dynamics Specialist**<br>• Orbital transfer mechanics & Hohmann trajectory modeling<br>• Characteristic launch energy ($C_3$) interpolation tables<br>• Planetary ephemeris validation and NASA scientific datasets | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abdullah-azb-18290a262) |
+| **Mahmoud Abdelhamid** | **Software Engineer & Telemetry Lead**<br>• Deep Space Network (DSN) link budget & bitrate calculations<br>• Deterministic Monte Carlo stochastic simulation logic<br>• Automated test suites (41/41 passing) & client-side persistence | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mahmoud-abdel-hamid-513363406/) |
 
 ---
 
