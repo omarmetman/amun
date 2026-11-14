@@ -513,6 +513,29 @@ export interface CampaignPreset {
   propellantReservePercent: number;
 }
 
+export interface ChapterNasaDossier {
+  benchmarkMission: LocalizedText;
+  historicalPrecedent: LocalizedText;
+  realWorldFacts: LocalizedText[];
+  primaryChallenge: LocalizedText;
+  engineeringHint: LocalizedText;
+  orbitalData: {
+    distanceAU: string;
+    gravityMs2: number;
+    escapeVelocityKms: number;
+    solarIrradianceWm2: number;
+    oneWayLightTimeMinutes: number;
+  };
+}
+
+export interface ChapterHazard {
+  id: string;
+  name: LocalizedText;
+  severity: 'low' | 'moderate' | 'critical';
+  description: LocalizedText;
+  mitigation: LocalizedText;
+}
+
 export interface CampaignChapter {
   id: string;
   number: number;
@@ -535,6 +558,8 @@ export interface CampaignChapter {
   epilogue: LocalizedText;
   bonusObjectives: CampaignObjectiveDef[];
   preset: CampaignPreset;
+  nasaDossier?: ChapterNasaDossier;
+  environmentalHazards?: ChapterHazard[];
 }
 
 export interface CampaignObjectiveResult {

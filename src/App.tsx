@@ -13,6 +13,7 @@ import { LearnPanel } from './components/LearnPanel';
 import { MobileDashboard } from './components/MobileDashboard';
 import { Modal } from './components/Modal';
 import { ProfileModal } from './components/ProfileModal';
+import { ProjectModal } from './components/ProjectModal';
 import { Sidebar } from './components/Sidebar';
 import { Stepper } from './components/Stepper';
 import { StepIntro, StepNav } from './components/StepShell';
@@ -31,7 +32,7 @@ import { Step09Orbit } from './steps/Step09Orbit';
 import { Step10Simulation } from './steps/Step10Simulation';
 import { Step11Evaluation } from './steps/Step11Evaluation';
 
-type ModalKind = 'new' | 'import' | 'reset' | 'profile' | 'campaign' | null;
+type ModalKind = 'new' | 'import' | 'reset' | 'profile' | 'campaign' | 'project' | null;
 
 export default function App() {
   const lang = useLang();
@@ -123,6 +124,7 @@ export default function App() {
         <Welcome
           onProfile={() => setModal('profile')}
           onCampaign={() => setModal('campaign')}
+          onProject={() => setModal('project')}
         />
         {modal === 'profile' ? (
           <ProfileModal
@@ -140,6 +142,12 @@ export default function App() {
             }}
           />
         ) : null}
+        {modal === 'project' ? (
+          <ProjectModal
+            onClose={() => setModal(null)}
+            onCampaign={() => setModal('campaign')}
+          />
+        ) : null}
         <Toasts />
       </>
     );
@@ -155,13 +163,14 @@ export default function App() {
       </a>
 
       <div className="flex min-h-screen">
-        <Sidebar onLearn={() => openLearn()} />
+        <Sidebar onLearn={() => openLearn()} onProject={() => setModal('project')} />
 
         <div className="min-w-0 flex-1">
           <Header
             onLearn={() => openLearn()}
             onProfile={() => setModal('profile')}
             onCampaign={() => setModal('campaign')}
+            onProject={() => setModal('project')}
             onNew={() => setModal('new')}
             onExport={handleExport}
             onImport={() => setModal('import')}
@@ -199,6 +208,13 @@ export default function App() {
             setModal(null);
             window.scrollTo({ top: 0 });
           }}
+        />
+      ) : null}
+
+      {modal === 'project' ? (
+        <ProjectModal
+          onClose={() => setModal(null)}
+          onCampaign={() => setModal('campaign')}
         />
       ) : null}
 

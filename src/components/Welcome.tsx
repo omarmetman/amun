@@ -10,7 +10,7 @@ import { AmunLogo } from './AmunLogo';
 import { SimplifiedNote } from './Badges';
 import { CampaignStarRating, CAMPAIGN_ACCENTS, ChapterPatch } from './CampaignArt';
 import { LanguageToggle } from './Header';
-import { IconBook, IconChevron, IconFlag, IconMedal, IconTarget } from './Icons';
+import { IconBook, IconChevron, IconFlag, IconMedal, IconRocket, IconTarget } from './Icons';
 import { Cartouche, Frieze } from './Ornament';
 import { Trajectory } from './Stepper';
 
@@ -19,9 +19,11 @@ const HERO_TARGETS = ['moon', 'mars', 'venus', 'jupiter', 'bennu', 'ryugu', '67p
 export function Welcome({
   onProfile,
   onCampaign,
+  onProject,
 }: {
   onProfile?: () => void;
   onCampaign?: () => void;
+  onProject?: () => void;
 }) {
   const t = useT();
   const l = useL();
@@ -72,6 +74,17 @@ export function Welcome({
         </span>
         <div className="flex shrink-0 items-center gap-2">
           <LanguageToggle />
+          {onProject ? (
+            <button
+              type="button"
+              onClick={onProject}
+              className="inline-flex min-h-[36px] items-center gap-1.5 border border-royal-700 bg-royal-950/60 px-2 py-1 text-[11px] font-semibold text-ochre-300 hover:border-ochre-400"
+              title={t('المشروع: الروابط، الفكرة، وبيانات ناسا، وطاقم العمل', 'Project: Links, Concept, NASA Data & Flight Crew')}
+            >
+              <IconRocket className="h-4 w-4 text-ochre-400" />
+              <span>{t('المشروع', 'Project')}</span>
+            </button>
+          ) : null}
           {onProfile ? (
             <button
               type="button"
@@ -152,14 +165,26 @@ export function Welcome({
                   </p>
                 )}
 
-                <button
-                  type="button"
-                  onClick={() => setStage(2)}
-                  className="mt-4 inline-flex items-center gap-1.5 border-b border-royal-400 pb-px text-xs text-limestone-300 hover:text-limestone-50"
-                >
-                  <IconBook className="h-4 w-4" />
-                  {t('كيف تعمل اللعبة', 'How the game works')}
-                </button>
+                <div className="mt-4 flex flex-wrap items-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setStage(2)}
+                    className="inline-flex items-center gap-1.5 border-b border-royal-400 pb-px text-xs text-limestone-300 hover:text-limestone-50"
+                  >
+                    <IconBook className="h-4 w-4" />
+                    {t('كيف تعمل اللعبة', 'How the game works')}
+                  </button>
+                  {onProject ? (
+                    <button
+                      type="button"
+                      onClick={onProject}
+                      className="inline-flex items-center gap-1.5 border-b border-ochre-400/80 pb-px text-xs text-ochre-300 hover:text-ochre-200"
+                    >
+                      <IconRocket className="h-4 w-4 text-ochre-400" />
+                      {t('دليل المشروع وطاقم العمل', 'Project Dossier & Team')}
+                    </button>
+                  ) : null}
+                </div>
               </div>
             </section>
 

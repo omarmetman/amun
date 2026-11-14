@@ -15,6 +15,7 @@ import {
   IconMenu,
   IconPlus,
   IconReset,
+  IconRocket,
   IconUpload,
 } from './Icons';
 
@@ -55,13 +56,14 @@ interface HeaderProps {
   onLearn: () => void;
   onProfile: () => void;
   onCampaign: () => void;
+  onProject?: () => void;
   onNew: () => void;
   onExport: () => void;
   onImport: () => void;
   onReset: () => void;
 }
 
-export function Header({ onLearn, onProfile, onCampaign, onNew, onExport, onImport, onReset }: HeaderProps) {
+export function Header({ onLearn, onProfile, onCampaign, onProject, onNew, onExport, onImport, onReset }: HeaderProps) {
   const t = useT();
   const l = useL();
   const step = useMissionStore((state) => state.step);
@@ -137,6 +139,18 @@ export function Header({ onLearn, onProfile, onCampaign, onNew, onExport, onImpo
           <div className="hidden sm:block">
             <LanguageToggle />
           </div>
+          {onProject ? (
+            <button
+              type="button"
+              onClick={onProject}
+              className="inline-flex min-h-[36px] items-center gap-1.5 border border-royal-700 bg-royal-950/60 px-2 py-1 text-[11px] font-semibold text-ochre-300 hover:border-ochre-400"
+              title={t('المشروع: الروابط، الفكرة، بيانات ناسا، وطاقم العمل', 'Project: Links, Concept, NASA Data & Flight Crew')}
+              aria-label={t('افتح دليل المشروع', 'Open Project dossier')}
+            >
+              <IconRocket className="h-4 w-4 text-ochre-400" />
+              <span className="hidden sm:inline">{t('المشروع', 'Project')}</span>
+            </button>
+          ) : null}
           <button
             type="button"
             onClick={onCampaign}
@@ -210,6 +224,7 @@ export function Header({ onLearn, onProfile, onCampaign, onNew, onExport, onImpo
                   {t('إدارة المهمة', 'Mission control')}
                 </div>
                 {item(<IconFlag className="h-4 w-4 text-ochre-400" />, t('حملة أفق آمون', 'AMUN Horizon campaign'), onCampaign)}
+                {onProject ? item(<IconRocket className="h-4 w-4 text-ochre-400" />, t('دليل المشروع وطاقم العمل', 'Project Dossier & Team'), onProject) : null}
                 {activeChapterId
                   ? item(<IconExit className="h-4 w-4" />, t('الخروج من الحملة', 'Exit campaign'), exitCampaign)
                   : null}

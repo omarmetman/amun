@@ -403,6 +403,117 @@ export function CampaignModal({
                           })}
                         </ul>
                       </div>
+
+                      {chapter.nasaDossier ? (
+                        <div className="mt-4 border-t border-royal-700 pt-3">
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <div className="flex items-center gap-2">
+                              <span className="font-latin text-[10px] font-bold uppercase tracking-wider text-ochre-400">
+                                NASA 100% Data Benchmark
+                              </span>
+                              <StatusPill tone="good">
+                                {l(chapter.nasaDossier.benchmarkMission)}
+                              </StatusPill>
+                            </div>
+                            <span className="font-latin text-[10px] text-limestone-400">
+                              Horizons & GSFC Data
+                            </span>
+                          </div>
+
+                          {/* Real World Facts */}
+                          <div className="mt-2.5 rounded border border-royal-700 bg-lapis-900/50 p-2.5">
+                            <span className="text-[11px] font-semibold text-limestone-200">
+                              {t('حقائق علمية حقيقية 100% من ناسا:', '100% Authentic NASA Scientific Facts:')}
+                            </span>
+                            <ul className="mt-1.5 space-y-1 text-[11px] leading-relaxed text-limestone-300">
+                              {chapter.nasaDossier.realWorldFacts.map((fact, fIdx) => (
+                                <li key={fIdx} className="flex items-start gap-1.5">
+                                  <span className="text-ochre-400">✦</span>
+                                  <span>{l(fact)}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <p className="mt-2 border-t border-royal-800/80 pt-1.5 text-[11px] italic text-limestone-400">
+                              <span className="font-semibold text-limestone-300">
+                                {t('المرجع التاريخي: ', 'Historical Precedent: ')}
+                              </span>
+                              {l(chapter.nasaDossier.historicalPrecedent)}
+                            </p>
+                          </div>
+
+                          {/* Orbital Telemetry Grid */}
+                          <dl className="mt-2.5 grid grid-cols-2 gap-2 rounded border border-royal-700 bg-lapis-900/40 p-2 text-center sm:grid-cols-4">
+                            <div>
+                              <dt className="text-[10px] text-limestone-400">{t('المسافة', 'Distance')}</dt>
+                              <dd className="font-latin text-xs font-semibold text-limestone-100" dir="ltr">
+                                {chapter.nasaDossier.orbitalData.distanceAU}
+                              </dd>
+                            </div>
+                            <div>
+                              <dt className="text-[10px] text-limestone-400">{t('الجاذبية', 'Gravity')}</dt>
+                              <dd className="font-latin text-xs font-semibold text-ochre-300" dir="ltr">
+                                {chapter.nasaDossier.orbitalData.gravityMs2} m/s²
+                              </dd>
+                            </div>
+                            <div>
+                              <dt className="text-[10px] text-limestone-400">{t('التدفق الشمسي', 'Solar Irradiance')}</dt>
+                              <dd className="font-latin text-xs font-semibold text-malachite" dir="ltr">
+                                {chapter.nasaDossier.orbitalData.solarIrradianceWm2} W/m²
+                              </dd>
+                            </div>
+                            <div>
+                              <dt className="text-[10px] text-limestone-400">{t('تأخر الضوء', 'Light Delay')}</dt>
+                              <dd className="font-latin text-xs font-semibold text-carnelian-300" dir="ltr">
+                                {chapter.nasaDossier.orbitalData.oneWayLightTimeMinutes} min
+                              </dd>
+                            </div>
+                          </dl>
+
+                          {/* Engineering Hint */}
+                          <div className="mt-2.5 rounded border border-ochre-400/60 bg-ochre-400/10 p-2.5">
+                            <div className="flex items-center gap-1.5 text-[11px] font-bold text-ochre-300">
+                              <span>💡</span>
+                              <span>{t('نصيحة المهندس لتجاوز الفصل:', 'Engineering Hint for Mission Success:')}</span>
+                            </div>
+                            <p className="mt-1 text-xs leading-relaxed text-limestone-100">
+                              {l(chapter.nasaDossier.engineeringHint)}
+                            </p>
+                          </div>
+                        </div>
+                      ) : null}
+
+                      {chapter.environmentalHazards && chapter.environmentalHazards.length > 0 ? (
+                        <div className="mt-3 border-t border-royal-700 pt-2.5">
+                          <div className="text-[11px] font-semibold text-carnelian-300">
+                            {t('المخاطر الفضائية والبيئية:', 'Space Weather & Environmental Hazards:')}
+                          </div>
+                          <div className="mt-1.5 space-y-1.5">
+                            {chapter.environmentalHazards.map((hazard) => (
+                              <div key={hazard.id} className="rounded border border-royal-800 bg-lapis-950/70 p-2">
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className="text-xs font-bold text-limestone-100">{l(hazard.name)}</span>
+                                  <span
+                                    className={`rounded px-1.5 py-0.5 font-latin text-[10px] uppercase ${
+                                      hazard.severity === 'critical'
+                                        ? 'border border-carnelian-700 bg-carnelian-900/60 text-carnelian-200'
+                                        : hazard.severity === 'moderate'
+                                          ? 'border border-amber-700 bg-amber-900/60 text-amber-200'
+                                          : 'bg-royal-800 text-limestone-300'
+                                    }`}
+                                  >
+                                    {hazard.severity}
+                                  </span>
+                                </div>
+                                <p className="mt-1 text-[11px] text-limestone-300">{l(hazard.description)}</p>
+                                <div className="mt-1 text-[10px] text-malachite">
+                                  <span className="font-semibold">{t('أسلوب التخفيف: ', 'Mitigation: ')}</span>
+                                  <span className="text-limestone-200">{l(hazard.mitigation)}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
 
                     <aside className="min-w-0 border-t border-royal-700 pt-3 md:border-s md:border-t-0 md:ps-4 md:pt-0">

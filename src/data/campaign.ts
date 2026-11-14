@@ -144,6 +144,73 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
       reservePercent: 12,
       propellantReservePercent: 15,
     }),
+    nasaDossier: {
+      benchmarkMission: {
+        ar: 'مسبار الاستطلاع القمري NASA LRO ومهمة LCROSS',
+        en: 'NASA Lunar Reconnaissance Orbiter (LRO) & LCROSS',
+      },
+      historicalPrecedent: {
+        ar: 'أثبتت قياسات مقياس الارتفاع الليزري LOLA ومستشعر الحرارة Diviner وجود جليد مائي نقي محاصر في فوهات القطب الجنوبي المظلمة دائمًا مثل فوهة شاكلتون.',
+        en: 'LOLA laser altimetry and Diviner thermal data proved pristine water ice is cold-trapped in permanently shadowed polar craters like Shackleton.',
+      },
+      realWorldFacts: [
+        {
+          ar: 'الجاذبية السطحية للقمر هي 1.62 م/ث² (سدس جاذبية الأرض)، وسرعة الإفلات 2.38 كم/ث.',
+          en: 'Lunar surface gravity is 1.62 m/s² (1/6th Earth), and escape velocity is 2.38 km/s.',
+        },
+        {
+          ar: 'الجانب البعيد من القمر هو أهدأ بيئة كهرومغناطيسية في النظام الشمسي الداخلي لحجبه الضوضاء الراديوية للأرض تمامًا.',
+          en: 'The lunar far side is the quietest electromagnetic environment in the inner solar system, completely shielded from terrestrial RFI.',
+        },
+        {
+          ar: 'تتراوح درجات الحرارة السطحية بين -130°C أثناء الليل القمري و+120°C عند الظهيرة.',
+          en: 'Surface temperatures swing from -130°C during the lunar night to +120°C at lunar noon.',
+        },
+      ],
+      primaryChallenge: {
+        ar: 'البقاء خلال الكسوف القمري والتعامل مع التدرجات الحرارية الشديدة بين النور والظلام.',
+        en: 'Surviving lunar eclipses and extreme thermal gradients between sunlit and shadowed sectors.',
+      },
+      engineeringHint: {
+        ar: 'احرص على بطارية لا تقل عن 10 كجم لتجاوز فترات الكسوف. مساحة ألواح شمسية 2.5 م² كافية تمامًا عند 1.0 AU.',
+        en: 'Ensure a battery of at least 10 kg to survive eclipses. A solar area of 2.5 m² is ample at 1.0 AU.',
+      },
+      orbitalData: {
+        distanceAU: '0.00257 AU (384,400 km)',
+        gravityMs2: 1.62,
+        escapeVelocityKms: 2.38,
+        solarIrradianceWm2: 1361,
+        oneWayLightTimeMinutes: 0.021,
+      },
+    },
+    environmentalHazards: [
+      {
+        id: 'lunarThermalShock',
+        name: { ar: 'صدمة حرارية ليلية', en: 'Lunar Night Thermal Shock' },
+        severity: 'moderate',
+        description: {
+          ar: 'انخفاض سريع لدرجة الحرارة إلى ما دون -130°C يتطلب تفريغ بطاريات منتظم لتشغيل سخانات الأجهزة.',
+          en: 'Rapid plunge below -130°C requiring steady battery draw to maintain instrument survival heaters.',
+        },
+        mitigation: {
+          ar: 'تخصيص سعة بطارية كافية مع تدفئة كهروحرارية ذاتية.',
+          en: 'Allocate sufficient battery capacity with autonomous electric heaters.',
+        },
+      },
+      {
+        id: 'regolithAdhesion',
+        name: { ar: 'التصاق الغبار الكهروستاتيكي', en: 'Electrostatic Regolith Dust Adhesion' },
+        severity: 'low',
+        description: {
+          ar: 'جسيمات الغبار المشحونة كهرومغناطيسيًا تلتصق بالعدسات والألواح وتقلل كفاءة الرصد.',
+          en: 'Electrostatically lofted sub-micron dust clings to optics and panels, reducing transmission.',
+        },
+        mitigation: {
+          ar: 'تنظيف أجهزة الاستشعار واستخدام طلاءات مضادة للشحن الكهروستاتيكي.',
+          en: 'Optical baffles and conductive indium-tin-oxide surface coatings.',
+        },
+      },
+    ],
   },
   {
     id: 'mars-dust',
@@ -216,6 +283,73 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
       reservePercent: 12,
       propellantReservePercent: 15,
     }),
+    nasaDossier: {
+      benchmarkMission: {
+        ar: 'مركبة استطلاع المريخ NASA MRO ومسبار MAVEN ومسبار الأمل',
+        en: 'NASA Mars Reconnaissance Orbiter (MRO), MAVEN & Hope Probe',
+      },
+      historicalPrecedent: {
+        ar: 'كشفت كاميرا HiRISE ومسبار MAVEN عن معدلات تجريد الرياح الشمسية للغلاف الجوي المريخي الرقيق بمعدل 100 غرام/ثانية، ورصدت ديناميكيات العواصف الغبارية العالمية.',
+        en: 'HiRISE imagery and MAVEN revealed solar wind sputtering strips Mars upper atmosphere at 100 g/s, tracking global dust storm dynamics.',
+      },
+      realWorldFacts: [
+        {
+          ar: 'متوسط بعد المريخ عن الشمس 1.524 AU، مما يقلص التدفق الشمسي إلى 590 واط/م² فقط (43% من الأرض).',
+          en: 'Mars sits at 1.524 AU, reducing solar irradiance to only 590 W/m² (43% of Earth).',
+        },
+        {
+          ar: 'الغلاف الجوي رقيق للغاية بضغط سطحي 610 باسكال (أقل من 1% من ضغط الأرض) ومعظمه ثاني أكسيد الكربون.',
+          en: 'Surface pressure averages 610 Pa (<1% of Earth), composed of 95% carbon dioxide.',
+        },
+        {
+          ar: 'العواصف الغبارية العالمية تحجب ما يصل إلى 99% من ضوء الشمس الساقط لعدة أشهر متواصلة.',
+          en: 'Global dust storms can block up to 99% of incident sunlight for months at a time.',
+        },
+      ],
+      primaryChallenge: {
+        ar: 'انخفاض الطاقة الشمسية وتلاشي الإشارة الراديوية عبر مسافات سحيقة تصل إلى 2.5 AU في نقطة الاقتران.',
+        en: 'Solar power degradation and telecom attenuation across distances up to 2.5 AU at conjunction.',
+      },
+      engineeringHint: {
+        ar: 'استخدم نطاق X أو Ka مع هوائي MGA/HGA، وارفع مساحة الألواح الشمسية إلى 4 م² أو ادعمها ببطارية احتياطية أكبر.',
+        en: 'Deploy X or Ka band with an MGA/HGA antenna, and expand solar array to 4 m² or boost battery reserves.',
+      },
+      orbitalData: {
+        distanceAU: '1.524 AU (227.9M km)',
+        gravityMs2: 3.72,
+        escapeVelocityKms: 5.03,
+        solarIrradianceWm2: 586,
+        oneWayLightTimeMinutes: 12.6,
+      },
+    },
+    environmentalHazards: [
+      {
+        id: 'martianDustStorm',
+        name: { ar: 'عاصفة غبارية كوكبية', en: 'Planet-Encircling Dust Storm' },
+        severity: 'critical',
+        description: {
+          ar: 'غبار أكسيد الحديد المعلق في الغلاف الجوي يحجب الإشعاع الشمسي بنسبة تصل إلى 80%.',
+          en: 'Atmospheric ferric oxide dust elevates optical depth above 4.0, cutting solar flux by 80%.',
+        },
+        mitigation: {
+          ar: 'تكبير مساحة الألواح بنسبة 35% وإضافة بطاريات ذات سعة تفريغ ممتدة.',
+          en: 'Oversize solar array margins and maintain deep-cycle lithium-ion reserves.',
+        },
+      },
+      {
+        id: 'solarWindSputtering',
+        name: { ar: 'تجريد الرياح الشمسية', en: 'Solar Wind Induced Atmospheric Drag' },
+        severity: 'moderate',
+        description: {
+          ar: 'تفاعلات الرياح الشمسية غير المصدودة بغلاف مغناطيسي تسبب اضطرابات في كثافة الغلاف الجوي العلوي.',
+          en: 'Unshielded solar wind interactions cause unpredictable scale height expansions in the exobase.',
+        },
+        mitigation: {
+          ar: 'رفع الحضيض المداري لتجنب مقاومة الغاز المتبقي.',
+          en: 'Maintain periapsis above 250 km to minimize atmospheric torque and decay.',
+        },
+      },
+    ],
   },
   {
     id: 'bennu-letter',
@@ -288,6 +422,73 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
       reservePercent: 12,
       propellantReservePercent: 15,
     }),
+    nasaDossier: {
+      benchmarkMission: {
+        ar: 'مهمة NASA OSIRIS-REx لجمع عينات الكويكبات',
+        en: 'NASA OSIRIS-REx Asteroid Sample Return Mission',
+      },
+      historicalPrecedent: {
+        ar: 'أكدت قياسات OSIRIS-REx أن كويكب بنو عبارة عن كومة ركامية مسامية غنية بالكربون والمعادن المائية يعود تاريخها إلى فجر النظام الشمسي.',
+        en: 'OSIRIS-REx confirmed Bennu is a microgravity rubble-pile asteroid rich in carbon and hydrated minerals from the dawn of the solar system.',
+      },
+      realWorldFacts: [
+        {
+          ar: 'الجاذبية السطحية متناهية الصغر وتبلغ 0.000008 م/ث²، مما يجعل التماسك بين أجزائه ناتجاً عن قوى فان دير فالس.',
+          en: 'Surface gravity is an ultra-weak 0.000008 m/s², where cohesive forces dominate over gravity.',
+        },
+        {
+          ar: 'يغير تأثير ياركوفسكي الحراري مدار بنو بمقدار 284 متراً سنوياً.',
+          en: 'The Yarkovsky thermal thrust shifts Bennus orbit by 284 meters every year.',
+        },
+        {
+          ar: 'عادت كبسولة عينات OSIRIS-REx إلى الأرض في سبتمبر 2023 محملة بـ 121.6 غرام من المادة البكر.',
+          en: 'The OSIRIS-REx capsule returned to Earth in Sep 2023 with 121.6 g of pristine asteroid material.',
+        },
+      ],
+      primaryChallenge: {
+        ar: 'توفير دلتا-في مضاعفة للذهاب والعودة، مع حمل كبسولة عينات ثقيلة ودرع إعادة الدخول.',
+        en: 'Providing two-way Delta-V for Earth departure and return while hauling a heavy sample capsule and heat shield.',
+      },
+      engineeringHint: {
+        ar: 'اختر صاروخ فالكون 9 لتأمين طاقة إطلاق C3 عالية، وحافظ على كبسولة العينات ضمن الحمولة، واستخدم مرحلة دفع ثنائية.',
+        en: 'Select Falcon 9 to secure high C3 launch energy, keep the sample capsule loaded, and use bipropellant propulsion.',
+      },
+      orbitalData: {
+        distanceAU: '1.126 AU (168.4M km)',
+        gravityMs2: 0.000008,
+        escapeVelocityKms: 0.0002,
+        solarIrradianceWm2: 1073,
+        oneWayLightTimeMinutes: 9.3,
+      },
+    },
+    environmentalHazards: [
+      {
+        id: 'particleEjection',
+        name: { ar: 'انبعاث جسيمات من السطح', en: 'Active Surface Particle Ejection' },
+        severity: 'moderate',
+        description: {
+          ar: 'ينفث بنو شظايا صخرية دقيقة في الفضاء المحيط بسبب التكسر الحراري للنيازك الدقيقة.',
+          en: 'Thermal fracturing triggers spontaneous ejection of centimeter-scale pebbles into proximity orbit.',
+        },
+        mitigation: {
+          ar: 'الحفاظ على مسار طيران نسبي وتحديد مسافة اقتراب آمنة.',
+          en: 'Adopt hyperbolic flyby trajectories with standoff distances during initial survey.',
+        },
+      },
+      {
+        id: 'surfaceFluidity',
+        name: { ar: 'مقاومة سطحية غير متماسكة', en: 'Porous Regolith Fluidization' },
+        severity: 'critical',
+        description: {
+          ar: 'يتصرف السطح كسائل غير متماسك تحت الضغط مما قد يبتلع أذرع أخذ العينات إذا لم تكن مزودة بآلية ارتداد فوري.',
+          en: 'Surface behaves like a fluid bed upon contact; touching without immediate back-away thrusters risks sinking.',
+        },
+        mitigation: {
+          ar: 'استخدام آلية TAGSAM مجهزة بغاز نيتروجين مضغوط مع مناورة ارتداد فورية.',
+          en: 'Deploy nitrogen gas burst with autonomous reverse burn within 5 seconds of touch.',
+        },
+      },
+    ],
   },
   {
     id: 'venus-trial',
@@ -360,6 +561,73 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
       reservePercent: 12,
       propellantReservePercent: 15,
     }),
+    nasaDossier: {
+      benchmarkMission: {
+        ar: 'مهمات NASA DAVINCI و VERITAS وماجلان',
+        en: 'NASA DAVINCI, VERITAS & Magellan Missions',
+      },
+      historicalPrecedent: {
+        ar: 'رسم رادار ماجلان 98% من تضاريس الزهرة البركانية، وتستعد مهمة DAVINCI للغوص عبر الغلاف الجوي لقياس الغازات النبيلة والحرارة.',
+        en: 'Magellan radar mapped 98% of Venus volcanic topography, while DAVINCI prepares to probe noble gases in the deep atmosphere.',
+      },
+      realWorldFacts: [
+        {
+          ar: 'الضغط الجوي السطحي 92 بار يعادل الغوص 900 متر تحت محيطات الأرض.',
+          en: 'Surface atmospheric pressure is 92 bar, equivalent to 900 m depth in Earth oceans.',
+        },
+        {
+          ar: 'تصل درجة الحرارة السطحية إلى 465°C بسبب الاحتباس الحراري الفائق، كافية لصهر الرصاص.',
+          en: 'Surface heat reaches 465°C due to runaway greenhouse effect, hot enough to melt lead.',
+        },
+        {
+          ar: 'سحب حمض الكبريتيك المركزة بين ارتفاع 48 و68 كم تعكس 75% من ضوء الشمس.',
+          en: 'Sulfuric acid cloud decks between 48 and 68 km reflect 75% of sunlight.',
+        },
+      ],
+      primaryChallenge: {
+        ar: 'الانهيار الحراري السريع وانعدام الضوء على السطح مما يمنع الألواح الشمسية.',
+        en: 'Rapid thermal soak and darkness at the surface making solar panels useless.',
+      },
+      engineeringHint: {
+        ar: 'اعتمد على البطاريات فقط للهبوط مع بطارية 60 كجم، واستخدم درعًا حراريًا، ونطاق X عالي القدرة مع محطة DSN 34.',
+        en: 'Rely solely on chemical batteries (60 kg) for descent with heat shielding and high-power X-band.',
+      },
+      orbitalData: {
+        distanceAU: '0.723 AU (108.2M km)',
+        gravityMs2: 8.87,
+        escapeVelocityKms: 10.36,
+        solarIrradianceWm2: 2601,
+        oneWayLightTimeMinutes: 6.0,
+      },
+    },
+    environmentalHazards: [
+      {
+        id: 'supercriticalAcid',
+        name: { ar: 'وسط حمضي فائق الحرج', en: 'Supercritical Acidic Medium' },
+        severity: 'critical',
+        description: {
+          ar: 'غلاف جوي من ثاني أكسيد الكربون فائق الحرج مشبع ببخار حمض الكبريتيك يهاجم الوصلات المعدنية المكشوفة.',
+          en: 'Dense supercritical CO2 laced with sulfuric acid vapors rapidly corrodes structural seals.',
+        },
+        mitigation: {
+          ar: 'تغليف الهيكل بسبائك التيتانيوم ومواد السيراميك العازلة.',
+          en: 'Encase vital electronics in hermetically sealed titanium pressure spheres.',
+        },
+      },
+      {
+        id: 'thermalRunaway',
+        name: { ar: 'انفلات حراري سطحي', en: 'Surface Thermal Soak' },
+        severity: 'critical',
+        description: {
+          ar: 'درجة حرارة 465°C تخترق العوازل تدريجيًا وتسبب فشل الدوائر المتكاملة خلال ساعتين.',
+          en: 'Ambient 738 K temperatures overwhelm passive insulation, degrading silicon chips within 120 minutes.',
+        },
+        mitigation: {
+          ar: 'استخدام بطاريات امتصاص حراري ونقل أكبر قدر من البيانات أثناء الهبوط المظلي.',
+          en: 'Phase-change thermal sinks and prioritized high-rate data downlink during parachute descent.',
+        },
+      },
+    ],
   },
   {
     id: 'jupiter-eye',
@@ -431,6 +699,73 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
       reservePercent: 12,
       propellantReservePercent: 15,
     }),
+    nasaDossier: {
+      benchmarkMission: {
+        ar: 'مهمات NASA جونو ويوروبا كليبر وغاليليو',
+        en: 'NASA Juno, Europa Clipper & Galileo Missions',
+      },
+      historicalPrecedent: {
+        ar: 'أثبتت قياسات غاليليو وجونو أن حزام إشعاع المشتري يحمل ملايين الإلكترونات النسبية المحصورة، وتتطلب المهمات خزنة تيتانيوم سميكة لحماية الإلكترونيات.',
+        en: 'Galileo and Juno proved Jupiters radiation belts trap relativistic electrons, requiring heavy titanium vaults to protect electronics.',
+      },
+      realWorldFacts: [
+        {
+          ar: 'بعد المشتري 5.20 AU يقلص الطاقة الشمسية إلى 50 واط/م² فقط (أقل من 4% من الأرض).',
+          en: 'Jupiter at 5.20 AU slashes solar flux to 50 W/m² (<4% of Earth).',
+        },
+        {
+          ar: 'الحقل المغناطيسي أقوى بـ 20,000 مرة من الأرض ويولد إشعاع سنكروتروني فتاك.',
+          en: 'The magnetic field is 20,000x stronger than Earth, generating lethal synchrotron radiation.',
+        },
+        {
+          ar: 'جاذبية المشتري الهائلة تتطلب دلتا-في كبح مداري ضخمة أو مناورات مساعدة جاذبية دقيقة.',
+          en: 'Massive Jovian gravity requires substantial orbital capture Delta-V or precision gravity assists.',
+        },
+      ],
+      primaryChallenge: {
+        ar: 'التلف الإشعاعي الفوري وعجز الألواح الشمسية العادية على هذا البعد السحيق.',
+        en: 'Severe radiation damage and total insufficiency of regular solar arrays at 5.2 AU.',
+      },
+      engineeringHint: {
+        ar: 'استخدم مولدين نوويين RTG، وفعّل تدريع الإشعاع (radHard: true)، وتواصل عبر هوائي DSN 70m.',
+        en: 'Equip 2 nuclear RTGs, enable radiation hardening (radHard: true), and link via DSN 70m dish.',
+      },
+      orbitalData: {
+        distanceAU: '5.204 AU (778.5M km)',
+        gravityMs2: 24.79,
+        escapeVelocityKms: 59.5,
+        solarIrradianceWm2: 50.3,
+        oneWayLightTimeMinutes: 43.2,
+      },
+    },
+    environmentalHazards: [
+      {
+        id: 'jovianSynchrotron',
+        name: { ar: 'أحزمة إشعاع سنكروتروني قاسية', en: 'Severe Jovian Synchrotron Belts' },
+        severity: 'critical',
+        description: {
+          ar: 'جسيمات مشحونة عالية الطاقة تخترق المكونات وتسبب أخطاء بتات مفردة (SEUs) أو انهيار عوازل السيليكون.',
+          en: 'Trapped relativistic electrons induce Single Event Upsets (SEUs) and deep dielectric charging.',
+        },
+        mitigation: {
+          ar: 'تفعيل خيار الإلكترونيات المقاومة للإشعاع (Radiation Hardening) مع هيكل تيتانيوم مضاعف.',
+          en: 'Mandate rad-hardened silicon-on-insulator chips shielded by titanium vaults.',
+        },
+      },
+      {
+        id: 'extremeLightLag',
+        name: { ar: 'تأخر الإشارة الراديوية (43 دقيقة)', en: '43-Minute One-Way Light Delay' },
+        severity: 'moderate',
+        description: {
+          ar: 'التأخير الزمني الضخم يجعل التحكم المباشر من الأرض مستحيلاً ويتطلب إدارة ذاتية كاملة.',
+          en: 'Huge round-trip telecom latency rules out human-in-the-loop crisis intervention.',
+        },
+        mitigation: {
+          ar: 'برمجة خوارزميات إبحار ذاتية واختيار محطة DSN 70 م لزيادة معامل الكسب.',
+          en: 'Deploy autonomous fault protection and utilize DSN 70m high-gain downlink.',
+        },
+      },
+    ],
   },
   {
     id: 'ceres-horizon',
@@ -503,6 +838,73 @@ export const CAMPAIGN_CHAPTERS: CampaignChapter[] = [
       reservePercent: 12,
       propellantReservePercent: 15,
     }),
+    nasaDossier: {
+      benchmarkMission: {
+        ar: 'مهمة NASA داون (Dawn) لكوكب سيريس القزم',
+        en: 'NASA Dawn Mission to Dwarf Planet Ceres',
+      },
+      historicalPrecedent: {
+        ar: 'اكتشف مسبار Dawn بقع أوكاتور الساطعة (Cerealia Faculae) المكونة من كربونات الصوديوم الناتجة عن محيط ملحي جوفي متجمد وبراكين جليدية (Ahuna Mons).',
+        en: 'Dawn discovered the bright faculae of Occator Crater formed by sodium carbonate brine from a relict subsurface reservoir and cryovolcano Ahuna Mons.',
+      },
+      realWorldFacts: [
+        {
+          ar: 'سيريس هو أكبر جسم في حزام الكويكبات بقطر 940 كم ويحتوي على ثلث كتلة الحزام بالكامل.',
+          en: 'Ceres is the largest asteroid belt body (940 km diameter), holding 1/3 of the entire belt mass.',
+        },
+        {
+          ar: 'يقع سيريس عند 2.77 AU، وتدفق الشمس عليه 177 واط/م².',
+          en: 'Ceres orbits at 2.77 AU with a solar flux of 177 W/m².',
+        },
+        {
+          ar: 'سرعة الإفلات 0.51 كم/ث وجاذبيته 0.28 م/ث²، مما يتيح مدارات علمية منخفضة وفعالة.',
+          en: 'Escape velocity is 0.51 km/s with gravity of 0.28 m/s², enabling highly efficient low mapping orbits.',
+        },
+      ],
+      primaryChallenge: {
+        ar: 'تحقيق تقدير امتياز S ونقل حجم بيانات علمية ضخم يتجاوز 40 جيجابايت مع هامش ميزانية منضبط.',
+        en: 'Achieving an S-rank debrief while downlinking a massive 40+ GB scientific payload under tight budget.',
+      },
+      engineeringHint: {
+        ar: 'اجمع بين ألواح شمسية 4 م² ومولد RTG واحد، وضع هوائي HGA مع تردد Ka لنقل البيانات بأعلى سرعة.',
+        en: 'Combine 4 m² solar arrays with 1 RTG, and use an HGA on Ka-band for maximum data throughput.',
+      },
+      orbitalData: {
+        distanceAU: '2.767 AU (413.9M km)',
+        gravityMs2: 0.28,
+        escapeVelocityKms: 0.51,
+        solarIrradianceWm2: 177,
+        oneWayLightTimeMinutes: 23.0,
+      },
+    },
+    environmentalHazards: [
+      {
+        id: 'micrometeoroidBelt',
+        name: { ar: 'كثافة نيازك حزام الكويكبات', en: 'Main Asteroid Belt Debris Flux' },
+        severity: 'moderate',
+        description: {
+          ar: 'العبور في قلب حزام الكويكبات يرفع احتمالية الاصطدامات النيزكية الدقيقة.',
+          en: 'Transit through the main asteroid belt increases cumulative micrometeoroid collision probability.',
+        },
+        mitigation: {
+          ar: 'تضمين طبقات Whipple shield واختيار تكرار الأنظمة الفردية.',
+          en: 'Equip Kevlar Whipple bumpers and single-fault redundancy.',
+        },
+      },
+      {
+        id: 'cryoVaporPlumes',
+        name: { ar: 'أبخرة تسامي جليدية عابرة', en: 'Transient Water Vapor Sublimation' },
+        severity: 'low',
+        description: {
+          ar: 'تسامي جليد الماء السطحي تحت أشعة الشمس قد يولد قوى عزم دورانية خفيفة على المركبة.',
+          en: 'Localized sublimation of water ice near sub-solar points generates faint torques on attitude control.',
+        },
+        mitigation: {
+          ar: 'معايرة عجلات العزم (Reaction Wheels) لمقاومة الاضطراب الطفيف.',
+          en: 'Trim reaction wheel desaturation cycles during low-altitude passes.',
+        },
+      },
+    ],
   },
 ];
 

@@ -5,6 +5,7 @@ import { useDesign } from '../store/useDesign';
 import { useMissionStore } from '../store/useMissionStore';
 import { AmunLogo } from './AmunLogo';
 import { DashboardGrid } from './Dashboard';
+import { IconRocket } from './Icons';
 import { Stepper } from './Stepper';
 import { TargetImage } from './TargetImage';
 
@@ -14,7 +15,7 @@ const TRANSFER_LABEL: Record<TransferType, { ar: string; en: string }> = {
   assist: { ar: 'مساعدة جاذبية', en: 'Gravity assist' },
 };
 
-export function Sidebar({ onLearn }: { onLearn: () => void }) {
+export function Sidebar({ onLearn, onProject }: { onLearn: () => void; onProject?: () => void }) {
   const design = useDesign();
   const l = useL();
   const t = useT();
@@ -102,6 +103,20 @@ export function Sidebar({ onLearn }: { onLearn: () => void }) {
         <button type="button" onClick={onLearn} className="btn-ghost mt-4 w-full text-xs">
           {t('افتح لوحة تعلّم', 'Open the Learn panel')}
         </button>
+
+        {onProject ? (
+          <button
+            type="button"
+            onClick={onProject}
+            className="mt-2 flex w-full items-center justify-between border border-royal-700 bg-royal-950/40 px-3 py-2 text-xs text-limestone-200 transition-colors hover:border-ochre-400 hover:text-ochre-300"
+          >
+            <span className="flex items-center gap-2">
+              <IconRocket className="h-3.5 w-3.5 text-ochre-400" />
+              <span>{t('دليل المشروع وطاقم العمل', 'Project Dossier & Team')}</span>
+            </span>
+            <span className="font-latin text-[10px] text-ochre-300">↗</span>
+          </button>
+        ) : null}
       </div>
 
       <div className="border-t border-royal-700 px-4 py-3">
