@@ -8,6 +8,9 @@ import { useActiveChapter } from '../store/useCampaign';
 import { CampaignStarRating, CAMPAIGN_ACCENTS, ChapterPatch } from './CampaignArt';
 import { StatusPill } from './Badges';
 import { IconCheck, IconCross, IconDice, IconFlag, IconLock, IconPlay, IconReset, IconTarget } from './Icons';
+import { targetById } from '../data/targets';
+import { difficultyById, missionTypeById } from '../data/missions';
+import { TargetImage } from './TargetImage';
 
 /**
  * Campaign payoff for the evaluation step: the chapter ending, the objectives
@@ -33,6 +36,9 @@ export function CampaignDebrief({ onOpenCampaign }: { onOpenCampaign: () => void
   const evaluation = evaluateCampaignChapter(chapter, design, simulation, score);
   const record = campaign.completed[chapter.id];
   const next = nextCampaignChapter(chapter.id);
+  const nextTarget = next ? targetById[next.targetId] : null;
+  const nextMissionType = next ? missionTypeById[next.missionType] : null;
+  const nextDifficulty = next ? difficultyById[next.difficulty] : null;
   const progress = campaignProgress(campaign.completed);
   const stars = evaluation.stars;
   const bestStars = record?.stars ?? stars;
@@ -283,6 +289,126 @@ export function CampaignDebrief({ onOpenCampaign }: { onOpenCampaign: () => void
             </div>
           </div>
         </div>
+
+        {/* Dedicated Next Chapter Showcase with Full Details & Launch Button */}
+        {(evaluation.completed || completedEver) && next && nextTarget ? (
+          <div className="mt-6 overflow-hidden rounded-2xl border-2 border-ochre-400/90 bg-gradient-to-b sm:bg-gradient-to-r from-royal-950 via-lapis-900 to-royal-950 p-4 sm:p-6 shadow-2xl">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-5">
+              <div className="relative shrink-0 text-center">
+                <TargetImage
+                  target={nextTarget}
+                  className="h-28 w-28 sm:h-36 sm:w-36 rounded-2xl border-2 border-ochre-400 object-cover shadow-[0_0_25px_rgba(227,169,47,0.35)] ring-4 ring-royal-900/80 mx-auto"
+                  compact
+                />
+                <span className="mt-2 inline-block rounded-full bg-ochre-500/20 border border-ochre-400/60 px-2.5 py-0.5 font-latin text-[10px] font-bold text-ochre-300">
+                  {next.code} • {next.year}
+                </span>
+              </div>
+
+              <div className="min-w-0 flex-1 text-center md:text-start">
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                  <span className="rounded-full bg-malachite/20 border border-malachite/60 px-3 py-0.5 font-latin text-xs font-bold uppercase tracking-wider text-malachite">
+                    {t(`الفصل التالي 0${next.number} متاح الآن 🚀`, `Next Chapter 0${next.number} Unlocked 🚀`)}
+                  </span>
+                  <span className="rounded bg-royal-700/60 px-2.5 py-0.5 text-xs text-limestone-200">
+                    {t('الهدف:', 'Target:')} <span className="font-bold text-limestone-50">{l(nextTarget.name)}</span>
+                  </span>
+                  {nextMissionType ? (
+                    <span className="rounded bg-royal-700/60 px-2.5 py-0.5 text-xs text-limestone-200">
+                      {t('نوع المهمة:', 'Mission:')} <span className="text-ochre-300">{l(nextMissionType.name)}</span>
+                    </span>
+                  ) : null}
+                  {nextDifficulty ? (
+                    <span className="rounded bg-royal-700/60 px-2.5 py-0.5 text-xs text-limestone-200">
+                      {t('المستوى:', 'Tier:')} <span className="text-amber">{l(nextDifficulty.name)}</span>
+                    </span>
+                  ) : null}
+                </div>
+
+                <h3 className="mt-2.5 font-display text-xl sm:text-2xl font-bold text-limestone-50">
+                  {l(next.title)}
+                  <span className="ms-2 text-base sm:text-lg font-normal text-ochre-300">
+                    — {l(next.subtitle)}
+                  </span>
+                </h3>
+
+                <p className="mt-2 text-xs sm:text-sm leading-relaxed text-limestone-200">
+                  {l(next.objective)}
+                </p>
+
+                <p className="mt-1 text-xs text-limestone-400 italic">
+                  {l(next.briefing)}
+                </p>
+
+                {next.nasaDossier?.benchmarkMission ? (
+                  <div className="mt-3 flex flex-wrap items-center justify-center md:justify-start gap-2 rounded-xl border border-royal-800 bg-lapis-950/70 p-2.5 text-xs text-limestone-300">
+                    <span className="font-bold text-ochre-400">
+                      {t('مهمة ناسا المرجعية:', 'NASA Benchmark:')}
+                    </span>
+                    <span className="font-latin text-limestone-100 font-semibold">
+                      {l(next.nasaDossier.benchmarkMission)}
+                    </span>
+                  </div>
+                ) : null}
+
+                {/* Direct Big Action Button */}
+                <div className="mt-4 flex flex-col sm:flex-row items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={advance}
+                    className="btn-primary w-full sm:w-auto !min-h-[48px] !px-6 text-sm sm:text-base font-bold shadow-2xl flex items-center justify-center gap-2 transition-transform hover:scale-[1.02]"
+                  >
+                    <IconPlay className="h-5 w-5" />
+                    <span>
+                      {t(
+                        `ابدأ الفصل 0${next.number}: ${l(next.title)} (${l(nextTarget.name)}) 🚀`,
+                        `Launch Chapter 0${next.number}: ${l(next.title)} (${l(nextTarget.name)}) 🚀`,
+                      )}
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={onOpenCampaign}
+                    className="btn-ghost !min-h-[42px] !px-4 text-xs text-limestone-300 hover:text-limestone-100"
+                  >
+                    <IconFlag className="h-4 w-4 text-ochre-400" />
+                    <span>{t('عرض خريطة الحملة الكاملة', 'View Campaign Map')}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        {/* Campaign Grand Finale (When Chapter 6 is completed) */}
+        {(evaluation.completed || completedEver) && !next ? (
+          <div className="mt-6 overflow-hidden rounded-2xl border-2 border-malachite/80 bg-gradient-to-b sm:bg-gradient-to-r from-royal-950 via-lapis-900 to-royal-950 p-4 sm:p-6 shadow-2xl">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <span className="rounded-full bg-malachite/20 border border-malachite/60 px-3 py-0.5 text-xs font-bold text-malachite">
+                  {t('اكتملت الحملة بالكامل! 🏆', 'Campaign 100% Complete! 🏆')}
+                </span>
+                <h3 className="mt-2 font-display text-xl sm:text-2xl font-bold text-limestone-50">
+                  {t('لقد بلغت أفق آمون بنجاح!', 'You reached the AMUN Horizon!')}
+                </h3>
+                <p className="mt-1 text-xs sm:text-sm text-limestone-200">
+                  {t(
+                    'تم إتمام جميع الفصول الستة واستكشاف أسرار النظام الشمسي. شهادتك وسجلك جاهزان الآن.',
+                    'All six chapters completed, unlocking the grand campaign certificate and full narrative lore.',
+                  )}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={onOpenCampaign}
+                className="btn-primary !min-h-[46px] !px-6 text-sm font-bold shadow-xl"
+              >
+                <span>{t('عرض شهادة وسجل الحملة 🎖️', 'View Campaign Certificate 🎖️')}</span>
+              </button>
+            </div>
+          </div>
+        ) : null}
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import type { AttemptSummary, DecisionImpact, ScoreResult, TransferType } from '../data/types';
 import { missionTypeById } from '../data/missions';
 import { targetById } from '../data/targets';
+import { nextCampaignChapter } from '../data/campaign';
 import { useL, useLang, useT } from '../i18n';
 import { fmt, fmtDateTime, fmtMoney, fmtPct } from '../lib/format';
 import { useDesign } from '../store/useDesign';
@@ -331,11 +332,16 @@ export function Step11Evaluation({
   const chapter = useActiveChapter();
   const simulation = useMissionStore((state) => state.simulation);
   const score = useMissionStore((state) => state.score);
+  const campaign = useMissionStore((state) => state.campaign);
+  const startCampaignChapter = useMissionStore((state) => state.startCampaignChapter);
   const attempts = useMissionStore((state) => state.attempts);
   const setStep = useMissionStore((state) => state.setStep);
   const replaySameChoices = useMissionStore((state) => state.replaySameChoices);
   const replaySameSeed = useMissionStore((state) => state.replaySameSeed);
   const replayFromScratch = useMissionStore((state) => state.replayFromScratch);
+
+  const next = chapter ? nextCampaignChapter(chapter.id) : null;
+  const isChapterCompleted = chapter ? Boolean(campaign.completed[chapter.id]) : false;
 
   const openSimulation = () => {
     setStep(10);
@@ -751,6 +757,39 @@ export function Step11Evaluation({
             </button>
           </div>
         </Section>
+      ) : null}
+
+      {chapter && isChapterCompleted && next ? (
+        <div className="rounded-2xl border-2 border-ochre-400/90 bg-gradient-to-r from-royal-950 via-lapis-900 to-royal-950 p-4 sm:p-5 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="min-w-0 text-center sm:text-start">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+              <span className="rounded-full bg-malachite/20 border border-malachite/60 px-2.5 py-0.5 font-latin text-[10px] font-bold text-malachite">
+                {t(`الفصل التالي 0${next.number} متاح 🚀`, `Next Chapter 0${next.number} Unlocked 🚀`)}
+              </span>
+              <span className="font-latin text-xs text-limestone-300">
+                {next.code} • {next.year}
+              </span>
+            </div>
+            <h4 className="mt-1 font-display text-base sm:text-lg font-bold text-limestone-50">
+              {l(next.title)}: <span className="text-ochre-300 font-normal">{l(next.subtitle)}</span>
+            </h4>
+            <p className="mt-0.5 text-xs text-limestone-200">
+              {l(next.objective)}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (startCampaignChapter(next.id)) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
+            className="btn-primary w-full sm:w-auto !min-h-[46px] !px-6 text-sm font-bold shadow-xl flex items-center justify-center gap-2 shrink-0 hover:scale-[1.02] transition-transform"
+          >
+            <IconPlay className="h-5 w-5" />
+            <span>{t(`ابدأ الفصل 0${next.number}: ${l(next.title)} 🚀`, `Launch Chapter 0${next.number}: ${l(next.title)} 🚀`)}</span>
+          </button>
+        </div>
       ) : null}
 
       <SimplifiedNote>
