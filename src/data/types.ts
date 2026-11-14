@@ -44,6 +44,8 @@ export interface TargetImage {
   url: string;
   credit: string;
   title: string;
+  /** Agency that produced the photograph, shown on the image plate. */
+  source?: 'NASA' | 'ESA' | 'JAXA' | 'NASA/ESA';
   nasaId?: string;
   illustrative?: boolean;
 }

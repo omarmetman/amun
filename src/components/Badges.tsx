@@ -34,7 +34,7 @@ const SOURCE_SHORT: Record<SourceKey, { ar: string; en: string }> = {
   horizons: { ar: 'Horizons', en: 'Horizons' },
   sbdb: { ar: 'SBDB', en: 'SBDB' },
   ntrs: { ar: 'NTRS', en: 'NTRS' },
-  nasaImages: { ar: 'صور NASA', en: 'NASA Images' },
+  nasaImages: { ar: 'صور المهام', en: 'Imagery' },
   basics: { ar: 'أساسيات الطيران', en: 'Basics' },
   nasaFact: { ar: 'Fact Sheet', en: 'Fact Sheet' },
   dsn: { ar: 'DSN', en: 'DSN' },

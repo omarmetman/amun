@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DIFFICULTIES } from '../data/missions';
 import { ACHIEVEMENT_COUNT } from '../data/achievements';
 import { CAMPAIGN, CAMPAIGN_CHAPTERS, campaignProgress } from '../data/campaign';
+import { GITHUB, LIVE_LAB } from '../data/links';
 import { isChapterUnlocked } from '../engine/campaign';
 import { useL, useLang, useT } from '../i18n';
 import { fmt, fmtDateTime, fmtMoney } from '../lib/format';
@@ -68,12 +69,17 @@ export function Welcome({
     window.scrollTo({ top: 0 });
   };
 
+  const goToStage = (next: number) => {
+    setStage(next);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen">
       <Frieze className="text-royal-500" />
 
       <SiteHeader
-        onLogoClick={() => setStage(1)}
+        onLogoClick={() => goToStage(1)}
         context={
           <div className="min-w-0">
             <div className="text-[10px] leading-none text-limestone-400">
@@ -93,6 +99,32 @@ export function Welcome({
             : []),
         ]}
         menuGroups={[
+          {
+            title: t('ابدأ من هنا', 'Start here'),
+            items: [
+              {
+                key: 'welcome-intro',
+                label: t('المقدمة', 'Introduction'),
+                icon: <IconBook className="h-4 w-4 text-royal-300" />,
+                active: stage === 1,
+                onClick: () => goToStage(1),
+              },
+              {
+                key: 'welcome-brief',
+                label: t('الموجز الكامل', 'Full mission brief'),
+                icon: <IconTarget className="h-4 w-4 text-royal-300" />,
+                active: stage === 2,
+                onClick: () => goToStage(2),
+              },
+              {
+                key: 'welcome-start',
+                label: t('بدء مهمة جديدة', 'Start a new mission'),
+                icon: <IconRocket className="h-4 w-4 text-ochre-300" />,
+                active: stage === 3,
+                onClick: () => goToStage(3),
+              },
+            ],
+          },
           ...(onProject || onNasaData
             ? [
                 {
@@ -122,32 +154,49 @@ export function Welcome({
                 },
               ]
             : []),
-          ...(onProfile
+          ...(onProfile || onCampaign
             ? [
                 {
-                  title: t('القائد', 'Commander'),
+                  title: t('القائد والحملة', 'Commander & campaign'),
                   items: [
-                    {
-                      key: 'profile',
-                      label: t('ملف القائد والإنجازات', 'Commander profile & achievements'),
-                      hint: `${unlockedCount}/${ACHIEVEMENT_COUNT}`,
-                      icon: <IconMedal className="h-4 w-4 text-ochre-300" />,
-                      onClick: onProfile,
-                    },
+                    ...(onProfile
+                      ? [
+                          {
+                            key: 'profile',
+                            label: t('ملف القائد والإنجازات', 'Commander profile & achievements'),
+                            hint: `${unlockedCount}/${ACHIEVEMENT_COUNT}`,
+                            icon: <IconMedal className="h-4 w-4 text-ochre-300" />,
+                            onClick: onProfile,
+                          },
+                        ]
+                      : []),
+                    ...(onCampaign
+                      ? [
+                          {
+                            key: 'campaign',
+                            label: t('حملة أفق آمون', 'AMUN Horizon campaign'),
+                            icon: <IconFlag className="h-4 w-4 text-ochre-300" />,
+                            onClick: onCampaign,
+                          },
+                        ]
+                      : []),
                   ],
                 },
               ]
             : []),
+          {
+            title: t('المعمل والكود', 'Lab & code'),
+            items: [
+              { key: 'lab', label: t('المعمل التفاعلي الحي', 'Live interactive lab'), href: LIVE_LAB },
+              { key: 'github', label: 'GitHub', href: GITHUB },
+            ],
+          },
         ]}
-        primaryAction={
-          onProject
-            ? {
-                label: t('المشروع', 'Project'),
-                onClick: onProject,
-                icon: <IconRocket className="h-4 w-4" />,
-              }
-            : undefined
-        }
+        primaryAction={{
+          label: t('ابدأ مهمة', 'Start mission'),
+          onClick: () => goToStage(3),
+          icon: <IconRocket className="h-4 w-4" />,
+        }}
         menuLabel={t('قائمة العام', 'Main menu')}
       />
 

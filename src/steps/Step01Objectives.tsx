@@ -186,7 +186,7 @@ export function Step01Objectives({ onCampaign }: { onCampaign?: () => void }) {
                   aria-pressed={active}
                   className="block w-full text-start focus:outline-none disabled:cursor-not-allowed"
                 >
-                  <TargetImage target={target} className="h-28 w-full" compact />
+                  <TargetImage target={target} className="h-32 w-full" compact />
                   <div className="px-2.5 pb-2 pt-2">
                     <div className="flex items-start justify-between gap-1.5">
                       <span className="min-w-0 truncate text-sm text-limestone-50">{l(target.name)}</span>
@@ -273,15 +273,17 @@ export function Step01Objectives({ onCampaign }: { onCampaign?: () => void }) {
             <FactRow label={t('يدعم الهبوط', 'Landing capable')} value={t(design.target.landingCapable ? 'نعم' : 'لا', design.target.landingCapable ? 'Yes' : 'No')} />
           </div>
           <div className="mt-3 border-s border-royal-600 ps-3">
-            <div className="text-[10px] text-limestone-400">{t('صورة NASA وإسنادها', 'NASA image and credit')}</div>
+            <div className="text-[10px] text-limestone-400">{t('صورة حقيقية وإسنادها', 'Real photograph & credit')}</div>
             <div className="mt-0.5 text-[11px] leading-relaxed text-limestone-200">{design.target.image.credit}</div>
-            {design.target.image.nasaId ? (
-              <div className="mt-1 font-latin text-[10px] tabular-nums text-royal-300" dir="ltr">
-                {design.target.image.nasaId}
+            {design.target.image.illustrative ? (
+              <div className="mt-1 text-[10px] text-ochre-300">
+                {t('توضيح فني، وليس صورة مهمة', 'Illustrative, not a mission photograph')}
               </div>
             ) : (
-              <div className="mt-1 text-[10px] text-ochre-300">
-                {t('توضيح فني، لا صورة NASA في اللقطة', 'Illustrative, no NASA image in the snapshot')}
+              <div className="mt-1 flex flex-wrap items-baseline gap-x-2 font-latin text-[10px] tabular-nums text-royal-300" dir="ltr">
+                {design.target.image.source ? <span>{design.target.image.source}</span> : null}
+                {design.target.image.nasaId ? <span>{design.target.image.nasaId}</span> : null}
+                <span className="text-limestone-400">{design.target.image.title}</span>
               </div>
             )}
           </div>

@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { GITHUB, LIVE_LAB } from '../data/links';
 import { useLang, useT } from '../i18n';
 import { Cartouche } from './Ornament';
 import { IconCheck, IconDownload, IconExternal, IconPlay, IconRocket, IconTarget } from './Icons';
@@ -12,9 +13,6 @@ import abdullahImg from '../assets/team/abdullah.jpg';
 import omarImg from '../assets/team/omar.jpg';
 import elshimaaImg from '../assets/team/elshimaa.jpg';
 import mahmoudImg from '../assets/team/mahmoud.jpg';
-
-const LIVE_LAB = 'https://omarmetman.vercel.app/projects/amun';
-const GITHUB = 'https://github.com/omarmetman/amun';
 
 interface ProjectPageProps {
   onBack: () => void;
@@ -233,11 +231,11 @@ const SOURCES = [
     },
   },
   {
-    name: 'NASA Image and Video Library',
-    url: 'https://images-api.nasa.gov/search',
+    name: 'Mission imagery archives',
+    url: 'https://images.nasa.gov/',
     desc: {
-      ar: 'الصور الفلكية عالية الدقة للأجرام السماوية مع الإسناد وحقوق النشر الرسمية.',
-      en: 'High-resolution planetary photography with authentic NASA/JPL mission credits.',
+      ar: 'صور حقيقية عالية الدقة للأجرام السماوية من ناسا وESA وJAXA مع الإسناد الأصلي لكل مهمة.',
+      en: 'Real high-resolution planetary photography from NASA, ESA and JAXA with the original mission credit for every frame.',
     },
   },
   {
@@ -272,6 +270,10 @@ export function ProjectPage({ onBack, onNasaData }: ProjectPageProps) {
     label: t('المشروع', 'Project'),
     onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
     active: true,
+  };
+
+  const goToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -309,6 +311,15 @@ export function ProjectPage({ onBack, onNasaData }: ProjectPageProps) {
                       },
                     ]
                   : []),
+              ],
+            },
+            {
+              title: t('أقسام الصفحة', 'On this page'),
+              items: [
+                { key: 'trailer', label: t('العرض الترويجي', 'Official trailer'), onClick: () => goToSection('trailer') },
+                { key: 'crew', label: t('الفريق المصري', 'The Egyptian crew'), onClick: () => goToSection('crew') },
+                { key: 'engineering', label: t('الفكرة الهندسية', 'Engineering concept'), onClick: () => goToSection('engineering') },
+                { key: 'nasa-sources', label: t('مصادر ناسا', 'NASA sources'), onClick: () => goToSection('nasa-sources') },
               ],
             },
             {
@@ -406,7 +417,7 @@ export function ProjectPage({ onBack, onNasaData }: ProjectPageProps) {
         </section>
 
         {/* 01 — Trailer */}
-        <section>
+        <section id="trailer" className="scroll-mt-24">
           <SectionHeading
             number="01"
             eyebrow={t('الفيلم التعريفي', 'Promotional film')}
@@ -489,7 +500,7 @@ export function ProjectPage({ onBack, onNasaData }: ProjectPageProps) {
         </section>
 
         {/* 02 — Crew */}
-        <section>
+        <section id="crew" className="scroll-mt-24">
           <SectionHeading
             number="02"
             eyebrow={t('طاقم المهمة', 'Flight crew')}
@@ -514,7 +525,7 @@ export function ProjectPage({ onBack, onNasaData }: ProjectPageProps) {
         </section>
 
         {/* 03 — Engineering model */}
-        <section>
+        <section id="engineering" className="scroll-mt-24">
           <SectionHeading
             number="03"
             eyebrow={t('منهجية هندسة النظم', 'Systems engineering')}
@@ -565,7 +576,7 @@ export function ProjectPage({ onBack, onNasaData }: ProjectPageProps) {
         </section>
 
         {/* 04 — Data provenance */}
-        <section>
+        <section id="nasa-sources" className="scroll-mt-24">
           <SectionHeading
             number="04"
             eyebrow={t('مصادر البيانات', 'Data provenance')}

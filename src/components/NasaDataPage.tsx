@@ -1,4 +1,5 @@
 import { useL, useLang, useT } from '../i18n';
+import { GITHUB, LIVE_LAB } from '../data/links';
 import { Cartouche } from './Ornament';
 import { IconCheck, IconExternal, IconRocket, IconTarget } from './Icons';
 import { Ltr, PageFooter, SectionHeading, Stat } from './PagePrimitives';
@@ -114,11 +115,11 @@ const DATASETS = [
       en: 'NASA open repository of high-resolution scientific photography and planetary imagery with original instrument credits.',
     },
     howAmunUsesIt: {
-      ar: 'جميع صور الأجرام الفلكية في اللعبة مأخوذة مباشرة من مستودع ناسا مع توثيق اسم المهمة الأصلية (LRO للقمر، MRO للمريخ، OSIRIS-REx لبينو، جونو للمشتري، داون لسيريس).',
-      en: 'Every planetary image in AMUN is sourced directly from NASA open archives with official mission credit metadata (LRO, MRO, OSIRIS-REx, Juno, Dawn).',
+      ar: 'معظم صور الأجرام من مكتبة ناسا (غاليليو للقمر، مارينر 10 للزهرة، جونو للمشتري، داون لفيستا وسيريس، جيوتو لهالي، ديب إمباكت لتيمبل 1). وتُستخدم صور حقيقية من ESA لمريخ روزيتا والمذنب 67P، ومن JAXA لهايابوسا2/ريوغو. كل صورة تحمل إسناد مهمتها الأصلي.',
+      en: 'Most target photographs come from NASA archives (Galileo for the Moon, Mariner 10 for Venus, Juno for Jupiter, Dawn for Vesta and Ceres, Giotto for Halley, Deep Impact for Tempel 1). Real ESA imagery covers Rosetta’s Mars and comet 67P, and JAXA/Hayabusa2 covers Ryugu. Every image carries its original mission credit.',
     },
-    codeSnippet: '// NASA Media API image metadata\nimage: { url: "https://images-assets.nasa.gov/...", credit: "NASA/JPL-Caltech/MRO", nasaId: "PIA00407" }',
-    tags: ['Mission Photography', 'HiRISE', 'LRO', 'Public Domain'],
+    codeSnippet: '// Local, optimised mission photography with explicit credit\nimage: { url: "/targets/moon.jpg", source: "NASA", credit: "NASA/JPL-Caltech (Galileo)", nasaId: "PIA00405" }',
+    tags: ['Mission Photography', 'NASA / ESA / JAXA', 'Original Credits', 'Local Assets'],
   },
   {
     id: 'basics',
@@ -244,6 +245,10 @@ export function NasaDataPage({ onBack, onProject }: NasaDataPageProps) {
     active: true,
   };
 
+  const goToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <PageShell
       header={
@@ -276,12 +281,27 @@ export function NasaDataPage({ onBack, onProject }: NasaDataPageProps) {
               ],
             },
             {
+              title: t('أقسام الصفحة', 'On this page'),
+              items: [
+                { key: 'sources', label: t('المصادر السبعة', 'The seven sources'), onClick: () => goToSection('sources') },
+                { key: 'equations', label: t('المعادلات الخمس', 'The five equations'), onClick: () => goToSection('equations') },
+                { key: 'comparison', label: t('الحقيقة مقابل المحاكي', 'Ground truth vs simulator'), onClick: () => goToSection('comparison') },
+              ],
+            },
+            {
               title: t('المصادر', 'Sources'),
               items: [
                 { key: 'horizons', label: 'JPL Horizons', href: 'https://ssd.jpl.nasa.gov/horizons/' },
                 { key: 'sbdb', label: 'JPL Small-Body Database', href: 'https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html' },
                 { key: 'factsheet', label: 'NASA Planetary Fact Sheet', href: 'https://nssdc.gsfc.nasa.gov/planetary/factsheet/' },
                 { key: 'ntrs', label: 'NASA Technical Reports Server', href: 'https://ntrs.nasa.gov/' },
+              ],
+            },
+            {
+              title: t('المعمل والكود', 'Lab & code'),
+              items: [
+                { key: 'lab', label: t('المعمل التفاعلي الحي', 'Live interactive lab'), href: LIVE_LAB },
+                { key: 'github', label: 'GitHub', href: GITHUB },
               ],
             },
           ]}
@@ -302,7 +322,7 @@ export function NasaDataPage({ onBack, onProject }: NasaDataPageProps) {
               <Cartouche>
                 <span className="font-latin text-[10px] tracking-[0.18em] text-ochre-300">NASA DATA / PROVENANCE</span>
               </Cartouche>
-              <StatusPill tone="good">100% NASA open data</StatusPill>
+              <StatusPill tone="good">{t('بيانات ناسا وصور ESA/JAXA', 'NASA data + ESA/JAXA imagery')}</StatusPill>
               <StatusPill tone="info">Space Apps 2026</StatusPill>
             </div>
 
@@ -359,7 +379,7 @@ export function NasaDataPage({ onBack, onProject }: NasaDataPageProps) {
         </section>
 
         {/* 01 — Datasets */}
-        <section>
+        <section id="sources" className="scroll-mt-24">
           <SectionHeading
             number="01"
             eyebrow={t('دليل المصادر', 'Dataset directory')}
@@ -463,7 +483,7 @@ export function NasaDataPage({ onBack, onProject }: NasaDataPageProps) {
         </section>
 
         {/* 02 — Equations */}
-        <section>
+        <section id="equations" className="scroll-mt-24">
           <SectionHeading
             number="02"
             eyebrow={t('الصيغ الفيزيائية', 'Physical formulations')}
@@ -517,7 +537,7 @@ export function NasaDataPage({ onBack, onProject }: NasaDataPageProps) {
         </section>
 
         {/* 03 — Verification */}
-        <section>
+        <section id="comparison" className="scroll-mt-24">
           <SectionHeading
             number="03"
             eyebrow={t('مصفوفة التحقق', 'Benchmark verification')}

@@ -1,4 +1,5 @@
-import type { SimulationPhaseResult } from '../data/types';
+import { useId } from 'react';
+import type { SimulationPhaseResult, TargetKind } from '../data/types';
 import { useL, useT } from '../i18n';
 import { fmt, fmtDateTime, fmtMoney, fmtPct } from '../lib/format';
 import { useActiveChapter } from '../store/useCampaign';
@@ -44,80 +45,326 @@ const severityTone = {
   error: 'text-carnelian-300',
 } as const;
 
+const ROUND_KINDS: TargetKind[] = ['moon', 'planet', 'gasGiant', 'dwarfPlanet'];
+
 function OrbitDiagram({
   targetId,
   targetName,
+  targetAU,
+  targetKind,
+  targetImage,
   progress,
   rtl,
 }: {
   targetId: string;
   targetName: string;
+  targetAU: number;
+  targetKind: TargetKind;
+  targetImage: string;
   progress: number;
   rtl: boolean;
 }) {
-  const earthX = rtl ? 404 : 76;
-  const earthY = 172;
-  const targetX = rtl ? 76 : 404;
-  const targetY = 58;
-  const controlX = (earthX + targetX) / 2;
-  const controlY = -30;
-  const t = Math.max(0, Math.min(1, progress));
-  const craftX = (1 - t) * (1 - t) * earthX + 2 * (1 - t) * t * controlX + t * t * targetX;
-  const craftY = (1 - t) * (1 - t) * earthY + 2 * (1 - t) * t * controlY + t * t * targetY;
+  const t = useT();
+  const rawId = useId();
+  const uid = rawId.replace(/[^a-zA-Z0-9_-]/g, '');
+  const isMoon = targetId === 'moon';
+  const tNorm = Math.max(0, Math.min(1, progress));
+  const roundBody = ROUND_KINDS.includes(targetKind);
+
+  const W = 720;
+  const H = 400;
+  const cx = W / 2;
+  const cy = 200;
+
+  // Mirror the layout for Arabic: Earth on the right, destination on the left.
+  const side = rtl ? 1 : -1;
+
+  const earthR = isMoon ? 0 : 100;
+  const targetR = isMoon ? 0 : Math.max(88, Math.min(250, 100 * (1 + 0.3 * Math.log(Math.max(targetAU, 0.3)))));
+
+  const moonGeom = (() => {
+    const moonDir = -side;
+    const orbitR = 232;
+    const departureR = 64;
+    const center = cx + moonDir * ((orbitR - departureR) / 2);
+    const a = (orbitR + departureR) / 2;
+    const b = a * 0.45;
+    const thetaStart = moonDir === 1 ? Math.PI : 0;
+    const thetaDelta = moonDir === 1 ? Math.PI : -Math.PI;
+    return {
+      moonX: cx + moonDir * orbitR,
+      moonY: cy,
+      orbitRx: orbitR,
+      orbitRy: orbitR * 0.45,
+      center,
+      a,
+      b,
+      thetaStart,
+      thetaDelta,
+      sweep: moonDir === 1 ? 1 : 0,
+      startX: cx - moonDir * departureR,
+      endX: cx + moonDir * orbitR,
+    };
+  })();
+
+  const helioGeom = (() => {
+    const earthX = cx + side * earthR;
+    const targetX = cx - side * targetR;
+    const center = (earthX + targetX) / 2;
+    const a = (earthR + targetR) / 2;
+    const b = a * 0.34;
+    const thetaStart = side === -1 ? Math.PI : 0;
+    const thetaDelta = side === -1 ? Math.PI : -Math.PI;
+    return {
+      earthX,
+      targetX,
+      center,
+      a,
+      b,
+      thetaStart,
+      thetaDelta,
+      sweep: side === -1 ? 1 : 0,
+    };
+  })();
+
+  const geometry = isMoon ? moonGeom : helioGeom;
+
+  const theta = geometry.thetaStart + tNorm * geometry.thetaDelta;
+  const craftX = geometry.center + geometry.a * Math.cos(theta);
+  const craftY = cy + geometry.b * Math.sin(theta);
+  const direction = geometry.thetaDelta > 0 ? 1 : -1;
+  const tangent = Math.atan2(
+    geometry.b * Math.cos(theta) * direction,
+    -geometry.a * Math.sin(theta) * direction,
+  );
+  const tangentDeg = (tangent * 180) / Math.PI;
+
+  const plate = (x: number, y: number, size: number, href: string, ring: boolean) => (
+    <g>
+      <circle cx={x} cy={y} r={size / 2 + 12} fill={`url(#glow-${uid})`} opacity="0.55" />
+      <image
+        href={href}
+        x={x - size / 2}
+        y={y - size / 2}
+        width={size}
+        height={size}
+        preserveAspectRatio="xMidYMid meet"
+        style={{ mixBlendMode: 'screen' }}
+      />
+      {ring ? (
+        <circle cx={x} cy={y} r={size / 2 + 1} fill="none" stroke="#6F8FD8" strokeOpacity="0.4" strokeWidth="0.8" />
+      ) : null}
+    </g>
+  );
 
   return (
-    <svg viewBox="0 0 480 220" className="h-auto w-full" role="img" aria-label={`${targetName}`}>
-      <g stroke="#1A3A85" strokeWidth="1">
-        {Array.from({ length: 13 }, (_, i) => 40 + i * 34).map((x, index) => (
-          <path key={x} d={`M${x} 12V206`} strokeOpacity={index % 4 === 0 ? 1 : 0.35} />
-        ))}
-        {Array.from({ length: 6 }, (_, i) => 26 + i * 34).map((y, index) => (
-          <path key={y} d={`M8 ${y}H472`} strokeOpacity={index % 3 === 0 ? 1 : 0.25} />
-        ))}
-      </g>
+    <figure className="min-w-0">
+      <div className="overflow-hidden rounded-data border border-royal-700 bg-lapis-950">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="h-auto w-full"
+          role="img"
+          aria-label={
+            isMoon
+              ? `${targetName} — ${t('مخطط النقل من الأرض إلى القمر', 'Earth–Moon transfer diagram')}`
+              : `${targetName} — ${t('مخطط نقل هوهمان', 'Hohmann transfer diagram')}`
+          }
+        >
+          <defs>
+            <radialGradient id={`space-${uid}`} cx="50%" cy="50%" r="62%">
+              <stop offset="0%" stopColor="#12295F" />
+              <stop offset="70%" stopColor="#0A1A3D" />
+              <stop offset="100%" stopColor="#081531" />
+            </radialGradient>
+            <radialGradient id={`sun-${uid}`}>
+              <stop offset="0%" stopColor="#FFF3CE" />
+              <stop offset="52%" stopColor="#F3D08A" />
+              <stop offset="100%" stopColor="#E3A92F" />
+            </radialGradient>
+            <radialGradient id={`glow-${uid}`}>
+              <stop offset="0%" stopColor="#6F8FD8" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="#6F8FD8" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id={`corona-${uid}`}>
+              <stop offset="0%" stopColor="#E3A92F" stopOpacity="0.42" />
+              <stop offset="100%" stopColor="#E3A92F" stopOpacity="0" />
+            </radialGradient>
+          </defs>
 
-      <g stroke="#2C57B4" fill="none" strokeWidth="1">
-        <ellipse cx="240" cy="150" rx="188" ry="86" strokeDasharray="2 7" />
-        <ellipse cx="240" cy="122" rx="132" ry="54" strokeDasharray="2 7" />
-      </g>
+          <rect width={W} height={H} fill={`url(#space-${uid})`} />
 
-      <path
-        d={`M${earthX} ${earthY}Q${controlX} ${controlY} ${targetX} ${targetY}`}
-        fill="none"
-        stroke="#E3A92F"
-        strokeWidth="2"
-      />
-      <circle cx={earthX} cy={earthY} r="9" fill="none" stroke="#EDE7D8" strokeWidth="1.5" />
-      <path d={`M${earthX - 3} ${earthY}H${earthX + 3}M${earthX} ${earthY - 3}V${earthY + 3}`} stroke="#3FA878" strokeWidth="1.5" />
-      <text x={earthX} y={earthY + 24} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="IBM Plex Sans Arabic, sans-serif">
-        {rtl ? 'الأرض' : 'Earth'}
-      </text>
+          {isMoon ? (
+            <>
+              <ellipse
+                cx={cx}
+                cy={cy}
+                rx={moonGeom.orbitRx}
+                ry={moonGeom.orbitRy}
+                fill="none"
+                stroke="#4A6DC4"
+                strokeOpacity="0.55"
+                strokeWidth="1"
+                strokeDasharray="2 7"
+              />
+              <path
+                d={`M${moonGeom.startX} ${cy}A${moonGeom.a} ${moonGeom.b} 0 0 ${moonGeom.sweep} ${moonGeom.endX} ${cy}`}
+                fill="none"
+                stroke="#E3A92F"
+                strokeWidth="2.2"
+              />
+              {plate(cx, cy, 116, '/targets/earth.jpg', true)}
+              {plate(moonGeom.moonX, moonGeom.moonY, targetKind === 'moon' ? 38 : 34, '/targets/moon.jpg', true)}
+              <text
+                x={cx}
+                y={cy + 78}
+                textAnchor="middle"
+                fill="#EDE7D8"
+                fontSize="11"
+                fontFamily="IBM Plex Sans Arabic, sans-serif"
+              >
+                {t('الأرض', 'Earth')}
+              </text>
+              <text
+                x={moonGeom.moonX}
+                y={cy - 36}
+                textAnchor="middle"
+                fill="#EDE7D8"
+                fontSize="11"
+                fontFamily="IBM Plex Sans Arabic, sans-serif"
+              >
+                {targetName}
+              </text>
+              <text
+                x={moonGeom.moonX}
+                y={cy + 36}
+                textAnchor="middle"
+                fill="#948C79"
+                fontSize="9"
+                fontFamily="IBM Plex Sans, sans-serif"
+              >
+                384,400 km
+              </text>
+              <g fontFamily="IBM Plex Sans, sans-serif" fontSize="9" fill="#BDB39C">
+                <text x={cx} y={H - 18} textAnchor="middle">
+                  {t('نصف قطع ناقص والأرض في إحدى البؤرتين — ليس بمقياس رسم', 'Half-ellipse with Earth at one focus — not to scale')}
+                </text>
+              </g>
+            </>
+          ) : (
+            <>
+              <ellipse
+                cx={cx}
+                cy={cy}
+                rx={targetR}
+                ry={targetR * 0.34}
+                fill="none"
+                stroke="#31509F"
+                strokeOpacity="0.7"
+                strokeWidth="1"
+                strokeDasharray="2 7"
+              />
+              <ellipse
+                cx={cx}
+                cy={cy}
+                rx={earthR}
+                ry={earthR * 0.34}
+                fill="none"
+                stroke="#4A6DC4"
+                strokeOpacity="0.8"
+                strokeWidth="1"
+                strokeDasharray="2 7"
+              />
 
-      <circle cx={targetX} cy={targetY} r="14" fill="none" stroke="#EDE7D8" strokeWidth="1.5" />
-      {['moon', 'mars', 'venus', 'jupiter'].includes(targetId) ? (
-        <circle cx={targetX} cy={targetY} r="7" fill="none" stroke="#EDE7D8" strokeOpacity="0.5" strokeWidth="1" />
-      ) : (
-        <path
-          d={`M${targetX - 10} ${targetY + 4}L${targetX - 4} ${targetY - 9}L${targetX + 6} ${targetY - 6}L${targetX + 10} ${targetY + 5}L${targetX - 1} ${targetY + 10}Z`}
-          fill="none"
-          stroke="#EDE7D8"
-          strokeWidth="1"
-        />
-      )}
-      <text x={targetX} y={targetY - 22} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="IBM Plex Sans Arabic, sans-serif">
-        {targetName}
-      </text>
+              <path
+                d={`M${helioGeom.earthX} ${cy}A${helioGeom.a} ${helioGeom.b} 0 0 ${helioGeom.sweep} ${helioGeom.targetX} ${cy}`}
+                fill="none"
+                stroke="#E3A92F"
+                strokeWidth="2.2"
+              />
 
-      <g transform={`translate(${craftX} ${craftY})`}>
-        <path d="M0 -5 4 4H-4Z" fill="#E3A92F" />
-      </g>
+              <circle cx={cx} cy={cy} r="38" fill={`url(#corona-${uid})`} />
+              <circle cx={cx} cy={cy} r="15" fill={`url(#sun-${uid})`} />
+              <circle cx={cx} cy={cy} r="20" fill="none" stroke="#E3A92F" strokeOpacity="0.35" strokeWidth="0.8" />
+              <text
+                x={cx}
+                y={cy + 34}
+                textAnchor="middle"
+                fill="#EFC163"
+                fontSize="10"
+                fontFamily="IBM Plex Sans Arabic, sans-serif"
+              >
+                {t('الشمس', 'Sun')}
+              </text>
 
-      <g fill="#948C79" fontSize="9" fontFamily="IBM Plex Sans, sans-serif">
-        <text x="40" y="216">0</text>
-        <text x="420" y="216">12 AU</text>
-        <text x="12" y="30">90°</text>
-      </g>
-    </svg>
+              {plate(helioGeom.earthX, cy, 42, '/targets/earth.jpg', true)}
+              {plate(helioGeom.targetX, cy, roundBody ? 42 : 38, targetImage, roundBody)}
+
+              <text
+                x={helioGeom.earthX}
+                y={cy + 40}
+                textAnchor="middle"
+                fill="#EDE7D8"
+                fontSize="11"
+                fontFamily="IBM Plex Sans Arabic, sans-serif"
+              >
+                {t('الأرض', 'Earth')}
+              </text>
+              <text
+                x={helioGeom.targetX}
+                y={cy - 36}
+                textAnchor="middle"
+                fill="#EDE7D8"
+                fontSize="11"
+                fontFamily="IBM Plex Sans Arabic, sans-serif"
+              >
+                {targetName}
+              </text>
+              <text
+                x={helioGeom.targetX}
+                y={cy - 23}
+                textAnchor="middle"
+                fill="#948C79"
+                fontSize="9"
+                fontFamily="IBM Plex Sans, sans-serif"
+              >
+                {fmt(targetAU, targetAU < 1 ? 3 : 2)} AU
+              </text>
+            </>
+          )}
+
+          <g transform={`translate(${craftX} ${craftY}) rotate(${tangentDeg})`}>
+            <path d="M8 0 L-5 5 L-2.5 0 L-5 -5 Z" fill="#F3D08A" stroke="#081531" strokeWidth="0.8" />
+          </g>
+
+          <g fontFamily="IBM Plex Sans, sans-serif" fontSize="9" fill="#948C79">
+            <text x={W - 16} y={H - 14} textAnchor="end">
+              {isMoon
+                ? t('المسافة مضغوطة', 'Distance compressed')
+                : t('المسافات الشعاعية مضغوطة', 'Radial distances compressed')}
+            </text>
+          </g>
+
+        </svg>
+      </div>
+
+      <figcaption className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] text-limestone-400">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-0.5 w-5 bg-ochre-400" aria-hidden="true" />
+          {isMoon ? t('مسار الأرض–القمر', 'Earth–Moon transfer') : t('نقل هوهمان', 'Hohmann transfer')}
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-0 w-5 border-t border-dashed border-royal-400" aria-hidden="true" />
+          {isMoon ? t('مدار القمر المرجعي', 'Reference lunar orbit') : t('مدارات مرجعية', 'Reference orbits')}
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2 w-2 rotate-45 bg-ochre-200" aria-hidden="true" />
+          {t('موضع المركبة', 'Spacecraft position')}
+        </span>
+        <span className="text-limestone-400">
+          {t('المسافات مضغوطة لتبقى القراءة واضحة.', 'Distances are compressed so the diagram stays readable.')}
+        </span>
+      </figcaption>
+    </figure>
   );
 }
 
@@ -394,15 +641,25 @@ export function Step10Simulation({ onLearn }: { onLearn: (key?: string) => void 
 
       <Section
         title={t('منظر المدار', 'Orbit view')}
-        description={t(
-          'الأرض على اليمين والهدف على اليسار في القراءة العربية، والمسار المغرة هو نقل هوهمان المختار.',
-          'Earth sits on the right and the target on the left in Arabic reading order; the ochre line is the selected Hohmann transfer.',
-        )}
+        description={
+          design.target.id === 'moon'
+            ? t(
+                'مسار الأرض–القمر حول الأرض، والشمس خارج الإطار. المسار نصف قطع ناقص والأرض في إحدى البؤرتين، فلا يقطع مدار القمر قبل الوصول.',
+                'The Earth–Moon transfer around Earth, with the Sun outside the frame. The path is a half-ellipse with Earth at one focus, so it meets the lunar orbit only on arrival.',
+              )
+            : t(
+                'الشمس في البؤرة، والأرض والهدف على مداريهما، والمسار المغرة نصف قطع ناقص لنقل هوهمان. المسافات الشعاعية مضغوطة لتظل القراءة واضحة.',
+                'The Sun sits at the focus, Earth and the target ride their orbits, and the ochre path is the half-ellipse of a Hohmann transfer. Radial distances are compressed so the diagram stays legible.',
+              )
+        }
       >
         <OrbitDiagram
           targetId={design.target.id}
           targetName={l(design.target.name)}
-          progress={simulation ? 1 : 0.82}
+          targetAU={design.target.semiMajorAxisAU}
+          targetKind={design.target.kind}
+          targetImage={design.target.image.url}
+          progress={simulation ? 0.97 : 0.68}
           rtl={lang === 'ar'}
         />
       </Section>

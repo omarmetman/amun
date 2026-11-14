@@ -38,12 +38,12 @@ export const SOURCES: Record<SourceKey, SourceDef> = {
   },
   nasaImages: {
     key: 'nasaImages',
-    name: { ar: 'NASA Image and Video Library', en: 'NASA Image and Video Library' },
-    publisher: 'NASA',
-    url: 'https://images-api.nasa.gov/search',
+    name: { ar: 'أرشيف صور المهام', en: 'Mission imagery archives' },
+    publisher: 'NASA / ESA / JAXA',
+    url: 'https://images.nasa.gov/search',
     note: {
-      ar: 'صور الأهداف مع الإسناد الأصلي (Credit).',
-      en: 'Target imagery with its original credit.',
+      ar: 'صور الأهداف الحقيقية مع الإسناد الأصلي (NASA وESA وJAXA).',
+      en: 'Real target imagery with its original credit (NASA, ESA and JAXA).',
     },
   },
   basics: {

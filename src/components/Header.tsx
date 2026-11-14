@@ -1,5 +1,6 @@
 import { ACHIEVEMENT_COUNT } from '../data/achievements';
 import { CAMPAIGN_CHAPTERS } from '../data/campaign';
+import { GITHUB, LIVE_LAB } from '../data/links';
 import { STEPS } from '../data/steps';
 import { useL, useT } from '../i18n';
 import { useMissionStore } from '../store/useMissionStore';
@@ -144,6 +145,13 @@ export function Header({
           onClick: onReset,
           tone: 'danger' as const,
         },
+      ],
+    },
+    {
+      title: t('المعمل والكود', 'Lab & code'),
+      items: [
+        { key: 'lab', label: t('المعمل التفاعلي الحي', 'Live interactive lab'), href: LIVE_LAB },
+        { key: 'github', label: 'GitHub', href: GITHUB },
       ],
     },
   ];
