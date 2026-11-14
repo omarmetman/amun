@@ -117,27 +117,27 @@ export function ProjectModal({
     {
       name: { ar: 'محمود عبدالحميد', en: 'Mahmoud Abdelhamid' },
       role: {
-        ar: 'مهندس البرمجيات ومسؤول القياس عن بعد',
-        en: 'Software Engineer & Telemetry Lead',
+        ar: 'مهندس بيانات',
+        en: 'Data Engineer',
       },
       image: mahmoudImg,
       linkedin: 'https://www.linkedin.com/in/mahmoud-abdel-hamid-513363406/',
       bio: {
-        ar: 'مهندس برمجيات متخصص في نمذجة الاتصالات والأنظمة الموزعة. طوّر ميزانية الاتصال اللاسلكي بشبكة الفضاء العميق (DSN) ومعادلة فرايس لفقد المسار، وصمم محرك محاكاة مونت كارلو العشوائي الحتمي القائم على البذور.',
-        en: 'Software engineer specializing in telecommunications and distributed simulation modeling. Developed the Deep Space Network (DSN) link budget, Friis path loss models, and the deterministic seeded Monte Carlo flight engine.',
+        ar: 'مهندس بيانات بالفريق، مسؤول عن جمع وتنظيم مجموعات البيانات الفلكية وسجلات وكالة ناسا داخل المشروع، والتحقق من دقة الأرقام والمدخلات الخاصة بالأجرام والمهام الفضائية.',
+        en: 'Data engineer responsible for processing and structuring NASA astronomical datasets within the platform, ensuring data consistency and accuracy across celestial targets and mission parameters.',
       },
       contributions: [
         {
-          ar: 'نمذجة سرعة نقل البيانات وفق معادلة فرايس وهوائيات DSN بأقطار 34 متراً و70 متراً وترددات X وKa.',
-          en: 'Engineered bitrate downlink models using Friis transmission equations for 34m/70m DSN dishes.',
+          ar: 'جمع وتنظيم بيانات الأجرام والكواكب من سجلات ناسا الرسمية (JPL Horizons & SBDB).',
+          en: 'Collected and structured planetary datasets from NASA JPL Horizons and SBDB.',
         },
         {
-          ar: 'برمجة محرك المحاكاة ذي المراحل الأربع (إطلاق، إبحار، وصول، عمليات) والأحداث العشوائية.',
-          en: 'Constructed the 4-phase stochastic Monte Carlo engine with design-sensitive flight anomalies.',
+          ar: 'هيكلة جداول البيانات ومطابقة المعايير الفيزيائية للأهداف الفضائية.',
+          en: 'Organized data tables and verified physical parameters for mission targets.',
         },
         {
-          ar: 'كتابة وأتمتة حزمة الاختبارات البرمجية الشاملة بـ 41 اختبار وحدة ناجحاً بنسبة 100%.',
-          en: 'Authored comprehensive Vitest test suites achieving 41/41 passing automated tests.',
+          ar: 'مراجعة وتدقيق مدخلات التيليمتري والأرقام المرجعية داخل النظام.',
+          en: 'Audited telemetry figures and reference benchmarks across the simulator.',
         },
       ],
     },

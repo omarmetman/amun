@@ -119,28 +119,28 @@ const TEAM: TeamMember[] = [
   {
     name: { ar: 'محمود عبدالحميد', en: 'Mahmoud Abdelhamid' },
     role: {
-      ar: 'عضو فريق (مهندس البرمجيات والقياس عن بعد)',
-      en: 'Team Member & Telemetry Software Engineer',
+      ar: 'مهندس بيانات',
+      en: 'Data Engineer',
     },
-    tag: { ar: 'عضو فريق', en: 'Team Member' },
+    tag: { ar: 'مهندس بيانات', en: 'Data Engineer' },
     image: mahmoudImg,
     linkedin: 'https://www.linkedin.com/in/mahmoud-abdel-hamid-513363406/',
     bio: {
-      ar: 'مهندس برمجيات وعضو الفريق المسؤول عن نمذجة اتصالات الفضاء العميق عبر شبكة DSN وفق معادلة فرايس، وتطوير محرك محاكاة مونت كارلو العشوائي الحتمي القائم على البذور، وتصميم حزم الاختبارات المؤتمتة التي حققت 41/41 اختبار ناجح بنسبة 100%.',
-      en: 'Software engineer and team member specialized in telecommunications modeling and stochastic simulations. Formulated the Deep Space Network (DSN) link budget, the deterministic seeded Monte Carlo flight engine, and automated Vitest suites (41/41 passing).',
+      ar: 'مهندس بيانات بالفريق، مسؤول عن جمع وتنظيم مجموعات البيانات الفلكية وسجلات وكالة ناسا داخل المشروع، والتحقق من دقة الأرقام والمدخلات الخاصة بالأجرام والمهام الفضائية.',
+      en: 'Data engineer responsible for processing and structuring NASA astronomical datasets within the platform, ensuring data consistency and accuracy across celestial targets and mission parameters.',
     },
     contributions: [
       {
-        ar: 'نمذجة سرعة نقل البيانات وفق معادلة فرايس وهوائيات DSN بأقطار 34 متراً و70 متراً وترددات X وKa.',
-        en: 'Engineered bitrate downlink models using Friis transmission equations for 34m/70m DSN dishes.',
+        ar: 'جمع وتنظيم بيانات الأجرام والكواكب من سجلات ناسا الرسمية (JPL Horizons & SBDB).',
+        en: 'Collected and structured planetary datasets from NASA JPL Horizons and SBDB.',
       },
       {
-        ar: 'برمجة محرك المحاكاة ذي المراحل الأربع (إطلاق، إبحار، وصول، عمليات) والأحداث العشوائية.',
-        en: 'Constructed the 4-phase stochastic Monte Carlo engine with design-sensitive flight anomalies.',
+        ar: 'هيكلة جداول البيانات ومطابقة المعايير الفيزيائية للأهداف الفضائية.',
+        en: 'Organized data tables and verified physical parameters for mission targets.',
       },
       {
-        ar: 'كتابة وأتمتة حزمة الاختبارات البرمجية الشاملة بـ 41 اختبار وحدة ناجحاً بنسبة 100%.',
-        en: 'Authored comprehensive Vitest test suites achieving 41/41 passing automated tests.',
+        ar: 'مراجعة وتدقيق مدخلات التيليمتري والأرقام المرجعية داخل النظام.',
+        en: 'Audited telemetry figures and reference benchmarks across the simulator.',
       },
     ],
   },
