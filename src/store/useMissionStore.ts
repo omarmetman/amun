@@ -45,7 +45,7 @@ export interface Notice {
 
 const defaultChoices = (): DesignChoices => ({
   difficulty: 'normal',
-  language: 'ar',
+  language: 'en',
   seed: makeSeed(),
   missionType: 'orbiter',
   targetId: 'mars',
@@ -143,7 +143,7 @@ const cleanChoices = (input: Partial<DesignChoices> | undefined): DesignChoices 
   };
   // Keep only mission-legal choices; target/mission changes explain what was removed.
   if (!['beginner', 'normal', 'expert'].includes(merged.difficulty)) merged.difficulty = 'normal';
-  if (!['ar', 'en'].includes(merged.language)) merged.language = 'ar';
+  if (!['ar', 'en'].includes(merged.language)) merged.language = 'en';
   return merged;
 };
 
@@ -176,7 +176,7 @@ export const useMissionStore = create<MissionState>()(
         attempts: [],
         leaderboard: [],
         notices: [],
-        pilotName: 'قائد المهمة',
+        pilotName: 'Mission Commander',
         profile: emptyPilotProfile(),
         campaign: emptyCampaignState(),
         lastUnlocked: [],
@@ -283,7 +283,7 @@ export const useMissionStore = create<MissionState>()(
           }));
         },
 
-        setPilotName: (name) => set({ pilotName: name.slice(0, 40) || 'قائد المهمة' }),
+        setPilotName: (name) => set({ pilotName: name.slice(0, 40) || 'Mission Commander' }),
 
         setTarget: (targetId) => {
           if (activeChapter(get())) return;
@@ -707,7 +707,7 @@ export const useMissionStore = create<MissionState>()(
             attempts: [],
             leaderboard: [],
             notices: [],
-            pilotName: 'قائد المهمة',
+            pilotName: 'Mission Commander',
             profile: emptyPilotProfile(),
             campaign: emptyCampaignState(),
             lastUnlocked: [],

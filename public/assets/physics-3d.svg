@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="t-physics d-physics">
+  <title id="t-physics">AMUN 5 Coupled Computational Physics Engines</title>
+  <desc id="d-physics">Isometric 3D blueprint illustrating the five coupled mathematical systems of aerospace mission planning</desc>
+
+  <defs>
+    <linearGradient id="bg-phys" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#040816"/>
+      <stop offset="100%" stop-color="#0d183d"/>
+    </linearGradient>
+    <linearGradient id="cube-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a4c9c"/>
+      <stop offset="100%" stop-color="#1b326b"/>
+    </linearGradient>
+    <clipPath id="phys-clip"><rect width="1200" height="360" rx="16"/></clipPath>
+  </defs>
+
+  <style>
+    text { font-family: 'Segoe UI', Inter, sans-serif; }
+    .mono { font-family: 'Fira Code', monospace; }
+  </style>
+
+  <g clip-path="url(#phys-clip)">
+    <rect width="1200" height="360" fill="url(#bg-phys)"/>
+
+    <!-- Subtle Engineering Floor Grid -->
+    <g stroke="#1A3A85" stroke-opacity="0.25" stroke-width="1">
+      <line x1="0" y1="60" x2="1200" y2="60"/>
+      <line x1="0" y1="180" x2="1200" y2="180"/>
+      <line x1="0" y1="300" x2="1200" y2="300"/>
+    </g>
+
+    <!-- Header Section Badge -->
+    <g transform="translate(40, 24)">
+      <rect width="360" height="30" rx="4" fill="#0D1F4C" stroke="#E3A92F" stroke-width="1.2"/>
+      <circle cx="16" cy="15" r="4" fill="#E3A92F"/>
+      <text class="mono" x="32" y="20" font-size="12" font-weight="700" fill="#EDE7D8" letter-spacing="1">5 COUPLED AEROSPACE ENGINES</text>
+    </g>
+
+    <text class="mono" x="1160" y="44" font-size="11" fill="#3FA878" text-anchor="end">
+      PURE FUNCTIONS (src/engine/) ◆ ZERO REACT OVERHEAD
+    </text>
+
+    <!-- 5 ISOMETRIC MODULE PEDESTALS -->
+
+    <!-- Module 1: Rocket & Mass -->
+    <g transform="translate(60, 90)">
+      <rect width="205" height="220" rx="8" fill="#09122c" stroke="#1A3A85" stroke-width="1.5"/>
+      <rect width="205" height="28" rx="8" fill="#142654"/>
+      <text class="mono" x="10" y="19" font-size="11" font-weight="700" fill="#E3A92F">1. TSIOLKOVSKY SIZING</text>
+      <!-- Isometric Cube Icon -->
+      <g transform="translate(102, 65)">
+        <polygon points="0,-22 25,-8 0,6 -25,-8" fill="url(#cube-top)" stroke="#E3A92F" stroke-width="1"/>
+        <polygon points="-25,-8 0,6 0,35 -25,21" fill="#12234d" stroke="#1A3A85" stroke-width="1"/>
+        <polygon points="0,6 25,-8 25,21 0,35" fill="#1d3878" stroke="#1A3A85" stroke-width="1"/>
+      </g>
+      <text class="mono" x="102" y="130" font-size="10" fill="#7dd3fc" text-anchor="middle" font-weight="600">CLOSED TANK FRACTION</text>
+      <rect x="12" y="142" width="181" height="34" rx="4" fill="#04091a" stroke="#1A3A85"/>
+      <text class="mono" x="102" y="163" font-size="9" fill="#FFF5D1" text-anchor="middle">m_prop = m_oth(eˣ-1)/(1-k(eˣ-1))</text>
+      <text class="mono" x="102" y="198" font-size="10" fill="#3FA878" text-anchor="middle">Singularity Guarded ✓</text>
+    </g>
+
+    <!-- Module 2: Solar & Power -->
+    <g transform="translate(290, 90)">
+      <rect width="205" height="220" rx="8" fill="#09122c" stroke="#1A3A85" stroke-width="1.5"/>
+      <rect width="205" height="28" rx="8" fill="#142654"/>
+      <text class="mono" x="10" y="19" font-size="11" font-weight="700" fill="#E3A92F">2. POWER &amp; SOLAR DECAY</text>
+      <!-- Solar Array Icon -->
+      <g transform="translate(102, 65)">
+        <rect x="-28" y="-12" width="56" height="24" rx="2" fill="#082f49" stroke="#E3A92F" stroke-width="1.2"/>
+        <line x1="0" y1="-12" x2="0" y2="12" stroke="#38bdf8"/>
+        <line x1="-28" y1="0" x2="28" y2="0" stroke="#38bdf8"/>
+      </g>
+      <text class="mono" x="102" y="130" font-size="10" fill="#7dd3fc" text-anchor="middle" font-weight="600">INVERSE SQUARE DECAY</text>
+      <rect x="12" y="142" width="181" height="34" rx="4" fill="#04091a" stroke="#1A3A85"/>
+      <text class="mono" x="102" y="163" font-size="9" fill="#FFF5D1" text-anchor="middle">S(r) = 1361 / r² [W/m²]</text>
+      <text class="mono" x="102" y="198" font-size="10" fill="#3FA878" text-anchor="middle">Eclipse Battery Model ✓</text>
+    </g>
+
+    <!-- Module 3: Deep Space Network -->
+    <g transform="translate(520, 90)">
+      <rect width="205" height="220" rx="8" fill="#09122c" stroke="#1A3A85" stroke-width="1.5"/>
+      <rect width="205" height="28" rx="8" fill="#142654"/>
+      <text class="mono" x="10" y="19" font-size="11" font-weight="700" fill="#E3A92F">3. DSN TELEMETRY LINK</text>
+      <!-- Antenna Dish Icon -->
+      <g transform="translate(102, 65)">
+        <ellipse cx="0" cy="0" rx="24" ry="10" fill="#1e293b" stroke="#E3A92F" stroke-width="1.2"/>
+        <line x1="0" y1="0" x2="0" y2="-12" stroke="#E3A92F" stroke-width="1.5"/>
+      </g>
+      <text class="mono" x="102" y="130" font-size="10" fill="#7dd3fc" text-anchor="middle" font-weight="600">MRO BENCHMARKED</text>
+      <rect x="12" y="142" width="181" height="34" rx="4" fill="#04091a" stroke="#1A3A85"/>
+      <text class="mono" x="102" y="163" font-size="9" fill="#FFF5D1" text-anchor="middle">R ∝ (P/100)(D/3)²(f)²(0.5/d)²G</text>
+      <text class="mono" x="102" y="198" font-size="10" fill="#3FA878" text-anchor="middle">Ka/X &amp; 34m/70m Ground ✓</text>
+    </g>
+
+    <!-- Module 4: Orbital Mechanics -->
+    <g transform="translate(750, 90)">
+      <rect width="205" height="220" rx="8" fill="#09122c" stroke="#1A3A85" stroke-width="1.5"/>
+      <rect width="205" height="28" rx="8" fill="#142654"/>
+      <text class="mono" x="10" y="19" font-size="11" font-weight="700" fill="#E3A92F">4. HOHMANN TRAJECTORY</text>
+      <!-- Orbit Arc Icon -->
+      <g transform="translate(102, 65)">
+        <ellipse cx="0" cy="0" rx="26" ry="12" fill="none" stroke="#3FA878" stroke-width="1.5"/>
+        <circle cx="-26" cy="0" r="3" fill="#38bdf8"/>
+        <circle cx="26" cy="0" r="3" fill="#f87171"/>
+      </g>
+      <text class="mono" x="102" y="130" font-size="10" fill="#7dd3fc" text-anchor="middle" font-weight="600">SYNODIC LAUNCH WINDOWS</text>
+      <rect x="12" y="142" width="181" height="34" rx="4" fill="#04091a" stroke="#1A3A85"/>
+      <text class="mono" x="102" y="163" font-size="9" fill="#FFF5D1" text-anchor="middle">T = π√(a³/μ☉) · Δv_plane</text>
+      <text class="mono" x="102" y="198" font-size="10" fill="#3FA878" text-anchor="middle">Plane Change Penalty ✓</text>
+    </g>
+
+    <!-- Module 5: Budget & Causal Evaluation -->
+    <g transform="translate(980, 90)">
+      <rect width="180" height="220" rx="8" fill="#09122c" stroke="#1A3A85" stroke-width="1.5"/>
+      <rect width="180" height="28" rx="8" fill="#142654"/>
+      <text class="mono" x="10" y="19" font-size="11" font-weight="700" fill="#E3A92F">5. POST-MORTEM</text>
+      <!-- Cartouche Grade A Icon -->
+      <g transform="translate(90, 65)">
+        <ellipse cx="0" cy="0" rx="24" ry="14" fill="#060c24" stroke="#E3A92F" stroke-width="1.5"/>
+        <text class="mono" x="0" y="6" font-size="16" font-weight="900" fill="#E3A92F" text-anchor="middle">S</text>
+      </g>
+      <text class="mono" x="90" y="130" font-size="10" fill="#7dd3fc" text-anchor="middle" font-weight="600">CAUSAL ATTRIBUTION</text>
+      <rect x="10" y="142" width="160" height="34" rx="4" fill="#04091a" stroke="#1A3A85"/>
+      <text class="mono" x="90" y="163" font-size="9" fill="#FFF5D1" text-anchor="middle">Score = 35%Sci + 20%Cost...</text>
+      <text class="mono" x="90" y="198" font-size="10" fill="#3FA878" text-anchor="middle">Root-Cause Explainer ✓</text>
+    </g>
+
+    <!-- Outer Structural Border -->
+    <rect x="1" y="1" width="1198" height="358" rx="15" fill="none" stroke="#1A3A85" stroke-width="1.5"/>
+  </g>
+</svg>

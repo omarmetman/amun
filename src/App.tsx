@@ -13,7 +13,7 @@ import { LearnPanel } from './components/LearnPanel';
 import { MobileDashboard } from './components/MobileDashboard';
 import { Modal } from './components/Modal';
 import { ProfileModal } from './components/ProfileModal';
-import { ProjectModal } from './components/ProjectModal';
+import { ProjectPage } from './components/ProjectPage';
 import { Sidebar } from './components/Sidebar';
 import { Stepper } from './components/Stepper';
 import { StepIntro, StepNav } from './components/StepShell';
@@ -49,6 +49,40 @@ export default function App() {
   const [learnOpen, setLearnOpen] = useState(false);
   const [learnFocus, setLearnFocus] = useState<string | null>(null);
   const [modal, setModal] = useState<ModalKind>(null);
+
+  const [isProjectPage, setIsProjectPage] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return (
+        window.location.hash === '#project' ||
+        window.location.hash === '#/project' ||
+        window.location.pathname.endsWith('/project')
+      );
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      setIsProjectPage(hash === '#project' || hash === '#/project');
+    };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
+
+  const openProjectPage = () => {
+    window.location.hash = '#project';
+    setIsProjectPage(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const closeProjectPage = () => {
+    if (window.location.hash === '#project' || window.location.hash === '#/project') {
+      window.history.pushState(null, '', window.location.pathname + window.location.search);
+    }
+    setIsProjectPage(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const root = document.documentElement;
@@ -118,13 +152,22 @@ export default function App() {
     }
   })();
 
+  if (isProjectPage) {
+    return (
+      <>
+        <ProjectPage onBack={closeProjectPage} />
+        <Toasts />
+      </>
+    );
+  }
+
   if (!started) {
     return (
       <>
         <Welcome
           onProfile={() => setModal('profile')}
           onCampaign={() => setModal('campaign')}
-          onProject={() => setModal('project')}
+          onProject={openProjectPage}
         />
         {modal === 'profile' ? (
           <ProfileModal
@@ -142,12 +185,6 @@ export default function App() {
             }}
           />
         ) : null}
-        {modal === 'project' ? (
-          <ProjectModal
-            onClose={() => setModal(null)}
-            onCampaign={() => setModal('campaign')}
-          />
-        ) : null}
         <Toasts />
       </>
     );
@@ -163,14 +200,14 @@ export default function App() {
       </a>
 
       <div className="flex min-h-screen">
-        <Sidebar onLearn={() => openLearn()} onProject={() => setModal('project')} />
+        <Sidebar onLearn={() => openLearn()} onProject={openProjectPage} />
 
         <div className="min-w-0 flex-1">
           <Header
             onLearn={() => openLearn()}
             onProfile={() => setModal('profile')}
             onCampaign={() => setModal('campaign')}
-            onProject={() => setModal('project')}
+            onProject={openProjectPage}
             onNew={() => setModal('new')}
             onExport={handleExport}
             onImport={() => setModal('import')}
@@ -208,13 +245,6 @@ export default function App() {
             setModal(null);
             window.scrollTo({ top: 0 });
           }}
-        />
-      ) : null}
-
-      {modal === 'project' ? (
-        <ProjectModal
-          onClose={() => setModal(null)}
-          onCampaign={() => setModal('campaign')}
         />
       ) : null}
 

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="64" viewBox="0 0 340 64" role="img">
+  <defs>
+    <linearGradient id="btn-teal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="35%" stop-color="#0284c7"/>
+      <stop offset="85%" stop-color="#0369a1"/>
+      <stop offset="100%" stop-color="#075985"/>
+    </linearGradient>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-weight: 700; }
+  </style>
+  <g>
+    <!-- Drop Shadow -->
+    <rect x="0" y="6" width="340" height="58" rx="8" fill="#03253b"/>
+    <!-- Button Face -->
+    <rect x="0" y="0" width="340" height="58" rx="8" fill="url(#btn-teal)" stroke="#bae6fd" stroke-width="1.2"/>
+    <!-- Globe / Portal Icon -->
+    <g transform="translate(32, 29)">
+      <circle cx="0" cy="0" r="10" fill="none" stroke="#EDE7D8" stroke-width="1.5"/>
+      <ellipse cx="0" cy="0" rx="5" ry="10" fill="none" stroke="#EDE7D8" stroke-width="1.2"/>
+      <line x1="-10" y1="0" x2="10" y2="0" stroke="#EDE7D8" stroke-width="1.2"/>
+    </g>
+    <!-- Label -->
+    <text x="180" y="36" font-size="15" fill="#EDE7D8" text-anchor="middle" letter-spacing="1.2">PROJECT SHOWCASE LAB ➜</text>
+  </g>
+</svg>

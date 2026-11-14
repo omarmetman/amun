@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="580" viewBox="0 0 1200 580" role="img" aria-label="Project AMUN Official 30-Second Promotional Video Player">
+  <defs>
+    <filter id="glow4" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="glow16" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="glow30" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter>
+    <linearGradient id="vBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050a18"/>
+      <stop offset="50%" stop-color="#0d1f4c"/>
+      <stop offset="100%" stop-color="#081026"/>
+    </linearGradient>
+    <linearGradient id="vGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E3A92F"/>
+      <stop offset="50%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#C28916"/>
+    </linearGradient>
+    <linearGradient id="vBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A3A85"/>
+      <stop offset="100%" stop-color="#0D1F4C"/>
+    </linearGradient>
+    <clipPath id="vClip"><rect width="1200" height="580" rx="24"/></clipPath>
+  </defs>
+
+  <style>
+    text { font-family: 'Segoe UI', Inter, -apple-system, system-ui, sans-serif; }
+    .mono { font-family: 'SF Mono', Consolas, 'Fira Code', monospace; }
+    @keyframes pulseRing { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 0.3; } 100% { transform: scale(1); opacity: 0.8; } }
+    @keyframes floatProbe { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-10px, -8px); } }
+    .pulse { transform-origin: 600px 270px; animation: pulseRing 3s ease-in-out infinite; }
+    .probe { animation: floatProbe 6s ease-in-out infinite; }
+  </style>
+
+  <g clip-path="url(#vClip)">
+    <!-- Deep Space Canvas -->
+    <rect width="1200" height="580" fill="url(#vBg)" />
+
+    <!-- Isometric Space Grid -->
+    <g opacity="0.12" stroke="#4a6ebf" stroke-width="1">
+      <line x1="0" y1="145" x2="1200" y2="145"/>
+      <line x1="0" y1="290" x2="1200" y2="290"/>
+      <line x1="0" y1="435" x2="1200" y2="435"/>
+      <line x1="200" y1="0" x2="200" y2="580"/>
+      <line x1="400" y1="0" x2="400" y2="580"/>
+      <line x1="600" y1="0" x2="600" y2="580"/>
+      <line x1="800" y1="0" x2="800" y2="580"/>
+      <line x1="1000" y1="0" x2="1000" y2="580"/>
+    </g>
+
+    <!-- Stars -->
+    <g fill="#FFF">
+      <circle cx="120" cy="80" r="1.5" opacity="0.8"/>
+      <circle cx="280" cy="190" r="1.2" opacity="0.6"/>
+      <circle cx="450" cy="70" r="2" opacity="0.9"/>
+      <circle cx="750" cy="110" r="1.8" opacity="0.85"/>
+      <circle cx="920" cy="90" r="1.3" opacity="0.7"/>
+      <circle cx="1080" cy="160" r="2.2" opacity="0.95"/>
+      <circle cx="150" cy="420" r="1.4" opacity="0.6"/>
+      <circle cx="1040" cy="410" r="1.7" opacity="0.75"/>
+    </g>
+
+    <!-- Planetary Horizon (Mars & Moon in background) -->
+    <circle cx="1080" cy="300" r="160" fill="#a8432a" opacity="0.35" filter="url(#glow30)"/>
+    <circle cx="1080" cy="300" r="140" fill="#c25732" opacity="0.65"/>
+    <circle cx="120" cy="220" r="80" fill="#465c8a" opacity="0.25" filter="url(#glow16)"/>
+    <circle cx="120" cy="220" r="70" fill="#5874ab" opacity="0.5"/>
+
+    <!-- Curved Transfer Orbit Arc -->
+    <path d="M 120,220 Q 600,80 1080,300" fill="none" stroke="#E3A92F" stroke-width="2.5" stroke-dasharray="8 6" opacity="0.7"/>
+
+    <!-- Floating 3D Spacecraft Probe -->
+    <g class="probe" transform="translate(680, 110)">
+      <polygon points="50,20 80,40 80,70 50,50" fill="#E3A92F" opacity="0.9"/>
+      <polygon points="20,40 50,20 50,50 20,70" fill="#FFD700"/>
+      <polygon points="50,50 80,70 50,90 20,70" fill="#A77816"/>
+      <rect x="-30" y="38" width="50" height="14" rx="2" fill="#3FA878" opacity="0.85" stroke="#EDE7D8" stroke-width="0.8"/>
+      <rect x="80" y="38" width="50" height="14" rx="2" fill="#3FA878" opacity="0.85" stroke="#EDE7D8" stroke-width="0.8"/>
+      <circle cx="50" cy="35" r="7" fill="#0D1F4C" stroke="#FFF" stroke-width="1.5"/>
+    </g>
+
+    <!-- Top Status Bar HUD -->
+    <rect x="40" y="30" width="1120" height="48" rx="10" fill="#070e24" opacity="0.85" stroke="#1A3A85" stroke-width="1.2"/>
+    <circle cx="65" cy="54" r="6" fill="#3FA878" filter="url(#glow4)"/>
+    <text class="mono" x="84" y="59" font-size="14" font-weight="700" fill="#3FA878">LIVE MISSION TRAILER</text>
+    <text class="mono" x="600" y="59" font-size="13" font-weight="600" text-anchor="middle" fill="#EDE7D8" opacity="0.8">PROJECT AMUN • 4K RENDER • 1080P 30FPS • STEREO BILINGUAL</text>
+    <rect x="1030" y="42" width="110" height="24" rx="6" fill="#E3A92F" opacity="0.2" stroke="#E3A92F" stroke-width="1"/>
+    <text class="mono" x="1085" y="58" font-size="12" font-weight="800" text-anchor="middle" fill="#E3A92F">00:30.0 SEC</text>
+
+    <!-- Center Giant 3D Play Button -->
+    <g class="pulse">
+      <circle cx="600" cy="270" r="76" fill="#E3A92F" opacity="0.15" filter="url(#glow30)"/>
+      <circle cx="600" cy="270" r="62" fill="#E3A92F" opacity="0.3" filter="url(#glow16)"/>
+    </g>
+    <circle cx="600" cy="270" r="50" fill="url(#vGold)" stroke="#FFF" stroke-width="3" filter="url(#glow4)"/>
+    <!-- Play Triangle -->
+    <polygon points="590,248 622,270 590,292" fill="#0D1F4C"/>
+
+    <!-- Click to Play Callout -->
+    <text x="600" y="360" font-size="22" font-weight="800" text-anchor="middle" fill="#EDE7D8" letter-spacing="1.5">WATCH OFFICIAL 30-SECOND TRAILER</text>
+    <text class="mono" x="600" y="386" font-size="14" font-weight="600" text-anchor="middle" fill="#E3A92F">Click to play AMUN_promo.mp4 in high definition</text>
+
+    <!-- Bottom Player Control Deck & Timeline -->
+    <rect x="40" y="440" width="1120" height="105" rx="14" fill="#060c20" opacity="0.92" stroke="#1A3A85" stroke-width="1.5"/>
+
+    <!-- Timeline Scrubber -->
+    <rect x="70" y="468" width="1060" height="6" rx="3" fill="#13244e"/>
+    <rect x="70" y="468" width="480" height="6" rx="3" fill="url(#vGold)"/>
+    <circle cx="550" cy="471" r="9" fill="#FFD700" stroke="#FFF" stroke-width="2" filter="url(#glow4)"/>
+
+    <!-- 4 Timeline Mission Stages -->
+    <g class="mono" font-size="12" font-weight="700">
+      <text x="70" y="498" fill="#3FA878">01 LAUNCH (0.0s)</text>
+      <text x="360" y="498" fill="#E3A92F">02 CRUISE (10.5s)</text>
+      <text x="720" y="498" fill="#38B2AC">03 ARRIVAL (19.5s)</text>
+      <text x="1040" y="498" text-anchor="end" fill="#E3A92F">04 DEBRIEF (27.0s)</text>
+    </g>
+
+    <!-- Bottom Telemetry Badges -->
+    <g class="mono" font-size="11" fill="#8da4d0">
+      <text x="70" y="528">PROPULSION: ION / CHEMICAL HYBRID</text>
+      <text x="400" y="528">TARGET: MARS (1.524 AU)</text>
+      <text x="720" y="528">DELTA-V MARGIN: +24.8% OPTIMAL</text>
+      <text x="1130" y="528" text-anchor="end" fill="#3FA878">DSN LINK: 128 KBPS</text>
+    </g>
+  </g>
+
+  <!-- Outer Neon Frame -->
+  <rect x="1.5" y="1.5" width="1197" height="577" rx="23" fill="none" stroke="url(#vGold)" stroke-width="2.2" opacity="0.85"/>
+</svg>
