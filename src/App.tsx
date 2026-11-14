@@ -88,6 +88,7 @@ export default function App() {
       } else {
         setActivePage('simulator');
       }
+      window.scrollTo({ top: 0, behavior: 'auto' });
     };
     window.addEventListener('hashchange', handleHash);
     return () => window.removeEventListener('hashchange', handleHash);
@@ -117,8 +118,24 @@ export default function App() {
     const root = document.documentElement;
     root.lang = lang;
     root.dir = dirOf(lang);
-    document.title = lang === 'ar' ? 'AMUN: مصمم المهام الفضائية' : 'AMUN: Space Mission Designer';
-  }, [lang]);
+
+    const titles = {
+      simulator: {
+        ar: 'AMUN: مصمم المهام الفضائية',
+        en: 'AMUN: Space Mission Designer',
+      },
+      project: {
+        ar: 'مشروع آمون وطاقم العمل | NASA Space Apps 2026',
+        en: 'Project AMUN & Crew | NASA Space Apps 2026',
+      },
+      'nasa-data': {
+        ar: 'معلومات ناسا الحقيقية وكيف بُنيت AMUN',
+        en: 'NASA Real Science & How AMUN Was Built',
+      },
+    } as const;
+
+    document.title = titles[activePage][lang];
+  }, [lang, activePage]);
 
   const openLearn = (focusKey?: string) => {
     setLearnFocus(focusKey ?? null);

@@ -72,7 +72,7 @@ export function Modal({
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-[95] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[95] flex items-end justify-center p-0 sm:items-center sm:p-4">
       <button
         type="button"
         aria-label={t('إغلاق', 'Close')}
@@ -84,12 +84,12 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-window border border-royal-600 bg-lapis-900 ${
+        className={`relative flex max-h-[92dvh] w-full flex-col overflow-hidden border border-royal-600 bg-lapis-900 sm:max-h-[88dvh] sm:rounded-window ${
           extraWide ? 'max-w-4xl' : wide ? 'max-w-2xl' : 'max-w-md'
         }`}
       >
-        <div className="flex items-start justify-between gap-3 border-b border-royal-700 px-5 py-4">
-          <div>
+        <div className="flex items-start justify-between gap-3 border-b border-royal-700 px-4 py-3.5 sm:px-5 sm:py-4">
+          <div className="min-w-0">
             <h2 className="font-display text-base text-limestone-50">{title}</h2>
             {description ? <p className="mt-1 text-xs leading-relaxed text-limestone-400">{description}</p> : null}
           </div>
@@ -97,9 +97,14 @@ export function Modal({
             <IconCross className="h-4 w-4" />
           </button>
         </div>
-        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">{children}</div>
+        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-5">{children}</div>
         {footer ? (
-          <div className="flex flex-wrap items-center justify-end gap-2 border-t border-royal-700 px-5 py-3">{footer}</div>
+          <div
+            className="flex flex-col gap-2 border-t border-royal-700 px-4 py-3 [&>*]:w-full sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:px-5 sm:[&>*]:w-auto"
+            style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 12px)' }}
+          >
+            {footer}
+          </div>
         ) : null}
       </div>
     </div>

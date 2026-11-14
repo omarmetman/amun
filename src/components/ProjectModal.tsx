@@ -6,6 +6,7 @@ import { Cartouche, Frieze } from './Ornament';
 import { StatusPill } from './Badges';
 import {
   IconCompass,
+  IconCheck,
   IconDownload,
   IconFlag,
   IconOrbit,
@@ -166,7 +167,7 @@ export function ProjectModal({
               <div className="flex items-center gap-2">
                 <Cartouche>
                   <span className="font-display text-sm tracking-wider text-ochre-300">
-                    PROJECT AMUN • آمون
+                    PROJECT AMUN / آمون
                   </span>
                 </Cartouche>
                 <StatusPill tone="good">NASA Space Apps 2026</StatusPill>
@@ -187,7 +188,7 @@ export function ProjectModal({
               rel="noopener noreferrer"
               className="btn-primary !min-h-[36px] !px-3 !py-1 text-xs"
             >
-              <span>{t('زيارة المعمل الحي 🚀', 'Launch Live Lab 🚀')}</span>
+              <span>{t('زيارة المعمل الحي', 'Launch Live Lab')}</span>
             </a>
             <a
               href="https://github.com/omarmetman/amun"
@@ -258,7 +259,7 @@ export function ProjectModal({
                 rel="noopener noreferrer"
                 className="btn-primary !min-h-[40px] !px-4 text-xs font-bold"
               >
-                {t('فتح المعمل ↗', 'Open Lab ↗')}
+                {t('فتح المعمل', 'Open Lab')}
               </a>
             </div>
           </div>
@@ -363,7 +364,7 @@ export function ProjectModal({
                 className="mt-2.5 inline-flex items-center gap-1.5 font-latin text-xs font-semibold text-ochre-400 hover:underline"
                 dir="ltr"
               >
-                https://github.com/omarmetman/amun ↗
+                https://github.com/omarmetman/amun
               </a>
             </div>
 
@@ -385,7 +386,7 @@ export function ProjectModal({
                 onClick={() => setTab('nasa')}
                 className="mt-2.5 inline-flex items-center gap-1 text-xs text-ochre-400 hover:underline"
               >
-                <span>{t('استعراض مصادر ناسا السبعة ←', 'Explore 7 NASA sources →')}</span>
+                <span>{t('استعراض مصادر ناسا السبعة', 'Explore 7 NASA sources')}</span>
               </button>
             </div>
           </div>
@@ -565,7 +566,7 @@ export function ProjectModal({
                         rel="noopener noreferrer"
                         className="mt-2 inline-flex items-center gap-1 rounded border border-royal-600 bg-royal-950/70 px-2 py-0.5 font-latin text-[10px] text-limestone-200 hover:border-ochre-400 hover:text-ochre-300"
                       >
-                        <span>LinkedIn Profile ↗</span>
+                        <span>LinkedIn Profile</span>
                       </a>
                     </div>
                   </div>
@@ -581,7 +582,7 @@ export function ProjectModal({
                     <ul className="mt-1.5 space-y-1 text-[11px] leading-relaxed text-limestone-400">
                       {member.contributions.map((c, idx) => (
                         <li key={idx} className="flex items-start gap-1.5">
-                          <span className="text-malachite">✓</span>
+                          <IconCheck className="mt-[3px] h-3 w-3 shrink-0 text-malachite" />
                           <span>{l(c)}</span>
                         </li>
                       ))}
@@ -700,7 +701,7 @@ export function ProjectModal({
                     className="font-latin text-[11px] text-ochre-400 hover:underline"
                     dir="ltr"
                   >
-                    {source.url.replace('https://', '')} ↗
+                    {source.url.replace('https://', '')}
                   </a>
                 </div>
                 <p className="mt-1.5 text-xs text-limestone-300">{l(source.desc)}</p>
@@ -717,7 +718,8 @@ export function ProjectModal({
       {/* Footer Actions */}
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-royal-700 pt-4">
         <div className="text-[11px] text-limestone-400">
-          <span>PROJECT AMUN • </span>
+          <span>PROJECT AMUN</span>
+          <span className="mx-1.5 text-royal-500">/</span>
           <span className="text-ochre-400">NASA Space Apps Challenge 2026</span>
         </div>
         <div className="flex items-center gap-2">

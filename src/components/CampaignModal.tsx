@@ -17,6 +17,7 @@ import {
   IconCompass,
   IconCrown,
   IconFlag,
+  IconBulb,
   IconLock,
   IconPlay,
 } from './Icons';
@@ -428,7 +429,7 @@ export function CampaignModal({
                             <ul className="mt-1.5 space-y-1 text-[11px] leading-relaxed text-limestone-300">
                               {chapter.nasaDossier.realWorldFacts.map((fact, fIdx) => (
                                 <li key={fIdx} className="flex items-start gap-1.5">
-                                  <span className="text-ochre-400">✦</span>
+                                  <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rotate-45 border border-ochre-400" aria-hidden="true" />
                                   <span>{l(fact)}</span>
                                 </li>
                               ))}
@@ -472,7 +473,7 @@ export function CampaignModal({
                           {/* Engineering Hint */}
                           <div className="mt-2.5 rounded border border-ochre-400/60 bg-ochre-400/10 p-2.5">
                             <div className="flex items-center gap-1.5 text-[11px] font-bold text-ochre-300">
-                              <span>💡</span>
+                              <IconBulb className="h-3.5 w-3.5 shrink-0" />
                               <span>{t('نصيحة المهندس لتجاوز الفصل:', 'Engineering Hint for Mission Success:')}</span>
                             </div>
                             <p className="mt-1 text-xs leading-relaxed text-limestone-100">

@@ -439,4 +439,18 @@ export const IconBolt = (props: SVGProps<SVGSVGElement>) => (
   </Glyph>
 );
 
+export const IconExternal = (props: SVGProps<SVGSVGElement>) => (
+  <Glyph {...props}>
+    <path d="M14 4h6v6M20 4l-9 9" />
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+  </Glyph>
+);
+
+export const IconLinkedIn = (props: SVGProps<SVGSVGElement>) => (
+  <Glyph {...props}>
+    <rect x="3" y="3" width="18" height="18" />
+    <path d="M7 10v7M7 7v.5M11 17v-4a2 2 0 0 1 4 0v4M11 10v7" />
+  </Glyph>
+);
+
 export const IconLikely = IconCheck;

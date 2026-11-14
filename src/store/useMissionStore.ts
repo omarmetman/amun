@@ -43,9 +43,15 @@ export interface Notice {
   text: LocalizedText;
 }
 
+const initialLanguage = (): DesignChoices['language'] => {
+  if (typeof navigator === 'undefined') return 'ar';
+  const languages = navigator.languages?.length ? navigator.languages : [navigator.language];
+  return languages.some((item) => item?.toLowerCase().startsWith('ar')) ? 'ar' : 'en';
+};
+
 const defaultChoices = (): DesignChoices => ({
   difficulty: 'normal',
-  language: 'en',
+  language: initialLanguage(),
   seed: makeSeed(),
   missionType: 'orbiter',
   targetId: 'mars',

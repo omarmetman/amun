@@ -89,7 +89,7 @@ function OrbitDiagram({
       />
       <circle cx={earthX} cy={earthY} r="9" fill="none" stroke="#EDE7D8" strokeWidth="1.5" />
       <path d={`M${earthX - 3} ${earthY}H${earthX + 3}M${earthX} ${earthY - 3}V${earthY + 3}`} stroke="#3FA878" strokeWidth="1.5" />
-      <text x={earthX} y={earthY + 24} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="Cairo, sans-serif">
+      <text x={earthX} y={earthY + 24} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="IBM Plex Sans Arabic, sans-serif">
         {rtl ? 'الأرض' : 'Earth'}
       </text>
 
@@ -104,7 +104,7 @@ function OrbitDiagram({
           strokeWidth="1"
         />
       )}
-      <text x={targetX} y={targetY - 22} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="Cairo, sans-serif">
+      <text x={targetX} y={targetY - 22} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="IBM Plex Sans Arabic, sans-serif">
         {targetName}
       </text>
 
@@ -183,8 +183,8 @@ function MissionTimeline({ simulation }: { simulation: NonNullable<ReturnType<ty
       </div>
 
       {/* Tablet and desktop: the full ruler with labels inside the phases. */}
-      <div className="hidden overflow-x-auto sm:block">
-        <div className="min-w-[520px]">
+      <div className="hidden sm:block">
+        <div className="min-w-0">
           <div className="flex h-10 items-end">
             {simulation.phases.map((phase) => {
               const width = ((phase.endDay - phase.startDay) / total) * 100;

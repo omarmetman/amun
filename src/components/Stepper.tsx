@@ -155,7 +155,7 @@ function Trajectory({
           textAnchor={rtl ? 'end' : 'start'}
           fill="#BDB39C"
           fontSize={groundLabel}
-          fontFamily="Cairo, IBM Plex Sans, sans-serif"
+          fontFamily="IBM Plex Sans Arabic, IBM Plex Sans, sans-serif"
         >
           {rtl ? 'الأرض' : 'Ground'}
         </text>
@@ -298,7 +298,7 @@ function StepSheet({
         aria-modal="true"
         aria-label={t('خطوات المهمة', 'Mission steps')}
         tabIndex={-1}
-        className="sheet-open absolute inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-window border-t border-royal-600 bg-lapis-900 pb-6 outline-none"
+        className="sheet-open absolute inset-x-0 bottom-0 max-h-[86dvh] overflow-y-auto rounded-t-window border-t border-royal-600 bg-lapis-900 pb-6 outline-none"
         style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 20px)' }}
       >
         <div className="sticky top-0 flex items-center justify-between border-b border-royal-700 bg-lapis-900 px-4 py-3">

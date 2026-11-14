@@ -61,9 +61,10 @@ export default {
         good: '#3FA878',
       },
       fontFamily: {
-        sans: ['"Cairo"', '"IBM Plex Sans"', 'system-ui', 'sans-serif'],
-        display: ['"Alexandria"', '"Cairo"', 'system-ui', 'sans-serif'],
+        sans: ['"IBM Plex Sans Arabic"', '"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Alexandria"', '"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
         latin: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
         base: ['17px', { lineHeight: '1.8' }],

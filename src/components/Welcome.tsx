@@ -6,12 +6,11 @@ import { isChapterUnlocked } from '../engine/campaign';
 import { useL, useLang, useT } from '../i18n';
 import { fmt, fmtDateTime, fmtMoney } from '../lib/format';
 import { useMissionStore } from '../store/useMissionStore';
-import { AmunLogo } from './AmunLogo';
 import { SimplifiedNote } from './Badges';
 import { CampaignStarRating, CAMPAIGN_ACCENTS, ChapterPatch } from './CampaignArt';
-import { LanguageToggle } from './Header';
 import { IconBook, IconChevron, IconFlag, IconMedal, IconRocket, IconTarget } from './Icons';
 import { Cartouche, Frieze } from './Ornament';
+import { SiteHeader } from './SiteHeader';
 import { Trajectory } from './Stepper';
 
 const HERO_TARGETS = ['moon', 'mars', 'venus', 'jupiter', 'bennu', 'ryugu', '67p', 'halley'];
@@ -73,62 +72,84 @@ export function Welcome({
     <div className="min-h-screen">
       <Frieze className="text-royal-500" />
 
-      {/* Sticky Header Across Welcome Page */}
-      <header className="sticky top-0 z-50 border-b border-royal-700/90 bg-lapis-950/95 backdrop-blur-md shadow-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 sm:px-8">
-          <div className="flex items-center gap-3">
-            <span className="sm:hidden">
-              <AmunLogo className="h-9 w-9" />
-            </span>
-            <span className="hidden sm:block">
-              <AmunLogo className="h-10 w-10" withWordmark />
-            </span>
+      <SiteHeader
+        onLogoClick={() => setStage(1)}
+        context={
+          <div className="min-w-0">
+            <div className="text-[10px] leading-none text-limestone-400">
+              {t('منصة تصميم مهام فضائية', 'Space mission design platform')}
+            </div>
+            <div className="mt-1 truncate font-display text-sm leading-none text-limestone-50">
+              {t('آمون / Space Apps 2026', 'Amun / Space Apps 2026')}
+            </div>
           </div>
-
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            <LanguageToggle />
-            {onNasaData ? (
-              <button
-                type="button"
-                onClick={onNasaData}
-                className="inline-flex min-h-[36px] items-center gap-1.5 border border-royal-700 bg-royal-950/60 px-2.5 py-1 text-[11px] font-semibold text-malachite hover:border-malachite"
-                title={t('معلومات حقيقية من ناسا عن الفضاء وكيف تم بناء اللعبة', 'Authentic NASA Space Science: How NASA Open Data Built AMUN')}
-              >
-                <IconTarget className="h-3.5 w-3.5 text-malachite" />
-                <span className="hidden sm:inline">{t('بيانات ناسا', 'NASA Science')}</span>
-              </button>
-            ) : null}
-            {onProject ? (
-              <button
-                type="button"
-                onClick={onProject}
-                className="inline-flex min-h-[36px] items-center gap-1.5 border border-royal-700 bg-royal-950/60 px-2.5 py-1 text-[11px] font-semibold text-ochre-300 hover:border-ochre-400"
-                title={t('المشروع: الروابط، الفكرة، وبيانات ناسا، وطاقم العمل', 'Project: Links, Concept, NASA Data & Flight Crew')}
-              >
-                <IconRocket className="h-4 w-4 text-ochre-400" />
-                <span>{t('المشروع', 'Project')}</span>
-              </button>
-            ) : null}
-            {onProfile ? (
-              <button
-                type="button"
-                onClick={onProfile}
-                className="inline-flex min-h-[36px] items-center gap-1.5 border border-transparent px-2 py-1 text-[11px] text-limestone-200 hover:border-limestone-400"
-                aria-label={t(
-                  `افتح ملف القائد: ${unlockedCount} من ${ACHIEVEMENT_COUNT} إنجازًا`,
-                  `Open pilot profile: ${unlockedCount} of ${ACHIEVEMENT_COUNT} achievements`,
-                )}
-              >
-                <IconMedal className="h-4 w-4 text-ochre-400" />
-                <span className="hidden sm:inline">{t('الملف', 'Profile')}</span>
-                <span className="font-latin tabular-nums" dir="ltr">
-                  {unlockedCount}/{ACHIEVEMENT_COUNT}
-                </span>
-              </button>
-            ) : null}
-          </div>
-        </div>
-      </header>
+        }
+        nav={[
+          ...(onProject
+            ? [{ key: 'project', label: t('المشروع', 'Project'), onClick: onProject }]
+            : []),
+          ...(onNasaData
+            ? [{ key: 'nasa', label: t('بيانات ناسا', 'NASA science'), onClick: onNasaData }]
+            : []),
+        ]}
+        menuGroups={[
+          ...(onProject || onNasaData
+            ? [
+                {
+                  title: t('استكشف المشروع', 'Explore the project'),
+                  items: [
+                    ...(onProject
+                      ? [
+                          {
+                            key: 'project',
+                            label: t('مشروع آمون وطاقم العمل', 'Project AMUN & crew'),
+                            icon: <IconRocket className="h-4 w-4 text-ochre-300" />,
+                            onClick: onProject,
+                          },
+                        ]
+                      : []),
+                    ...(onNasaData
+                      ? [
+                          {
+                            key: 'nasa',
+                            label: t('معلومات ناسا الحقيقية', 'NASA real science'),
+                            icon: <IconTarget className="h-4 w-4 text-malachite" />,
+                            onClick: onNasaData,
+                          },
+                        ]
+                      : []),
+                  ],
+                },
+              ]
+            : []),
+          ...(onProfile
+            ? [
+                {
+                  title: t('القائد', 'Commander'),
+                  items: [
+                    {
+                      key: 'profile',
+                      label: t('ملف القائد والإنجازات', 'Commander profile & achievements'),
+                      hint: `${unlockedCount}/${ACHIEVEMENT_COUNT}`,
+                      icon: <IconMedal className="h-4 w-4 text-ochre-300" />,
+                      onClick: onProfile,
+                    },
+                  ],
+                },
+              ]
+            : []),
+        ]}
+        primaryAction={
+          onProject
+            ? {
+                label: t('المشروع', 'Project'),
+                onClick: onProject,
+                icon: <IconRocket className="h-4 w-4" />,
+              }
+            : undefined
+        }
+        menuLabel={t('قائمة العام', 'Main menu')}
+      />
 
       <main className="mx-auto max-w-7xl px-4 pb-16 sm:px-8">
         {stage === 1 ? (
@@ -179,7 +200,7 @@ export function Welcome({
                       className="btn-secondary w-full text-sm sm:w-auto font-semibold"
                     >
                       <IconRocket className="h-4 w-4 text-ochre-400" />
-                      <span>{t('مشروع آمون وطاقم العمل 🇪🇬', 'Project AMUN & Egyptian Crew 🇪🇬')}</span>
+                      <span>{t('مشروع آمون وطاقم العمل', 'Project AMUN & crew')}</span>
                     </button>
                   ) : null}
                   {onNasaData ? (
@@ -189,7 +210,7 @@ export function Welcome({
                       className="btn-secondary w-full text-sm sm:w-auto font-semibold"
                     >
                       <IconTarget className="h-4 w-4 text-malachite" />
-                      <span>{t('معلومات ناسا الحقيقية 🪐', 'NASA Real Science 🪐')}</span>
+                      <span>{t('معلومات ناسا الحقيقية', 'NASA real science')}</span>
                     </button>
                   ) : null}
                   <button
@@ -429,7 +450,7 @@ export function Welcome({
                 />
                 {pilotError ? (
                   <p className="mt-1.5 text-xs text-carnelian font-semibold">
-                    {t('⚠️ لا يمكن بدء المهمة دون كتابة اسم قائد المهمة.', '⚠️ Cannot launch mission without entering commander name.')}
+                    {t('لا يمكن بدء المهمة دون كتابة اسم قائد المهمة.', 'Cannot launch the mission without entering a commander name.')}
                   </p>
                 ) : (
                   <p className="mt-2 text-[11px] leading-relaxed text-limestone-400">

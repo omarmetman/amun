@@ -22,20 +22,41 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  overflow-x: clip;
 }
 
 body {
   @apply bg-lapis-900 text-limestone-100 antialiased;
   min-height: 100vh;
-  font-family: 'Cairo', 'IBM Plex Sans', system-ui, sans-serif;
+  overflow-x: clip;
+  font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', system-ui, sans-serif;
   font-size: 17px;
   line-height: 1.8;
   font-synthesis: none;
+  text-rendering: optimizeLegibility;
   background-image:
     linear-gradient(rgba(237, 231, 216, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(237, 231, 216, 0.04) 1px, transparent 1px);
   background-size: 8px 8px;
   background-attachment: fixed;
+}
+
+/* Mixed Arabic / Latin fragments must not reorder around punctuation. */
+.ltr-isolate {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.break-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.code-wrap {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Arabic must never be spaced out: it breaks the letter joins. */
@@ -78,10 +99,11 @@ i {
   h2,
   h3,
   h4 {
-    font-family: 'Alexandria', 'Cairo', system-ui, sans-serif;
+    font-family: 'Alexandria', 'IBM Plex Sans Arabic', system-ui, sans-serif;
     font-weight: 700;
     line-height: 1.35;
     letter-spacing: normal;
+    text-wrap: balance;
   }
 
   p {
@@ -132,7 +154,7 @@ i {
   }
 
   .btn-icon {
-    @apply inline-flex h-10 w-10 items-center justify-center rounded-data border border-royal-700 bg-transparent text-limestone-200 transition-colors hover:border-limestone-400 hover:text-limestone-50;
+    @apply inline-flex h-11 w-11 items-center justify-center rounded-data border border-royal-700 bg-transparent text-limestone-200 transition-colors hover:border-limestone-400 hover:text-limestone-50;
   }
 
   .chip {
@@ -236,6 +258,16 @@ i {
   font-variant-numeric: tabular-nums;
   direction: ltr;
   unicode-bidi: isolate;
+}
+
+/* iOS zooms any focused field below 16px. */
+@media (max-width: 640px) {
+  input.field,
+  textarea.field,
+  select.field {
+    font-size: 16px;
+    line-height: 1.6;
+  }
 }
 
 .range {

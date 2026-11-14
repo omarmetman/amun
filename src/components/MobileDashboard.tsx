@@ -134,7 +134,7 @@ export function MobileDashboard({ onLearn }: { onLearn: () => void }) {
             role="dialog"
             aria-modal="true"
             aria-label={t('لوحة القيادة', 'Dashboard')}
-            className="sheet-open absolute inset-x-0 bottom-0 max-h-[84vh] overflow-y-auto rounded-t-window border-t border-royal-600 bg-lapis-900"
+            className="sheet-open absolute inset-x-0 bottom-0 max-h-[86dvh] overflow-y-auto rounded-t-window border-t border-royal-600 bg-lapis-900"
             style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}
           >
             <div className="sticky top-0 z-10 flex items-start justify-between border-b border-royal-700 bg-lapis-900 px-4 py-3">

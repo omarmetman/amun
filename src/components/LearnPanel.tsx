@@ -131,7 +131,7 @@ export function LearnPanel({ open, focusKey, onClose }: LearnPanelProps) {
           {topic.formula ? (
             <figure className="mt-4 border-s-2 border-royal-400 ps-3">
               <figcaption className="text-[11px] text-limestone-400">{t('المعادلة', 'The equation')}</figcaption>
-              <div className="mt-1 overflow-x-auto py-1 font-latin text-base text-ochre-200" dir="ltr">
+              <div className="break-anywhere mt-1 py-1 font-latin text-base leading-relaxed text-ochre-200" dir="ltr">
                 {topic.formula.expression}
               </div>
               <p className="mt-1 text-xs leading-relaxed text-limestone-300">{l(topic.formula.caption)}</p>

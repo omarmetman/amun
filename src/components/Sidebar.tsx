@@ -5,7 +5,7 @@ import { useDesign } from '../store/useDesign';
 import { useMissionStore } from '../store/useMissionStore';
 import { AmunLogo } from './AmunLogo';
 import { DashboardGrid } from './Dashboard';
-import { IconRocket } from './Icons';
+import { IconExternal, IconRocket, IconTarget } from './Icons';
 import { Stepper } from './Stepper';
 import { TargetImage } from './TargetImage';
 
@@ -114,7 +114,7 @@ export function Sidebar({ onLearn, onProject, onNasaData }: { onLearn: () => voi
               <IconRocket className="h-3.5 w-3.5 text-ochre-400" />
               <span>{t('دليل المشروع وطاقم العمل', 'Project Dossier & Team')}</span>
             </span>
-            <span className="font-latin text-[10px] text-ochre-300">↗</span>
+            <IconExternal className="h-3.5 w-3.5 shrink-0 text-ochre-300" />
           </button>
         ) : null}
 
@@ -125,10 +125,10 @@ export function Sidebar({ onLearn, onProject, onNasaData }: { onLearn: () => voi
             className="mt-2 flex w-full items-center justify-between border border-royal-700 bg-royal-950/40 px-3 py-2 text-xs text-limestone-200 transition-colors hover:border-malachite hover:text-malachite"
           >
             <span className="flex items-center gap-2">
-              <IconRocket className="h-3.5 w-3.5 text-malachite" />
+              <IconTarget className="h-3.5 w-3.5 text-malachite" />
               <span>{t('معلومات ناسا الحقيقية', 'NASA Real Space Science')}</span>
             </span>
-            <span className="font-latin text-[10px] text-malachite">↗</span>
+            <IconExternal className="h-3.5 w-3.5 shrink-0 text-malachite" />
           </button>
         ) : null}
       </div>
