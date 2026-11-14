@@ -27,7 +27,7 @@ html {
 body {
   @apply bg-lapis-900 text-limestone-100 antialiased;
   min-height: 100vh;
-  font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Cairo', 'IBM Plex Sans', system-ui, sans-serif;
   font-size: 17px;
   line-height: 1.8;
   font-synthesis: none;
@@ -78,8 +78,8 @@ i {
   h2,
   h3,
   h4 {
-    font-family: 'Reem Kufi', 'IBM Plex Sans Arabic', system-ui, sans-serif;
-    font-weight: 600;
+    font-family: 'Alexandria', 'Cairo', system-ui, sans-serif;
+    font-weight: 700;
     line-height: 1.35;
     letter-spacing: normal;
   }

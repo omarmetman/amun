@@ -155,7 +155,7 @@ function Trajectory({
           textAnchor={rtl ? 'end' : 'start'}
           fill="#BDB39C"
           fontSize={groundLabel}
-          fontFamily="IBM Plex Sans Arabic, IBM Plex Sans, sans-serif"
+          fontFamily="Cairo, IBM Plex Sans, sans-serif"
         >
           {rtl ? 'الأرض' : 'Ground'}
         </text>

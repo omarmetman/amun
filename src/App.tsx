@@ -14,6 +14,7 @@ import { MobileDashboard } from './components/MobileDashboard';
 import { Modal } from './components/Modal';
 import { ProfileModal } from './components/ProfileModal';
 import { ProjectPage } from './components/ProjectPage';
+import { NasaDataPage } from './components/NasaDataPage';
 import { Sidebar } from './components/Sidebar';
 import { Stepper } from './components/Stepper';
 import { StepIntro, StepNav } from './components/StepShell';
@@ -50,21 +51,43 @@ export default function App() {
   const [learnFocus, setLearnFocus] = useState<string | null>(null);
   const [modal, setModal] = useState<ModalKind>(null);
 
-  const [isProjectPage, setIsProjectPage] = useState<boolean>(() => {
+  const [activePage, setActivePage] = useState<'simulator' | 'project' | 'nasa-data'>(() => {
     if (typeof window !== 'undefined') {
-      return (
-        window.location.hash === '#project' ||
-        window.location.hash === '#/project' ||
+      const hash = window.location.hash;
+      if (
+        hash === '#project' ||
+        hash === '#/project' ||
         window.location.pathname.endsWith('/project')
-      );
+      ) {
+        return 'project';
+      }
+      if (
+        hash === '#nasa-data' ||
+        hash === '#/nasa-data' ||
+        hash === '#science' ||
+        hash === '#/science'
+      ) {
+        return 'nasa-data';
+      }
     }
-    return false;
+    return 'simulator';
   });
 
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash;
-      setIsProjectPage(hash === '#project' || hash === '#/project');
+      if (hash === '#project' || hash === '#/project') {
+        setActivePage('project');
+      } else if (
+        hash === '#nasa-data' ||
+        hash === '#/nasa-data' ||
+        hash === '#science' ||
+        hash === '#/science'
+      ) {
+        setActivePage('nasa-data');
+      } else {
+        setActivePage('simulator');
+      }
     };
     window.addEventListener('hashchange', handleHash);
     return () => window.removeEventListener('hashchange', handleHash);
@@ -72,15 +95,21 @@ export default function App() {
 
   const openProjectPage = () => {
     window.location.hash = '#project';
-    setIsProjectPage(true);
+    setActivePage('project');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const closeProjectPage = () => {
-    if (window.location.hash === '#project' || window.location.hash === '#/project') {
+  const openNasaDataPage = () => {
+    window.location.hash = '#nasa-data';
+    setActivePage('nasa-data');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const closeToSimulator = () => {
+    if (window.location.hash) {
       window.history.pushState(null, '', window.location.pathname + window.location.search);
     }
-    setIsProjectPage(false);
+    setActivePage('simulator');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -152,10 +181,19 @@ export default function App() {
     }
   })();
 
-  if (isProjectPage) {
+  if (activePage === 'project') {
     return (
       <>
-        <ProjectPage onBack={closeProjectPage} />
+        <ProjectPage onBack={closeToSimulator} onNasaData={openNasaDataPage} />
+        <Toasts />
+      </>
+    );
+  }
+
+  if (activePage === 'nasa-data') {
+    return (
+      <>
+        <NasaDataPage onBack={closeToSimulator} onProject={openProjectPage} />
         <Toasts />
       </>
     );
@@ -168,6 +206,7 @@ export default function App() {
           onProfile={() => setModal('profile')}
           onCampaign={() => setModal('campaign')}
           onProject={openProjectPage}
+          onNasaData={openNasaDataPage}
         />
         {modal === 'profile' ? (
           <ProfileModal
@@ -200,7 +239,11 @@ export default function App() {
       </a>
 
       <div className="flex min-h-screen">
-        <Sidebar onLearn={() => openLearn()} onProject={openProjectPage} />
+        <Sidebar
+          onLearn={() => openLearn()}
+          onProject={openProjectPage}
+          onNasaData={openNasaDataPage}
+        />
 
         <div className="min-w-0 flex-1">
           <Header
@@ -208,6 +251,7 @@ export default function App() {
             onProfile={() => setModal('profile')}
             onCampaign={() => setModal('campaign')}
             onProject={openProjectPage}
+            onNasaData={openNasaDataPage}
             onNew={() => setModal('new')}
             onExport={handleExport}
             onImport={() => setModal('import')}

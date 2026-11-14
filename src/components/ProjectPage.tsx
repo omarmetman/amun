@@ -10,6 +10,7 @@ import {
   IconDownload,
   IconPlay,
   IconRocket,
+  IconTarget,
 } from './Icons';
 
 import abdullahImg from '../assets/team/abdullah.jpg';
@@ -19,9 +20,10 @@ import mahmoudImg from '../assets/team/mahmoud.jpg';
 
 interface ProjectPageProps {
   onBack: () => void;
+  onNasaData?: () => void;
 }
 
-export function ProjectPage({ onBack }: ProjectPageProps) {
+export function ProjectPage({ onBack, onNasaData }: ProjectPageProps) {
   const t = useT();
   const l = useL();
   const lang = useLang();
@@ -32,8 +34,8 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     document.title =
       lang === 'ar'
-        ? 'مشروع AMUN | الفريق المصري لمسابقة ناسا Space Apps'
-        : 'Project AMUN | Egyptian NASA Space Apps Team';
+        ? 'مشروع AMUN | الفريق المصري لمسابقة ناسا Space Apps 2026'
+        : 'Project AMUN | Egyptian NASA Space Apps Team 2026';
   }, [lang]);
 
   const togglePlay = () => {
@@ -51,11 +53,11 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
     {
       name: { ar: 'عبدالله عزب', en: 'Abdullah Azb' },
       role: {
-        ar: 'القائد (رئيس الفريق وخبير النظم الفضائية)',
+        ar: 'القائد (رئيس الفريق وخبير النظم الفضائية والميكانيكا المدارية)',
         en: 'Team Leader & Aerospace Systems Lead',
       },
-      tag: { ar: 'القائد', en: 'Leader' },
-      tagColor: 'border-ochre-400 bg-ochre-400/20 text-ochre-300',
+      tag: { ar: 'القائد', en: 'Team Leader' },
+      tagColor: 'border-ochre-400/80 bg-ochre-500/15 text-ochre-300 ring-1 ring-ochre-400/30',
       image: abdullahImg,
       linkedin: 'https://www.linkedin.com/in/abdullah-azb-18290a262',
       bio: {
@@ -88,7 +90,7 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
         en: 'Project Lead Developer & Systems Architect',
       },
       tag: { ar: 'مطور المشروع', en: 'Lead Developer' },
-      tagColor: 'border-cyan-400 bg-cyan-400/20 text-cyan-300',
+      tagColor: 'border-cyan-400/80 bg-cyan-500/15 text-cyan-300 ring-1 ring-cyan-400/30',
       image: omarImg,
       linkedin: 'https://www.linkedin.com/in/omar-m-etman',
       bio: {
@@ -121,7 +123,7 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
         en: 'Creative Director & Visual Identity Lead',
       },
       tag: { ar: 'الهوية البصرية', en: 'Visual Identity' },
-      tagColor: 'border-amber-400 bg-amber-400/20 text-amber-300',
+      tagColor: 'border-amber-400/80 bg-amber-500/15 text-amber-300 ring-1 ring-amber-400/30',
       image: elshimaaImg,
       linkedin: 'http://linkedin.com/in/oshsayeddesigner',
       bio: {
@@ -150,11 +152,11 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
     {
       name: { ar: 'محمود عبدالحميد', en: 'Mahmoud Abdelhamid' },
       role: {
-        ar: 'عضو فريق (مهندس البرمجيات ومسؤول القياس عن بعد)',
-        en: 'Team Member & Software Telemetry Engineer',
+        ar: 'عضو فريق (مهندس البرمجيات والقياس عن بعد)',
+        en: 'Team Member & Telemetry Software Engineer',
       },
       tag: { ar: 'عضو فريق', en: 'Team Member' },
-      tagColor: 'border-emerald-400 bg-emerald-400/20 text-emerald-300',
+      tagColor: 'border-emerald-400/80 bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-400/30',
       image: mahmoudImg,
       linkedin: 'https://www.linkedin.com/in/mahmoud-abdel-hamid-513363406/',
       bio: {
@@ -179,12 +181,12 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-lapis-950 text-limestone-100">
+    <div className="min-h-screen bg-lapis-950 text-limestone-100 overflow-x-hidden">
       {/* Ancient Egyptian Architectural Frieze */}
       <Frieze className="text-royal-500" />
 
-      {/* Standalone Navigation Bar */}
-      <header className="sticky top-0 z-50 border-b border-royal-700 bg-lapis-900/95 backdrop-blur">
+      {/* Sticky Header Across Navigation */}
+      <header className="sticky top-0 z-50 border-b border-royal-700/90 bg-lapis-950/95 backdrop-blur-md shadow-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-8">
           <div className="flex items-center gap-3">
             <button
@@ -196,178 +198,166 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
               <IconChevron dir={lang === 'ar' ? 'end' : 'start'} className="h-4 w-4" />
               <span>{t('العودة للمحاكي', 'Back to Simulator')}</span>
             </button>
-            <div className="h-6 w-px bg-royal-700" />
-            <AmunLogo className="h-9 w-9" withWordmark />
+            <div className="hidden h-6 w-px bg-royal-700 sm:block" />
+            <AmunLogo className="h-9 w-9 hidden sm:block" withWordmark />
           </div>
 
           <div className="flex items-center gap-2">
             <LanguageToggle />
+            {onNasaData ? (
+              <button
+                type="button"
+                onClick={onNasaData}
+                className="btn-secondary !min-h-[36px] !px-3 text-xs"
+              >
+                <IconTarget className="h-3.5 w-3.5 text-ochre-400" />
+                <span>{t('معلومات ناسا الحقيقية ↗', 'NASA Real Science ↗')}</span>
+              </button>
+            ) : null}
             <a
               href="https://omarmetman.vercel.app/projects/amun"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary !min-h-[36px] !px-3 text-xs hidden sm:inline-flex"
+              className="btn-primary !min-h-[36px] !px-3 text-xs hidden md:inline-flex"
             >
               <IconRocket className="h-3.5 w-3.5" />
               <span>{t('المعمل التفاعلي ↗', 'Live Lab ↗')}</span>
-            </a>
-            <a
-              href="https://github.com/omarmetman/amun"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-ghost !min-h-[36px] !px-2.5 text-xs font-latin"
-            >
-              GitHub ↗
             </a>
           </div>
         </div>
       </header>
 
       {/* Main Full Page Content */}
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-8">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-8 sm:py-12 space-y-12">
         {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-window border-2 border-royal-600 bg-gradient-to-b from-royal-950 via-lapis-900 to-lapis-950 p-6 sm:p-10 text-center">
-          <div className="mx-auto mb-4 inline-flex items-center gap-2">
+        <div className="relative overflow-hidden rounded-2xl border-2 border-royal-600 bg-gradient-to-b from-royal-950 via-lapis-900 to-lapis-950 p-6 sm:p-10 text-center shadow-2xl">
+          <div className="mx-auto mb-4 inline-flex flex-wrap items-center justify-center gap-2">
             <Cartouche>
-              <span className="font-display text-sm tracking-widest text-ochre-300">
+              <span className="font-display text-xs sm:text-sm tracking-widest text-ochre-300">
                 PROJECT AMUN • مشروع آمون
               </span>
             </Cartouche>
-            <StatusPill tone="good">NASA Space Apps 2026</StatusPill>
+            <StatusPill tone="good">🇪🇬 الفريق المصري • NASA Space Apps 2026</StatusPill>
           </div>
 
-          <h1 className="font-display text-3xl font-extrabold leading-tight text-limestone-50 sm:text-5xl">
+          <h1 className="font-display text-2xl font-extrabold leading-tight text-limestone-50 sm:text-4xl lg:text-5xl">
             {t(
               'من النيل إلى النجوم: منصة هندسة ومحاكاة المهام الفضائية العميقة',
               'From the Nile to the Stars: Deep-Space Mission Engineering Simulator',
             )}
           </h1>
 
-          <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-limestone-200 sm:text-base">
+          <p className="mx-auto mt-4 max-w-3xl text-xs sm:text-sm md:text-base leading-relaxed text-limestone-200">
             {t(
               'مشروع مفتوح المصدر تم تصميمه وبرمجته بأيدي نخبة من الشباب والمهندسين المصريين لتمثيل جمهورية مصر العربية في تحدي ناسا الدولي لتطبيقات الفضاء (NASA Space Apps Challenge 2026). يدمج المشروع بين عبقرية الفلك والهندسة المصرية القديمة، وأحدث النظريات الأستروجرافيكية ومصادر بيانات وكالة ناسا المعتمدة 100%.',
               'An open-source aerospace systems engineering platform engineered by an Egyptian crew to represent Egypt in the global NASA Space Apps Challenge 2026. Fusing ancient Nile astronomical precision with modern 21st-century interplanetary astrodynamics and 100% authentic NASA open datasets.',
             )}
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={onBack}
-              className="btn-primary !min-h-[44px] !px-6 text-sm font-bold"
-            >
-              <IconRocket className="h-4 w-4" />
-              <span>{t('تشغيل المحاكي الآن', 'Launch Simulator Now')}</span>
-            </button>
+          {/* Quick Action Badges */}
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a
               href="https://omarmetman.vercel.app/projects/amun"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary !min-h-[44px] !px-5 text-sm"
+              className="btn-primary !min-h-[42px] !px-5 text-xs sm:text-sm font-bold shadow-lg"
             >
-              <span>{t('استعراض المعمل التفاعلي 🚀', 'Interactive Lab Showcase 🚀')}</span>
+              <IconRocket className="h-4 w-4" />
+              <span>{t('فتح المعمل التفاعلي الحي ↗', 'Launch Live Lab ↗')}</span>
             </a>
             <a
               href="https://github.com/omarmetman/amun"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-ghost !min-h-[44px] !px-4 text-sm font-latin"
+              className="btn-secondary !min-h-[42px] !px-5 text-xs sm:text-sm font-latin"
             >
-              View GitHub Repo
+              GitHub Repository ↗
             </a>
-          </div>
-        </div>
-
-        {/* SECTION 1: OFFICIAL 30-SECOND PROMO VIDEO */}
-        <section className="mt-12 rounded-window border border-royal-600 bg-lapis-900/70 p-6 sm:p-8">
-          <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-royal-700 pb-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-latin text-xs font-bold uppercase tracking-wider text-ochre-400">
-                  OFFICIAL MISSION DEMONSTRATION
-                </span>
-                <StatusPill tone="good">1080p 30 FPS</StatusPill>
-              </div>
-              <h2 className="mt-1 font-display text-2xl text-limestone-50 sm:text-3xl">
-                {t('العرض الترويجي الرسمي (30.0 ثانية)', 'Official 30.0-Second Promotional Video')}
-              </h2>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-limestone-300">
-              <span className="rounded border border-royal-600 bg-royal-950/60 px-2 py-1 font-latin">
-                Duration: 30.0s Exact
-              </span>
-              <span className="rounded border border-royal-600 bg-royal-950/60 px-2 py-1 font-latin">
-                Size: 2.96 MB
-              </span>
-            </div>
-          </div>
-
-          {/* Real Video Player Component */}
-          <div className="relative mt-6 overflow-hidden rounded-window border-2 border-ochre-400/80 bg-black shadow-2xl">
-            <video
-              ref={videoRef}
-              src="/AMUN_promo.mp4"
-              controls
-              playsInline
-              preload="metadata"
-              poster="/assets/header-3d.svg"
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              className="w-full max-h-[560px] object-contain mx-auto"
-            >
-              <source src="/AMUN_promo.mp4" type="video/mp4" />
-              <source src="./AMUN_promo.mp4" type="video/mp4" />
-              <source
-                src="https://github.com/omarmetman/amun/raw/main/AMUN_promo.mp4"
-                type="video/mp4"
-              />
-              <track
-                kind="subtitles"
-                src="/amun_subtitles_ar.vtt"
-                srcLang="ar"
-                label="العربية"
-                default={lang === 'ar'}
-              />
-              <track
-                kind="subtitles"
-                src="/amun_subtitles_en.vtt"
-                srcLang="en"
-                label="English"
-                default={lang === 'en'}
-              />
-              {t('المتصفح لا يدعم تشغيل الفيديو.', 'Your browser does not support HTML5 video.')}
-            </video>
-
-            {/* Quick Play Overlay if paused */}
-            {!isPlaying ? (
+            {onNasaData ? (
               <button
                 type="button"
-                onClick={togglePlay}
-                className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/20 transition-colors group cursor-pointer"
-                aria-label={t('تشغيل الفيديو', 'Play video')}
+                onClick={onNasaData}
+                className="btn-ghost !min-h-[42px] !px-4 text-xs sm:text-sm text-ochre-300 hover:text-ochre-200"
               >
-                <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-white bg-ochre-400 text-lapis-950 shadow-2xl transition-transform group-hover:scale-110">
-                  <IconPlay className="h-10 w-10 fill-current" />
-                </div>
+                <span>{t('تقرير بيانات ناسا وكيف بنيت اللعبة ↗', 'NASA Science Dossier ↗')}</span>
               </button>
             ) : null}
           </div>
+        </div>
 
-          {/* Video Metadata & Downloads */}
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-royal-700/80 pt-4 text-xs">
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="/AMUN_promo.mp4"
-                download="AMUN_promo.mp4"
-                className="btn-secondary !min-h-[36px] !px-3 text-xs"
+        {/* SECTION 1: OFFICIAL 30-SECOND TRAILER */}
+        <section className="rounded-2xl border border-royal-600/80 bg-lapis-900/80 p-5 sm:p-8 backdrop-blur-md shadow-xl">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-royal-700 pb-4">
+            <div>
+              <span className="font-latin text-xs font-bold uppercase tracking-wider text-ochre-400">
+                OFFICIAL 30-SECOND PROMOTIONAL FILM
+              </span>
+              <h2 className="mt-1 font-display text-xl sm:text-2xl font-bold text-limestone-50">
+                {t('العرض الترويجي الرسمي (AMUN Trailer)', 'AMUN Official 30s Trailer')}
+              </h2>
+            </div>
+            <StatusPill tone="info">30.0s • 1080p • 30fps</StatusPill>
+          </div>
+
+          <p className="mt-3 text-xs sm:text-sm leading-relaxed text-limestone-300">
+            {t(
+              'فيديو تعريفي مدته 30 ثانية يشرح رحلة مهندس المهمة في AMUN عبر 11 خطوة هندسية دقيقة من تحديد الهدف حتى تقرير التقييم، مع تعليق صوتي باللغة العربية الفصحى المبسطة وترجمة عربية وإنجليزية متزامنة.',
+              'A 30-second official trailer illustrating the spacecraft engineering lifecycle across 11 disciplined steps from target selection to post-flight debrief, featuring simplified modern Arabic voiceover and synced WebVTT captions.',
+            )}
+          </p>
+
+          {/* Responsive Video Container */}
+          <div className="relative mt-6 w-full overflow-hidden rounded-xl border-2 border-royal-700 bg-black shadow-2xl">
+            <div className="relative aspect-video w-full">
+              <video
+                ref={videoRef}
+                controls
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-contain"
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
               >
-                <IconDownload className="h-3.5 w-3.5 text-ochre-400" />
-                <span>{t('تنزيل ملف الفيديو (MP4)', 'Download MP4 Video')}</span>
-              </a>
+                <source src="/AMUN_promo.mp4" type="video/mp4" />
+                <track
+                  kind="subtitles"
+                  src="/amun_subtitles_ar.vtt"
+                  srcLang="ar"
+                  label={t('العربية (Arabic)', 'Arabic')}
+                  default={lang === 'ar'}
+                />
+                <track
+                  kind="subtitles"
+                  src="/amun_subtitles_en.vtt"
+                  srcLang="en"
+                  label={t('الإنجليزية (English)', 'English')}
+                  default={lang === 'en'}
+                />
+                {t('متصفحك لا يدعم تشغيل الفيديو.', 'Your browser does not support the video tag.')}
+              </video>
+
+              {!isPlaying && (
+                <button
+                  type="button"
+                  onClick={togglePlay}
+                  className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[2px] transition-all hover:bg-black/25"
+                  aria-label={t('تشغيل الفيديو', 'Play video')}
+                >
+                  <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full border-2 border-ochre-400 bg-ochre-500/90 text-lapis-950 shadow-2xl transition-transform hover:scale-110">
+                    <IconPlay className="h-7 w-7 sm:h-9 sm:w-9 translate-x-0.5" />
+                  </div>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Subtitle Downloads & Telemetry Info */}
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div className="flex flex-wrap items-center gap-2">
               <a
                 href="/amun_subtitles_ar.srt"
                 download="amun_subtitles_ar.srt"
-                className="btn-ghost !min-h-[36px] !px-3 text-xs"
+                className="btn-ghost !min-h-[30px] !px-2.5 text-xs text-ochre-300 hover:text-ochre-200"
               >
                 <IconDownload className="h-3.5 w-3.5" />
                 <span>{t('ترجمة عربية (.srt)', 'Arabic Subtitles (.srt)')}</span>
@@ -375,7 +365,7 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
               <a
                 href="/amun_subtitles_en.srt"
                 download="amun_subtitles_en.srt"
-                className="btn-ghost !min-h-[36px] !px-3 text-xs"
+                className="btn-ghost !min-h-[30px] !px-2.5 text-xs text-ochre-300 hover:text-ochre-200"
               >
                 <IconDownload className="h-3.5 w-3.5" />
                 <span>{t('ترجمة إنجليزية (.srt)', 'English Subtitles (.srt)')}</span>
@@ -388,19 +378,19 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
           </div>
         </section>
 
-        {/* SECTION 2: THE EGYPTIAN TEAM */}
-        <section className="mt-12 rounded-window border border-royal-600 bg-lapis-900/70 p-6 sm:p-8">
+        {/* SECTION 2: THE EGYPTIAN FLIGHT CREW (RADICAL REDESIGN FOR MOBILE & DESKTOP) */}
+        <section className="rounded-2xl border border-royal-600/80 bg-lapis-900/80 p-5 sm:p-8 backdrop-blur-md shadow-xl">
           <div className="border-b border-royal-700 pb-4">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="font-latin text-xs font-bold uppercase tracking-wider text-malachite">
                 EGYPTIAN INNOVATORS • NASA SPACE APPS 2026
               </span>
               <StatusPill tone="good">100% Egyptian Crew</StatusPill>
             </div>
-            <h2 className="mt-1 font-display text-2xl text-limestone-50 sm:text-3xl">
+            <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-limestone-50">
               {t('طاقم المهمة المصري (The Egyptian Flight Crew)', 'The Egyptian Flight Crew')}
             </h2>
-            <p className="mt-2 max-w-3xl text-xs leading-relaxed text-limestone-300 sm:text-sm">
+            <p className="mt-2 text-xs sm:text-sm leading-relaxed text-limestone-300">
               {t(
                 'فريق مصري متكامل يجمع بين شغف استكشاف الفضاء والتميز البرمجي والهندسي؛ يضم طلبة ومهندسين متخصصين في هندسة الميكاترونكس، ديناميكا الطيران والميكانيكا المدارية، الفنون وتصميم الهويات البصرية، وهندسة البرمجيات والنظم الموزعة. استلهم الفريق اسم المشروع من الإله المصري القديم «آمون» رمز الهواء وخفايا الكون، لربط عبقرية الحضارة المصرية القديمة في علوم الفلك بأحدث آفاق الملاحة الفضائية الحديثة.',
                 'A dedicated multidisciplinary Egyptian team uniting aerospace flight dynamics, mechatronics systems engineering, software architecture, and authentic cultural visual identity to represent Egypt at NASA Space Apps Challenge 2026.',
@@ -408,55 +398,59 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
             </p>
           </div>
 
+          {/* Cards Grid: Perfectly responsive on Mobile (Vertical stack) and Desktop (2-column) */}
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             {team.map((member) => (
               <div
                 key={member.name.en}
-                className="flex flex-col justify-between rounded-window border-2 border-royal-700 bg-lapis-950/80 p-5 transition-all hover:border-ochre-400/70"
+                className="flex flex-col justify-between rounded-2xl border border-royal-700/90 bg-gradient-to-b from-royal-950/90 via-lapis-900/95 to-lapis-950 p-5 sm:p-6 shadow-xl transition-all duration-300 hover:border-ochre-400/80 hover:shadow-2xl hover:shadow-ochre-500/10"
               >
                 <div>
-                  <div className="flex items-start gap-4">
+                  {/* Member Header: Stacks neatly on mobile, side-by-side on tablet/desktop */}
+                  <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-start">
                     <img
                       src={member.image}
                       alt={l(member.name)}
-                      className="h-24 w-24 shrink-0 rounded-window border-2 border-ochre-400 object-cover shadow-lg"
+                      className="h-28 w-28 sm:h-24 sm:w-24 shrink-0 rounded-2xl border-2 border-ochre-400 object-cover shadow-[0_0_20px_rgba(227,169,47,0.3)] ring-4 ring-royal-900/80"
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className={`rounded border px-2 py-0.5 font-latin text-[10px] font-bold uppercase tracking-wider ${member.tagColor}`}>
+                      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                        <span className={`rounded-full px-2.5 py-0.5 font-latin text-[10px] sm:text-[11px] font-bold uppercase tracking-wider ${member.tagColor}`}>
                           {l(member.tag)}
                         </span>
                         <a
                           href={member.linkedin}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-latin text-[11px] font-semibold text-ochre-400 hover:underline"
+                          className="font-latin text-xs font-semibold text-ochre-400 hover:text-ochre-300 hover:underline"
                         >
                           LinkedIn ↗
                         </a>
                       </div>
 
-                      <h3 className="mt-1 font-display text-lg font-bold text-limestone-50 sm:text-xl">
+                      <h3 className="mt-2 font-display text-xl sm:text-2xl font-bold text-limestone-50">
                         {l(member.name)}
                       </h3>
-                      <div className="mt-0.5 text-xs font-semibold text-ochre-300">
+                      <div className="mt-1 text-xs sm:text-sm font-semibold text-ochre-300">
                         {l(member.role)}
                       </div>
                     </div>
                   </div>
 
-                  <p className="mt-3.5 text-xs leading-relaxed text-limestone-200">
+                  {/* Biography */}
+                  <p className="mt-4 text-xs sm:text-sm leading-relaxed text-limestone-200">
                     {l(member.bio)}
                   </p>
 
-                  <div className="mt-4 border-t border-royal-800 pt-3">
-                    <span className="font-latin text-[10px] font-bold uppercase tracking-wider text-ochre-400">
-                      {t('أبرز الإسهامات الفنية في المشروع:', 'Core Technical Contributions:')}
+                  {/* Contributions Box */}
+                  <div className="mt-5 rounded-xl border border-royal-800 bg-lapis-950/70 p-3.5 sm:p-4">
+                    <span className="font-latin text-[10px] sm:text-xs font-bold uppercase tracking-wider text-ochre-400">
+                      {t('أبرز الإسهامات الهندسية في المشروع:', 'Core Technical Contributions:')}
                     </span>
-                    <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-limestone-300">
+                    <ul className="mt-2.5 space-y-2 text-xs sm:text-sm leading-relaxed text-limestone-300">
                       {member.contributions.map((c, cIdx) => (
-                        <li key={cIdx} className="flex items-start gap-2">
-                          <IconCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-malachite" />
+                        <li key={cIdx} className="flex items-start gap-2.5">
+                          <IconCheck className="mt-1 h-3.5 w-3.5 shrink-0 text-malachite" />
                           <span>{l(c)}</span>
                         </li>
                       ))}
@@ -464,17 +458,18 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
                   </div>
                 </div>
 
-                <div className="mt-5 border-t border-royal-800 pt-3 flex items-center justify-between text-xs">
+                {/* Card Footer */}
+                <div className="mt-5 pt-3 border-t border-royal-800 flex flex-wrap items-center justify-between gap-2 text-xs">
                   <span className="text-[11px] text-limestone-400">
-                    {t('جمهورية مصر العربية', 'Arab Republic of Egypt')}
+                    {t('جمهورية مصر العربية 🇪🇬', 'Arab Republic of Egypt 🇪🇬')}
                   </span>
                   <a
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-ghost !min-h-[30px] !px-2.5 text-xs text-ochre-300 hover:text-ochre-200"
+                    className="btn-secondary !min-h-[32px] !px-3 text-xs text-ochre-300 hover:text-ochre-200"
                   >
-                    <span>{t('عرض الملف الشخصي ↗', 'View LinkedIn Profile ↗')}</span>
+                    <span>{t('عرض الملف الشخصي ↗', 'LinkedIn Profile ↗')}</span>
                   </a>
                 </div>
               </div>
@@ -483,15 +478,15 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
         </section>
 
         {/* SECTION 3: CONCEPT & SYSTEMS ARCHITECTURE */}
-        <section className="mt-12 rounded-window border border-royal-600 bg-lapis-900/70 p-6 sm:p-8">
+        <section className="rounded-2xl border border-royal-600/80 bg-lapis-900/80 p-5 sm:p-8 backdrop-blur-md shadow-xl">
           <div className="border-b border-royal-700 pb-4">
             <span className="font-latin text-xs font-bold uppercase tracking-wider text-ochre-400">
               SYSTEMS ENGINEERING METHODOLOGY
             </span>
-            <h2 className="mt-1 font-display text-2xl text-limestone-50 sm:text-3xl">
+            <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-limestone-50">
               {t('الفكرة الهندسية ومحركات الفيزياء الخمسة', 'Engineering Concept & Five Physics Engines')}
             </h2>
-            <p className="mt-2 max-w-3xl text-xs leading-relaxed text-limestone-300 sm:text-sm">
+            <p className="mt-2 text-xs sm:text-sm leading-relaxed text-limestone-300">
               {t(
                 'يعتمد مشروع AMUN على محرك فيزيائي نقي مكتوب بلغة TypeScript بدون أي إطارات عمل خارجية، يربط بين خمس معادلات فيزيائية معتمدة لدى وكالة ناسا:',
                 'AMUN implements a pure TypeScript astrodynamics engine (src/engine) coupling five closed-form physics formulations verified by NASA standards:',
@@ -501,12 +496,12 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
 
           {/* 5 Physics Engines Grid */}
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-window border border-royal-700 bg-lapis-950/70 p-4">
+            <div className="rounded-xl border border-royal-700 bg-lapis-950/70 p-4">
               <span className="font-latin text-[10px] uppercase tracking-wider text-ochre-400">EQUATION 01</span>
               <h3 className="mt-1 font-display text-sm font-bold text-limestone-100">
                 {t('معادلة تسيلكوفسكي لكتلة الوقود', 'Tsiolkovsky Propellant Mass')}
               </h3>
-              <div className="mt-2 font-latin text-[11px] text-ochre-300" dir="ltr">
+              <div className="mt-2 font-mono text-[11px] text-ochre-300" dir="ltr">
                 m_prop = [m_other · (e^x - 1)] / [1 - k · (e^x - 1)]
               </div>
               <p className="mt-2 text-xs leading-relaxed text-limestone-400">
@@ -514,12 +509,12 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
               </p>
             </div>
 
-            <div className="rounded-window border border-royal-700 bg-lapis-950/70 p-4">
+            <div className="rounded-xl border border-royal-700 bg-lapis-950/70 p-4">
               <span className="font-latin text-[10px] uppercase tracking-wider text-ochre-400">EQUATION 02</span>
               <h3 className="mt-1 font-display text-sm font-bold text-limestone-100">
                 {t('قانون التربيع العكسي للإشعاع الشمسي', 'Inverse-Square Solar Irradiance')}
               </h3>
-              <div className="mt-2 font-latin text-[11px] text-ochre-300" dir="ltr">
+              <div className="mt-2 font-mono text-[11px] text-ochre-300" dir="ltr">
                 S(r) = 1361 / r² [W/m²]
               </div>
               <p className="mt-2 text-xs leading-relaxed text-limestone-400">
@@ -527,12 +522,12 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
               </p>
             </div>
 
-            <div className="rounded-window border border-royal-700 bg-lapis-950/70 p-4">
+            <div className="rounded-xl border border-royal-700 bg-lapis-950/70 p-4">
               <span className="font-latin text-[10px] uppercase tracking-wider text-ochre-400">EQUATION 03</span>
               <h3 className="mt-1 font-display text-sm font-bold text-limestone-100">
                 {t('معادلة فرايس لاتصالات DSN', 'Friis Path Loss & DSN Link')}
               </h3>
-              <div className="mt-2 font-latin text-[11px] text-ochre-300" dir="ltr">
+              <div className="mt-2 font-mono text-[11px] text-ochre-300" dir="ltr">
                 Bitrate ∝ P_tx · D_ant² · (f / f_ref)² · (1 / d_AU)²
               </div>
               <p className="mt-2 text-xs leading-relaxed text-limestone-400">
@@ -540,12 +535,12 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
               </p>
             </div>
 
-            <div className="rounded-window border border-royal-700 bg-lapis-950/70 p-4">
+            <div className="rounded-xl border border-royal-700 bg-lapis-950/70 p-4">
               <span className="font-latin text-[10px] uppercase tracking-wider text-ochre-400">EQUATION 04</span>
               <h3 className="mt-1 font-display text-sm font-bold text-limestone-100">
                 {t('مدارات انتقال هوهمان الكوكبية', 'Hohmann Interplanetary Transfer')}
               </h3>
-              <div className="mt-2 font-latin text-[11px] text-ochre-300" dir="ltr">
+              <div className="mt-2 font-mono text-[11px] text-ochre-300" dir="ltr">
                 T_transit ≈ 0.5 · a_AU^1.5 · 365.25 [days]
               </div>
               <p className="mt-2 text-xs leading-relaxed text-limestone-400">
@@ -553,7 +548,7 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
               </p>
             </div>
 
-            <div className="rounded-window border border-royal-700 bg-lapis-950/70 p-4 sm:col-span-2 lg:col-span-2">
+            <div className="rounded-xl border border-royal-700 bg-lapis-950/70 p-4 sm:col-span-2 lg:col-span-2">
               <span className="font-latin text-[10px] uppercase tracking-wider text-ochre-400">EQUATION 05</span>
               <h3 className="mt-1 font-display text-sm font-bold text-limestone-100">
                 {t('مساطر الهوامش الهندسية الصارمة (Aerospace Margin Rulers)', 'Aerospace Margin Rulers & Optimization')}
@@ -569,17 +564,28 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
         </section>
 
         {/* SECTION 4: 100% NASA OPEN DATA SOURCES */}
-        <section className="mt-12 rounded-window border border-royal-600 bg-lapis-900/70 p-6 sm:p-8">
+        <section className="rounded-2xl border border-royal-600/80 bg-lapis-900/80 p-5 sm:p-8 backdrop-blur-md shadow-xl">
           <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-royal-700 pb-4">
             <div>
               <span className="font-latin text-xs font-bold uppercase tracking-wider text-ochre-400">
                 NASA DATA PROVENANCE
               </span>
-              <h2 className="mt-1 font-display text-2xl text-limestone-50 sm:text-3xl">
+              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-limestone-50">
                 {t('مصادر بيانات NASA الرسمية المعتمدة 100%', '100% Authentic NASA Open Datasets')}
               </h2>
             </div>
-            <StatusPill tone="good">Global Award Eligible</StatusPill>
+            <div className="flex items-center gap-2">
+              <StatusPill tone="good">Global Award Eligible</StatusPill>
+              {onNasaData ? (
+                <button
+                  type="button"
+                  onClick={onNasaData}
+                  className="btn-secondary !min-h-[30px] !px-2.5 text-xs text-ochre-300"
+                >
+                  {t('شرح كامل ↗', 'Full Report ↗')}
+                </button>
+              ) : null}
+            </div>
           </div>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -633,7 +639,7 @@ export function ProjectPage({ onBack }: ProjectPageProps) {
                 ),
               },
             ].map((s) => (
-              <div key={s.name} className="rounded border border-royal-700 bg-lapis-950/60 p-3.5">
+              <div key={s.name} className="rounded-xl border border-royal-700 bg-lapis-950/60 p-3.5">
                 <div className="flex items-baseline justify-between gap-2">
                   <h4 className="font-display text-sm font-bold text-limestone-100">{s.name}</h4>
                   <a

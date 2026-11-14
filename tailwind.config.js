@@ -61,8 +61,8 @@ export default {
         good: '#3FA878',
       },
       fontFamily: {
-        sans: ['"IBM Plex Sans Arabic"', '"IBM Plex Sans"', 'system-ui', 'sans-serif'],
-        display: ['"Reem Kufi"', '"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
+        sans: ['"Cairo"', '"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Alexandria"', '"Cairo"', 'system-ui', 'sans-serif'],
         latin: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
       },
       fontSize: {

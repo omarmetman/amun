@@ -89,7 +89,7 @@ function OrbitDiagram({
       />
       <circle cx={earthX} cy={earthY} r="9" fill="none" stroke="#EDE7D8" strokeWidth="1.5" />
       <path d={`M${earthX - 3} ${earthY}H${earthX + 3}M${earthX} ${earthY - 3}V${earthY + 3}`} stroke="#3FA878" strokeWidth="1.5" />
-      <text x={earthX} y={earthY + 24} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="IBM Plex Sans Arabic, sans-serif">
+      <text x={earthX} y={earthY + 24} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="Cairo, sans-serif">
         {rtl ? 'الأرض' : 'Earth'}
       </text>
 
@@ -104,7 +104,7 @@ function OrbitDiagram({
           strokeWidth="1"
         />
       )}
-      <text x={targetX} y={targetY - 22} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="IBM Plex Sans Arabic, sans-serif">
+      <text x={targetX} y={targetY - 22} textAnchor="middle" fill="#EDE7D8" fontSize="11" fontFamily="Cairo, sans-serif">
         {targetName}
       </text>
 

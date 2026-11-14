@@ -175,21 +175,44 @@ export function Step05Budget() {
         </Section>
 
         <div className="space-y-5">
-          <Section title={t('مدة العمليات', 'Operations duration')} action={<IconClock className="h-5 w-5 text-royal-300" />}>
+          <Section title={t('مدة العمليات ودورة حياة المهمة', 'Operations Duration & Mission Lifecycle')} action={<IconClock className="h-5 w-5 text-royal-300" />}>
             <RangeControl
               id="ops-days"
-              label={t('أيام العمليات العلمية', 'Science operations days')}
+              label={t('أيام العمليات العلمية في الفضاء', 'Deep space science operations days')}
               value={design.choices.opsDays}
-              min={5}
-              max={180}
-              step={5}
+              min={10}
+              max={730}
+              step={10}
               unit={t('يوم', 'days')}
               onChange={(value) => setChoice('opsDays', value)}
               hint={t(
-                'أيام أكثر = علم وبيانات أكثر، لكن كلفة تشغيل ووقود اتصال أكثر.',
-                'More days = more science and data, but higher operations and link cost.',
+                'مهمات كبيرة وطويلة: تمتد من شهر واحد حتى عامين كاملين (730 يوماً). أيام أكثر تعني عائداً علمياً مضاعفاً، لكنها تتطلب بطاريات أضخم وتدريعاً إشعاعياً وتكلفة عمليات مستمرة.',
+                'Long-duration flagship missions: scalable from 30 days up to 2 full Earth years (730 days). Longer missions yield massive scientific data but require robust batteries, radiation hardening, and continuous operations funding.',
               )}
             />
+            {/* Quick Lifecycle Presets */}
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
+              {[
+                { days: 30, label: t('مهمة قياسية (30 يوم)', 'Standard (30d)') },
+                { days: 90, label: t('مهمة فصلية (90 يوم)', 'Quarterly (90d)') },
+                { days: 180, label: t('نصف سنوية (180 يوم)', 'Semi-Annual (180d)') },
+                { days: 365, label: t('مهمة سنوية (عام كامل)', 'Annual (1 Year)') },
+                { days: 730, label: t('مهمة كبرى ممتدة (عامان)', 'Flagship (2 Years)') },
+              ].map((p) => (
+                <button
+                  key={p.days}
+                  type="button"
+                  onClick={() => setChoice('opsDays', p.days)}
+                  className={`rounded-data px-2 py-0.5 text-[11px] font-medium border transition-colors ${
+                    design.choices.opsDays === p.days
+                      ? 'border-ochre-400 bg-ochre-500/20 text-ochre-300'
+                      : 'border-royal-700 bg-royal-800/30 text-limestone-300 hover:border-royal-500'
+                  }`}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
             <div className="mt-3 grid grid-cols-3 gap-x-4">
               <Stat label={t('علم متوقع', 'Science')} value={fmt(science, 1)} hint={`×${fmt(design.science.opsFactor, 2)}`} />
               <Stat label={t('بيانات', 'Data')} value={`${fmt(data, 2)}`} hint="GB" tone="royal" />

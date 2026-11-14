@@ -20,15 +20,18 @@ export function Welcome({
   onProfile,
   onCampaign,
   onProject,
+  onNasaData,
 }: {
   onProfile?: () => void;
   onCampaign?: () => void;
   onProject?: () => void;
+  onNasaData?: () => void;
 }) {
   const t = useT();
   const l = useL();
   const lang = useLang();
   const [stage, setStage] = useState(1);
+  const [pilotError, setPilotError] = useState(false);
   const startGame = useMissionStore((state) => state.startGame);
   const continueGame = useMissionStore((state) => state.continueGame);
   const setDifficulty = useMissionStore((state) => state.setDifficulty);
@@ -55,8 +58,13 @@ export function Welcome({
   };
 
   const begin = () => {
+    if (!pilot.trim()) {
+      setPilotError(true);
+      return;
+    }
+    setPilotError(false);
     setDifficulty(difficulty);
-    setPilotName(pilot.trim() || t('قائد المهمة', 'Mission Commander'));
+    setPilotName(pilot.trim());
     startGame();
     window.scrollTo({ top: 0 });
   };
@@ -65,43 +73,60 @@ export function Welcome({
     <div className="min-h-screen">
       <Frieze className="text-royal-500" />
 
-      <header className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-4 sm:px-8">
-        <span className="sm:hidden">
-          <AmunLogo className="h-9 w-9" />
-        </span>
-        <span className="hidden sm:block">
-          <AmunLogo className="h-10 w-10" withWordmark />
-        </span>
-        <div className="flex shrink-0 items-center gap-2">
-          <LanguageToggle />
-          {onProject ? (
-            <button
-              type="button"
-              onClick={onProject}
-              className="inline-flex min-h-[36px] items-center gap-1.5 border border-royal-700 bg-royal-950/60 px-2 py-1 text-[11px] font-semibold text-ochre-300 hover:border-ochre-400"
-              title={t('المشروع: الروابط، الفكرة، وبيانات ناسا، وطاقم العمل', 'Project: Links, Concept, NASA Data & Flight Crew')}
-            >
-              <IconRocket className="h-4 w-4 text-ochre-400" />
-              <span>{t('المشروع', 'Project')}</span>
-            </button>
-          ) : null}
-          {onProfile ? (
-            <button
-              type="button"
-              onClick={onProfile}
-              className="inline-flex min-h-[36px] items-center gap-1.5 border border-transparent px-2 py-1 text-[11px] text-limestone-200 hover:border-limestone-400"
-              aria-label={t(
-                `افتح ملف القائد: ${unlockedCount} من ${ACHIEVEMENT_COUNT} إنجازًا`,
-                `Open pilot profile: ${unlockedCount} of ${ACHIEVEMENT_COUNT} achievements`,
-              )}
-            >
-              <IconMedal className="h-4 w-4 text-ochre-400" />
-              <span className="hidden sm:inline">{t('الملف', 'Profile')}</span>
-              <span className="font-latin tabular-nums" dir="ltr">
-                {unlockedCount}/{ACHIEVEMENT_COUNT}
-              </span>
-            </button>
-          ) : null}
+      {/* Sticky Header Across Welcome Page */}
+      <header className="sticky top-0 z-50 border-b border-royal-700/90 bg-lapis-950/95 backdrop-blur-md shadow-xl">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 sm:px-8">
+          <div className="flex items-center gap-3">
+            <span className="sm:hidden">
+              <AmunLogo className="h-9 w-9" />
+            </span>
+            <span className="hidden sm:block">
+              <AmunLogo className="h-10 w-10" withWordmark />
+            </span>
+          </div>
+
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <LanguageToggle />
+            {onNasaData ? (
+              <button
+                type="button"
+                onClick={onNasaData}
+                className="inline-flex min-h-[36px] items-center gap-1.5 border border-royal-700 bg-royal-950/60 px-2.5 py-1 text-[11px] font-semibold text-malachite hover:border-malachite"
+                title={t('معلومات حقيقية من ناسا عن الفضاء وكيف تم بناء اللعبة', 'Authentic NASA Space Science: How NASA Open Data Built AMUN')}
+              >
+                <IconTarget className="h-3.5 w-3.5 text-malachite" />
+                <span className="hidden sm:inline">{t('بيانات ناسا', 'NASA Science')}</span>
+              </button>
+            ) : null}
+            {onProject ? (
+              <button
+                type="button"
+                onClick={onProject}
+                className="inline-flex min-h-[36px] items-center gap-1.5 border border-royal-700 bg-royal-950/60 px-2.5 py-1 text-[11px] font-semibold text-ochre-300 hover:border-ochre-400"
+                title={t('المشروع: الروابط، الفكرة، وبيانات ناسا، وطاقم العمل', 'Project: Links, Concept, NASA Data & Flight Crew')}
+              >
+                <IconRocket className="h-4 w-4 text-ochre-400" />
+                <span>{t('المشروع', 'Project')}</span>
+              </button>
+            ) : null}
+            {onProfile ? (
+              <button
+                type="button"
+                onClick={onProfile}
+                className="inline-flex min-h-[36px] items-center gap-1.5 border border-transparent px-2 py-1 text-[11px] text-limestone-200 hover:border-limestone-400"
+                aria-label={t(
+                  `افتح ملف القائد: ${unlockedCount} من ${ACHIEVEMENT_COUNT} إنجازًا`,
+                  `Open pilot profile: ${unlockedCount} of ${ACHIEVEMENT_COUNT} achievements`,
+                )}
+              >
+                <IconMedal className="h-4 w-4 text-ochre-400" />
+                <span className="hidden sm:inline">{t('الملف', 'Profile')}</span>
+                <span className="font-latin tabular-nums" dir="ltr">
+                  {unlockedCount}/{ACHIEVEMENT_COUNT}
+                </span>
+              </button>
+            ) : null}
+          </div>
         </div>
       </header>
 
@@ -142,15 +167,36 @@ export function Welcome({
                   )}
                 </p>
 
-                <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-                  <button type="button" onClick={() => setStage(3)} className="btn-primary w-full text-sm sm:w-auto">
-                    {t('ابدأ مهمة جديدة', 'Start a new mission')}
+                <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+                  <button type="button" onClick={() => setStage(3)} className="btn-primary w-full text-sm sm:w-auto font-bold shadow-lg">
+                    <IconRocket className="h-4 w-4" />
+                    <span>{t('ابدأ مهمة جديدة', 'Start a new mission')}</span>
                   </button>
+                  {onProject ? (
+                    <button
+                      type="button"
+                      onClick={onProject}
+                      className="btn-secondary w-full text-sm sm:w-auto font-semibold"
+                    >
+                      <IconRocket className="h-4 w-4 text-ochre-400" />
+                      <span>{t('مشروع آمون وطاقم العمل 🇪🇬', 'Project AMUN & Egyptian Crew 🇪🇬')}</span>
+                    </button>
+                  ) : null}
+                  {onNasaData ? (
+                    <button
+                      type="button"
+                      onClick={onNasaData}
+                      className="btn-secondary w-full text-sm sm:w-auto font-semibold"
+                    >
+                      <IconTarget className="h-4 w-4 text-malachite" />
+                      <span>{t('معلومات ناسا الحقيقية 🪐', 'NASA Real Science 🪐')}</span>
+                    </button>
+                  ) : null}
                   <button
                     type="button"
                     onClick={continueGame}
                     disabled={!savedAt}
-                    className="btn-secondary w-full text-sm sm:w-auto"
+                    className="btn-ghost w-full text-sm sm:w-auto"
                   >
                     {t('تابع المهمة المحفوظة', 'Continue the saved mission')}
                   </button>
@@ -174,28 +220,19 @@ export function Welcome({
                     <IconBook className="h-4 w-4" />
                     {t('كيف تعمل اللعبة', 'How the game works')}
                   </button>
-                  {onProject ? (
-                    <button
-                      type="button"
-                      onClick={onProject}
-                      className="inline-flex items-center gap-1.5 border-b border-ochre-400/80 pb-px text-xs text-ochre-300 hover:text-ochre-200"
-                    >
-                      <IconRocket className="h-4 w-4 text-ochre-400" />
-                      {t('دليل المشروع وطاقم العمل', 'Project Dossier & Team')}
-                    </button>
-                  ) : null}
                 </div>
               </div>
             </section>
 
-            <dl className="mt-8 grid grid-cols-3 border-y border-royal-700">
+            <dl className="mt-8 grid grid-cols-2 sm:grid-cols-4 border-y border-royal-700 divide-x divide-royal-700 rtl:divide-x-reverse bg-lapis-950/40">
               {[
-                { value: '06', label: t('فصول حملة قصصية', 'story chapters') },
-                { value: '11', label: t('خطوة تصميم وتقييم', 'design and evaluation steps') },
-                { value: '12', label: t('هدفًا من القمر إلى هالي', 'targets from Moon to Halley') },
-              ].map((item, index) => (
-                <div key={item.value} className={`px-3 py-3 ${index < 2 ? 'border-e border-royal-700' : ''}`}>
-                  <dt className="font-latin text-2xl tabular-nums text-ochre-400">{item.value}</dt>
+                { value: '06', label: t('فصول حملة قصصية عميقة', 'deep story chapters') },
+                { value: '11', label: t('خطوة تصميم ونظم هندسية', 'engineering systems steps') },
+                { value: '12', label: t('جرماً ببيانات JPL المعتمدة', 'JPL benchmarked targets') },
+                { value: '05', label: t('محركات فيزيائية متكاملة', 'coupled physics engines') },
+              ].map((item) => (
+                <div key={item.value} className="px-3 py-3 text-center sm:text-start">
+                  <dt className="font-latin text-2xl tabular-nums font-bold text-ochre-400">{item.value}</dt>
                   <dd className="mt-0.5 text-[11px] leading-snug text-limestone-300">{item.label}</dd>
                 </div>
               ))}
@@ -366,24 +403,42 @@ export function Welcome({
 
             <div className="mt-6 grid gap-6 md:grid-cols-2">
               <div>
-                <label htmlFor="pilot" className="label mb-2 block">
-                  {t('اسم قائد المهمة', 'Mission commander')}
+                <label htmlFor="pilot" className="label mb-2 flex items-center justify-between">
+                  <span className="font-semibold text-limestone-100">
+                    {t('اسم قائد المهمة', 'Mission commander')}
+                    <span className="ms-1.5 text-carnelian font-bold">* ({t('إجباري', 'Required')})</span>
+                  </span>
+                  {pilotError && (
+                    <span className="text-[11px] font-bold text-carnelian animate-pulse">
+                      {t('اسم القائد إجباري!', 'Commander name required!')}
+                    </span>
+                  )}
                 </label>
                 <input
                   id="pilot"
                   value={pilot}
-                  onChange={(event) => setPilot(event.target.value.slice(0, 40))}
-                  placeholder={t('اكتب اسمك ليظهر في لوحة الصدارة', 'Enter a name for the leaderboard')}
-                  className="field"
+                  onChange={(event) => {
+                    setPilot(event.target.value.slice(0, 40));
+                    if (event.target.value.trim()) setPilotError(false);
+                  }}
+                  placeholder={t('اكتب اسمك الكامل للمتابعة (مطلوب)', 'Enter your full name to proceed (required)')}
+                  className={`field ${pilotError ? '!border-carnelian focus:!ring-carnelian ring-1 ring-carnelian' : ''}`}
                   maxLength={40}
+                  required
                   autoComplete="nickname"
                 />
-                <p className="mt-2 text-[11px] leading-relaxed text-limestone-400">
-                  {t(
-                    'يُحفظ التقدم محليًا في متصفحك فقط. لا خادم ولا حساب.',
-                    'Progress is saved locally in your browser only. No server, no account.',
-                  )}
-                </p>
+                {pilotError ? (
+                  <p className="mt-1.5 text-xs text-carnelian font-semibold">
+                    {t('⚠️ لا يمكن بدء المهمة دون كتابة اسم قائد المهمة.', '⚠️ Cannot launch mission without entering commander name.')}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-[11px] leading-relaxed text-limestone-400">
+                    {t(
+                      'يُحفظ التقدم محليًا في متصفحك فقط. لا خادم ولا حساب.',
+                      'Progress is saved locally in your browser only. No server, no account.',
+                    )}
+                  </p>
+                )}
                 <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-limestone-300">
                   <span>{t('حفظ تلقائي', 'Auto-save')}</span>
                   <span>{t('تصدير JSON', 'JSON export')}</span>

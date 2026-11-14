@@ -16,6 +16,7 @@ import {
   IconPlus,
   IconReset,
   IconRocket,
+  IconTarget,
   IconUpload,
 } from './Icons';
 
@@ -57,13 +58,14 @@ interface HeaderProps {
   onProfile: () => void;
   onCampaign: () => void;
   onProject?: () => void;
+  onNasaData?: () => void;
   onNew: () => void;
   onExport: () => void;
   onImport: () => void;
   onReset: () => void;
 }
 
-export function Header({ onLearn, onProfile, onCampaign, onProject, onNew, onExport, onImport, onReset }: HeaderProps) {
+export function Header({ onLearn, onProfile, onCampaign, onProject, onNasaData, onNew, onExport, onImport, onReset }: HeaderProps) {
   const t = useT();
   const l = useL();
   const step = useMissionStore((state) => state.step);
@@ -110,7 +112,7 @@ export function Header({ onLearn, onProfile, onCampaign, onProject, onNew, onExp
   );
 
   return (
-    <header className="sticky top-0 z-40 border-b border-royal-700 bg-lapis-900">
+    <header className="sticky top-0 z-50 border-b border-royal-700/90 bg-lapis-950/95 backdrop-blur-md shadow-xl">
       <div className="flex h-16 items-center justify-between gap-2 px-3 sm:px-5">
         <div className="flex min-w-0 items-center gap-2.5">
           <div className="shrink-0 lg:hidden">
@@ -139,6 +141,17 @@ export function Header({ onLearn, onProfile, onCampaign, onProject, onNew, onExp
           <div className="hidden sm:block">
             <LanguageToggle />
           </div>
+          {onNasaData ? (
+            <button
+              type="button"
+              onClick={onNasaData}
+              className="inline-flex min-h-[36px] items-center gap-1.5 border border-royal-700 bg-royal-950/60 px-2 py-1 text-[11px] font-semibold text-malachite hover:border-malachite"
+              title={t('معلومات حقيقية من ناسا عن الفضاء وكيف تم بناء اللعبة', 'Authentic NASA Space Science: How NASA Open Data Built AMUN')}
+            >
+              <IconRocket className="h-3.5 w-3.5 text-malachite" />
+              <span className="hidden sm:inline">{t('بيانات ناسا', 'NASA Science')}</span>
+            </button>
+          ) : null}
           {onProject ? (
             <button
               type="button"
@@ -225,6 +238,7 @@ export function Header({ onLearn, onProfile, onCampaign, onProject, onNew, onExp
                 </div>
                 {item(<IconFlag className="h-4 w-4 text-ochre-400" />, t('حملة أفق آمون', 'AMUN Horizon campaign'), onCampaign)}
                 {onProject ? item(<IconRocket className="h-4 w-4 text-ochre-400" />, t('دليل المشروع وطاقم العمل', 'Project Dossier & Team'), onProject) : null}
+                {onNasaData ? item(<IconTarget className="h-4 w-4 text-malachite" />, t('معلومات ناسا الحقيقية وكيف بنيت اللعبة', 'NASA Real Science & How AMUN Was Built'), onNasaData) : null}
                 {activeChapterId
                   ? item(<IconExit className="h-4 w-4" />, t('الخروج من الحملة', 'Exit campaign'), exitCampaign)
                   : null}
