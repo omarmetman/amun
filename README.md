@@ -1,4 +1,4 @@
-# AMUN (آمون) — Deep Space Mission Designer & Orbital Simulator
+# AMUN — Deep Space Mission Designer & Orbital Simulator
 
 <div align="center">
 
@@ -259,7 +259,7 @@ AMUN rejects generic sci-fi tropes—such as neon glows, starfield particle back
 
 * **The Trajectory Stepper**: Replaces standard step bars with an interactive SVG orbital transfer curve tracking the spacecraft from Earth to destination.
 * **Margin Rulers**: Replaces radial dials with horizontal linear aerospace margin bars clearly highlighting the optimal $10\% - 30\%$ engineering safety margin.
-* **The Cartouche (الخرطوش)**: Traditional oval rope cartouches frame mission names and the final letter evaluation grade.
+* **The Cartouche**: Traditional oval rope cartouches frame mission names and the final letter evaluation grade.
 * **The Lotus Frieze**: A subtle geometric architectural border gracing the welcome interface and mission debrief dossier.
 * **Bespoke 24px Iconography**: Handcrafted SVG vector icons with uniform 1.75px line-weights.
 
@@ -398,7 +398,7 @@ AMUN's content architecture is entirely data-driven (`src/data/`). Adding new ta
 ```typescript
 export const NEW_TARGET: MissionTarget = {
   id: 'europa',
-  name: { ar: 'أوروبا', en: 'Europa' },
+  name: { ar: 'Europa', en: 'Europa' },
   kind: 'moon',
   horizonsId: '502',
   sunDistanceAU: 5.20,

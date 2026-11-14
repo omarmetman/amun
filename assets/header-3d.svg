@@ -349,10 +349,10 @@
         <text class="mono" x="0" y="4.5" font-size="12" fill="#EDE7D8" text-anchor="middle" letter-spacing="3" font-weight="600">DEEP SPACE MISSION DESIGNER &amp; ORBITAL SIMULATOR</text>
       </g>
 
-      <!-- Authentic Arabic Identity & Provenance Sub-tag -->
+      <!-- Engineering Provenance Sub-tag -->
       <g transform="translate(0, 72)">
-        <text x="0" y="0" font-size="14" fill="#C2B89E" text-anchor="middle" font-weight="500">
-          محاكي تصميم وإدارة المهام الفضائية بأصباغ الجداريات المصرية ومعادلات الفيزياء الفلكية الحقيقية
+        <text class="mono" x="0" y="0" font-size="12" fill="#C2B89E" text-anchor="middle" font-weight="600" letter-spacing="1.5">
+          AUTHENTIC ASTROPHYSICAL SIMULATION POWERED BY ANCIENT EGYPTIAN MURAL BLUEPRINTS
         </text>
       </g>
     </g>
