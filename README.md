@@ -1,16 +1,12 @@
 <div align="center">
 
-# AMUN — Deep Space Mission Designer & Orbital Simulator
-
-<br />
-
 <img src="./assets/header-3d.svg" alt="Project AMUN: Deep Space Mission Designer and Orbital Simulator" width="100%" />
 
 <br /><br />
 
-<a href="https://omarmetman.vercel.app/projects/amun"><img src="./assets/btn-website.svg" alt="Project Showcase Lab" height="52" /></a>
+<a href="https://omarmetman.vercel.app/projects/amun"><img src="./assets/btn-website.svg" alt="Launch Live Lab Instance" height="52" /></a>
 <a href="https://github.com/omarmetman/amun"><img src="./assets/btn-launch.svg" alt="Launch Simulator" height="52" /></a>
-<a href="./AMUN_promo.mp4"><img src="./assets/btn-video.svg" alt="Watch Promo Video" height="52" /></a>
+<a href="https://github.com/omarmetman/amun/raw/main/AMUN_promo.mp4"><img src="./assets/btn-video.svg" alt="Watch 30s Promo Video" height="52" /></a>
 <a href="https://github.com/omarmetman/amun"><img src="./assets/btn-github.svg" alt="View Source Code on GitHub" height="52" /></a>
 
 <br /><br />
@@ -24,50 +20,74 @@
 [![Offline First](https://img.shields.io/badge/Architecture-100%25%20Client--Side%20%7C%20Offline%20Ready-0D1F4C)](#offline-architecture)
 [![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%20AA%20%7C%20RTL%20%2B%20LTR-EDE7D8?logoColor=0D1F4C)](#accessibility--internationalization)
 
-<br />
+<br /><br />
 
-**[Project Showcase (Lab)](https://omarmetman.vercel.app/projects/amun) • [Live GitHub Source](https://github.com/omarmetman/amun) • [Watch Video (MP4)](./AMUN_promo.mp4) • [English Subtitles](./amun_subtitles_en.srt) • [Arabic Subtitles](./amun_subtitles_ar.srt)**
+<p align="center">
+  <b><a href="https://omarmetman.vercel.app/projects/amun">Project Showcase (Lab)</a></b> &nbsp;•&nbsp; 
+  <b><a href="https://github.com/omarmetman/amun">GitHub Source</a></b> &nbsp;•&nbsp; 
+  <b><a href="https://github.com/omarmetman/amun/raw/main/AMUN_promo.mp4">Watch Video (MP4)</a></b> &nbsp;•&nbsp; 
+  <b><a href="./amun_subtitles_en.srt">English Subtitles</a></b> &nbsp;•&nbsp; 
+  <b><a href="./amun_subtitles_ar.srt">Arabic Subtitles</a></b>
+</p>
 
-<br />
-
----
-
-### **"From the Nile to the Stars — Designed for NASA Space Apps"**
-*An authentic, client-side aerospace engineering simulator and interactive educational platform.*  
-*Bridging genuine orbital mechanics, NASA open datasets, and systems engineering trade-offs within an authentic Ancient Egyptian mural pigment blueprint.*
-
----
-
-<br />
-
-## Official 30-Second Promotional Video
-
-<video src="https://github.com/omarmetman/amun/raw/main/AMUN_promo.mp4" width="85%" controls poster="./assets/header-3d.svg">
-  <source src="./AMUN_promo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-<br />
-
-**[▶ Direct Video Stream (AMUN_promo.mp4)](./AMUN_promo.mp4)** &nbsp;|&nbsp; 
-**[Download Arabic Subtitles (.srt)](./amun_subtitles_ar.srt)** &nbsp;|&nbsp; 
-**[Download English Subtitles (.srt)](./amun_subtitles_en.srt)**
+<p align="center">
+  <sub><b>"From the Nile to the Stars — Designed for NASA Space Apps Challenge"</b></sub><br />
+  <sub>An authentic, client-side aerospace engineering simulator and interactive educational laboratory.</sub><br />
+  <sub>Bridging genuine orbital mechanics, NASA open datasets, and systems engineering trade-offs within an ancient Egyptian mural pigment palette.</sub>
+</p>
 
 <br /><br />
 
----
+<!-- 1. LIVE LAB SHOWCASE -->
+<a href="https://omarmetman.vercel.app/projects/amun">
+  <img src="./assets/lab-showcase-3d.svg" alt="Project AMUN Live Mission Lab at omarmetman.vercel.app/projects/amun" width="100%" />
+</a>
 
-## Mission Overview
+<br /><br />
 
-<p style="max-width: 850px; line-height: 1.8;">
-<b>Project AMUN</b> is an interactive, browser-based space mission design simulator. It guides engineers and learners through the authentic compromises of interplanetary spaceflight: balancing payload instrumentation against power generation, sizing rocket stages with analytical closed-form propellant equations, optimizing Deep Space Network telecommunications, and timing synodic Hohmann transfer departures.
+<!-- 2. OFFICIAL VIDEO SECTION -->
+<img src="./assets/sec-video.svg" alt="Official 30-Second Mission Demo Video" width="100%" />
+
+<br /><br />
+
+<a href="https://github.com/omarmetman/amun/raw/main/AMUN_promo.mp4">
+  <img src="./assets/video-player-3d.svg" alt="Project AMUN 30-Second Official Mission Video Player" width="100%" />
+</a>
+
+<br /><br />
+
+<video src="https://github.com/omarmetman/amun/raw/main/AMUN_promo.mp4" controls="controls" width="90%">
+  <source src="./AMUN_promo.mp4" type="video/mp4" />
+</video>
+
+<br /><br />
+
+<p align="center">
+  <a href="https://github.com/omarmetman/amun/raw/main/AMUN_promo.mp4"><b>[▶ Direct Video Stream: AMUN_promo.mp4]</b></a> &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="./amun_subtitles_en.srt"><b>[Download English Subtitles (.srt)]</b></a> &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="./amun_subtitles_ar.srt"><b>[Download Arabic Subtitles (.srt)]</b></a>
+</p>
+
+<p align="center">
+  <sub>30.0 Seconds Exact Runtime • 1080p 30 FPS • Simplified Modern Arabic Voiceover with Synchronized Subtitles • 100% Procedural HUD & Visual Identity</sub>
+</p>
+
+<br /><br />
+
+<!-- 3. MISSION OVERVIEW -->
+<img src="./assets/sec-overview.svg" alt="Mission Overview and Systems Briefing" width="100%" />
+
+<br /><br />
+
+<p align="center" style="max-width: 860px; line-height: 1.8;">
+  <b>AMUN (Aerospace Mission Unified Navigator)</b> is an open-source, web-based space mission design and simulation platform. Developed to bridge complex orbital mechanics and accessible STEM education, AMUN challenges players to engineer end-to-end robotic interplanetary missions through an 11-step engineering lifecycle. Players select celestial targets, configure science instruments, size solar/nuclear power systems, architect deep-space telecommunications, and calculate launch vehicle Delta-V margins using authentic NASA equations and datasets (JPL Horizons, JPL SBDB, and Planetary Fact Sheets). A real-time coupled simulation engine with Monte Carlo flight anomalies evaluates mission trade-offs, budget constraints, mass limits, and scientific yield. By gamifying mission architecture without compromising physics integrity, AMUN equips future engineers and space enthusiasts with an intuitive systems-thinking laboratory that runs 100% in any modern browser—even completely offline.
 </p>
 
 <br />
 
 ```
 ========================================================================================
-                               FIVE COUPLED AEROSPACE CONSTRAINTS
+                              FIVE COUPLED AEROSPACE CONSTRAINTS
 ========================================================================================
  [1] Mass vs. Launch Capacity     ──> Characteristic injection energy C3 interpolation
  [2] Power vs. Load Budget        ──> Inverse-square solar flux S(r) = 1361/r² & RTG decay
@@ -79,25 +99,25 @@
 
 <br /><br />
 
----
+<!-- 4. FLIGHT TELEMETRY & MARGIN RULERS -->
+<img src="./assets/sec-telemetry.svg" alt="Flight Telemetry Deck & Margin Rulers" width="100%" />
 
-## 3D Aerospace Telemetry Deck & Margin Rulers
-
-<br />
+<br /><br />
 
 <img src="./assets/telemetry-3d.svg" alt="Live Aerospace Flight Telemetry Deck & Margin Rulers" width="100%" />
 
 <br /><br />
 
-<p style="max-width: 820px; line-height: 1.8;">
-Rather than repetitive circular gauges, AMUN implements linear aerospace <b>Margin Rulers</b>. Each critical resource (Mass, Power, Delta-v, Budget) features an explicit capacity ceiling and a shaded <b>10%–30% optimal safety margin</b>. Negative margins trigger instant blocking errors, while excess margins reduce overall mission efficiency.
+<p align="center" style="max-width: 840px; line-height: 1.8;">
+  Rather than repetitive circular gauges, AMUN implements linear aerospace <b>Margin Rulers</b>. Each critical resource (Mass, Power, Delta-v, Budget) features an explicit capacity ceiling and a shaded <b>10%–30% optimal safety margin</b>. Negative margins trigger instant blocking errors, while excess margins reduce overall mission efficiency.
 </p>
 
 <br /><br />
 
----
+<!-- 5. ENGINEERING LIFECYCLE (11 STEPS) -->
+<img src="./assets/sec-workflow.svg" alt="Engineering Lifecycle: 11 Flight Systems Steps" width="100%" />
 
-## Core Engineering Workflow (11 Steps)
+<br /><br />
 
 ```
 [01 Objectives] ──> [02 Spacecraft] ──> [03 Instruments] ──> [04 Launch Vehicle]
@@ -109,37 +129,42 @@ Rather than repetitive circular gauges, AMUN implements linear aerospace <b>Marg
 
 <br />
 
-| Stage | Engineering Review Milestone | Primary Systems Computed |
-| :---: | :--- | :--- |
-| **01** | **Mission Objectives** | Target selection (Moon, Mars, Asteroids, Comets) & tiered scientific thresholds |
-| **02** | **Spacecraft Platform** | Bus dry mass, radiation hardening, and chemical vs. high-$I_{sp}$ ion propulsion |
-| **03** | **Scientific Payload** | Allocating instruments (Spectrometers, LIDAR, Magnetometers, Sample Capsules) |
-| **04** | **Launch Vehicle** | Sizing payload capacity against characteristic energy ($C_3$) interpolation curves |
-| **05** | **Budget & Reserves** | Subsystem costs, daily operations expenditure, and risk inflation reserve |
-| **06** | **Power Budget** | Solar flux decay ($S=1361/r^2$), annual cell degradation, RTGs, and eclipse battery |
-| **07** | **Mass & Rocket Sizing** | Closed-form Tsiolkovsky propellant mass with structural tank fraction ($k$) |
-| **08** | **Communications** | High-Gain Antenna (HGA) diameter, Ka/X bands, and DSN 34m/70m link margin |
-| **09** | **Orbital Trajectories** | Hohmann transit times, synodic launch windows, planetary capture, and plane-change |
-| **10** | **Mission Simulation** | Seeded deterministic Monte Carlo simulation of cruise, insertion, and anomalies |
-| **11** | **Evaluation & Debrief** | 100-point scoring matrix, letter rank (S through F), and causal post-mortem analysis |
+<div align="center">
+
+| Step | Milestone Name | Systems Engineered | Governing Equations & Datasets |
+| :---: | :--- | :--- | :--- |
+| **01** | **Mission Objectives** | Target celestial body & scientific thresholds | JPL Horizons & Small-Body Database (SBDB) |
+| **02** | **Spacecraft Platform** | Bus structure, dry mass, dual-redundancy | Spacecraft dry mass & subsystem margins |
+| **03** | **Scientific Payload** | Spectrometers, LIDAR, magnetometers, cameras | Mass allocation & power duty cycle budgets |
+| **04** | **Launch Vehicle** | Sizing booster capacity against trajectory | Characteristic energy ($C_3$) parabolic interpolation |
+| **05** | **Budget & Reserves** | Hardware cost, operations, risk inflation | Total expenditure vs. NASA program cost cap |
+| **06** | **Power Budget** | Solar arrays, cell degradation, RTGs, battery | Inverse-square solar decay $S(r) = 1361/r^2$ |
+| **07** | **Mass & Rocket Sizing** | Propellant mass with structural tank fraction | Closed-form Tsiolkovsky equation: $x = \Delta v / (I_{sp} g_0)$ |
+| **08** | **Communications** | High-Gain Antenna diameter, Ka/X bands | Free-space path loss & DSN 34m/70m link margin |
+| **09** | **Orbital Trajectory** | Hohmann transit duration & synodic launch window | Heliocentric semi-major axis: $T = 0.5 \cdot a^{1.5} \cdot 365.25$ |
+| **10** | **Mission Simulation** | 4-phase stochastic Monte Carlo flight engine | Deterministic seeded pseudorandom flight anomalies |
+| **11** | **Evaluation & Debrief**| Comprehensive debrief with letter grades (S to F) | Score matrix: Science (35%), Budget (20%), Margins (20%), Reliability (25%) |
+
+</div>
 
 <br /><br />
 
----
+<!-- 6. COUPLED ASTRODYNAMICS ENGINES -->
+<img src="./assets/sec-physics.svg" alt="Coupled Astrodynamics Physics Engines" width="100%" />
 
-## 5 Coupled Computational Physics Engines
-
-<br />
+<br /><br />
 
 <img src="./assets/physics-3d.svg" alt="5 Coupled Computational Physics Engines" width="100%" />
 
 <br /><br />
 
-<p style="max-width: 850px; line-height: 1.8;">
-All calculations reside in <code>src/engine/</code> as pure mathematical functions with zero React or framework dependencies. The UI purely observes a single derived design state (<code>deriveDesign</code>).
+<p align="center" style="max-width: 860px; line-height: 1.8;">
+  All calculations reside in <code>src/engine/</code> as pure mathematical functions with zero React or framework dependencies. The UI purely observes a single derived design state (<code>deriveDesign</code>).
 </p>
 
 <br />
+
+<div align="center">
 
 ### 1. Closed-Form Propellant Mass with Structural Tank Fraction
 $$x = \frac{\Delta v_{\text{req}} \cdot (1 + \text{reserve})}{I_{sp} \cdot g_0}$$
@@ -159,25 +184,28 @@ $$T_{\text{transit}} = \pi \sqrt{\frac{a^3}{\mu_{\odot}}} \approx 0.5 \cdot a_{\
 
 $$\Delta v_{\text{plane}} \approx 2 \cdot v_{\text{target}} \cdot \sin\left(\frac{i}{2}\right)$$
 
+</div>
+
 <br /><br />
 
----
+<!-- 7. STORY CAMPAIGN MODE -->
+<img src="./assets/sec-campaign.svg" alt="Story Campaign: AMUN Horizon 2041-2051" width="100%" />
 
-## Story Campaign: "AMUN Horizon" (2041–2051)
-
-<br />
+<br /><br />
 
 <img src="./assets/campaign-3d.svg" alt="AMUN Horizon: 6-Chapter Solar System Campaign" width="100%" />
 
 <br /><br />
 
-<p style="max-width: 850px; line-height: 1.8;">
-An episodic 6-chapter narrative set in the wake of a catastrophic 2041 solar super-storm. Players follow an anomalous 1420.405 MHz neutral hydrogen pulse repeating every 26 months across six strategic planetary loci.
+<p align="center" style="max-width: 860px; line-height: 1.8;">
+  An episodic 6-chapter narrative set in the wake of a catastrophic 2041 solar super-storm. Players follow an anomalous 1420.405 MHz neutral hydrogen pulse repeating every 26 months across six strategic planetary loci.
 </p>
 
 <br />
 
-| Chapter | Epoch | Celestial Target | Mission Profile | Scientific Objective |
+<div align="center">
+
+| Chapter | Epoch | Target Body | Profile | Scientific Objective |
 | :---: | :---: | :---: | :---: | :--- |
 | **01** | **2041** | **The Moon** | Lunar Orbiter | Establishing baseline deep-space relay and telemetry calibration |
 | **02** | **2043** | **Mars** | Mars Orbiter | Mapping high-altitude dust storms and relaying anomalous ground pulses |
@@ -186,13 +214,14 @@ An episodic 6-chapter narrative set in the wake of a catastrophic 2041 solar sup
 | **05** | **2049** | **Jupiter** | Radiation Orbiter | Navigating extreme radiation belts to track Jovian magnetosphere emissions |
 | **06** | **2051** | **1 Ceres** | The Horizon Orbiter | Exploring Occator crater bright spots to unlock the final campaign certificate |
 
+</div>
+
 <br /><br />
 
----
+<!-- 8. NASA DATA INTEGRATION -->
+<img src="./assets/sec-nasa.svg" alt="NASA Open Data Provenance and Offline Architecture" width="100%" />
 
-## NASA Open Data Integration & Offline Snapshot Failover
-
-<br />
+<br /><br />
 
 ```
                 ┌──────────────────────────────────┐
@@ -210,46 +239,54 @@ An episodic 6-chapter narrative set in the wake of a catastrophic 2041 solar sup
 
 <br />
 
+<div align="center">
+
 | NASA Resource / Endpoint | Integration Protocol | In-Game Utility |
 | :--- | :---: | :--- |
 | **[NASA JPL Horizons API](https://ssd.jpl.nasa.gov/api/horizons.api)** | REST Ephemerides | Real heliocentric and geocentric distances, orbital inclinations, and vectors |
 | **[NASA JPL Small-Body Database](https://ssd-api.jpl.nasa.gov/sbdb.api)** | REST Queries | High-precision orbital elements, diameters, and spin periods for asteroids and comets |
-| **[NASA Image and Video Library](https://images-api.nasa.gov/search)** | Direct Media API | High-resolution photography of celestial bodies with authentic mission credits |
+| **[NASA Planetary Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/)** | Planetary Benchmark | True physical parameters: mass, radius, surface gravity, escape velocity |
 | **[NASA Technical Reports Server](https://ntrs.nasa.gov/api/citations/search)** | STI Citations | Peer-reviewed aerospace literature citations inside the Learn Panel |
-| **[Basics of Space Flight](https://science.nasa.gov/learn/basics-of-space-flight/)** | Educational Docs | Conceptual explanations linked directly inside subsystem guidance popovers |
+| **[NASA Image and Video Library](https://images-api.nasa.gov/search)** | Direct Media API | High-resolution photography of celestial bodies with authentic mission credits |
+| **[NASA JPL Basics of Space Flight](https://science.nasa.gov/learn/basics-of-space-flight/)** | Educational Docs | Conceptual explanations linked directly inside subsystem guidance popovers |
+| **[NASA Deep Space Network (DSN)](https://www.nasa.gov/directorates/somd/space-communications-navigation-program/experimental-dsn/)** | Communications Data | Antenna configurations (34m & 70m dishes), frequency bands, and ground station gain |
+
+</div>
 
 <br /><br />
 
----
+<!-- 9. MISSION FLIGHT CREW -->
+<img src="./assets/sec-crew.svg" alt="AMUN Mission Flight Crew and Core Architects" width="100%" />
 
-## Mission Flight Crew & Core Architects
-
-<br />
+<br /><br />
 
 <img src="./assets/team-3d.svg" alt="AMUN Mission Flight Crew & Core Architects" width="100%" />
 
 <br /><br />
 
-<p style="max-width: 850px; line-height: 1.8;">
-Project AMUN was engineered by an interdisciplinary team combining full-stack software architecture, aerospace flight dynamics, and authentic cultural visual identity:
+<p align="center" style="max-width: 860px; line-height: 1.8;">
+  Project AMUN was engineered by an interdisciplinary team combining full-stack software architecture, aerospace flight dynamics, and authentic cultural visual identity:
 </p>
 
 <br />
 
-| Specialist | Mission Role & Technical Responsibility | Professional Connect |
+<div align="center">
+
+| Specialist | Mission Role & Technical Scope | Professional Connect |
 | :--- | :--- | :---: |
 | **Omar Mohammed Etman** | **Mission Commander & Systems Architect**<br>• Core closed-form astrodynamic engine (`src/engine`)<br>• Tsiolkovsky closed propellant sizing & state management pipeline<br>• Full-stack React 18, TypeScript, and Vite integration | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/omar-m-etman) |
 | **Elshimaa Sayed Mohamed** | **Creative Director & Visual Identity Lead**<br>• Authentic Ancient Egyptian mural pigment palette design<br>• Bespoke 24px stroke iconography, Cartouche, and Lotus Frieze<br>• Mobile-first UI/UX architecture & 360px viewport experience | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](http://linkedin.com/in/oshsayeddesigner) |
 | **Abdullah Azb** | **Aerospace Systems & Flight Dynamics Specialist**<br>• Orbital transfer mechanics & Hohmann trajectory modeling<br>• Characteristic launch energy ($C_3$) interpolation tables<br>• Planetary ephemeris validation and NASA scientific datasets | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abdullah-azb-18290a262) |
 | **Mahmoud Abdelhamid** | **Software Engineer & Telemetry Lead**<br>• Deep Space Network (DSN) link budget & bitrate calculations<br>• Deterministic Monte Carlo stochastic simulation logic<br>• Automated test suites (41/41 passing) & client-side persistence | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mahmoud-abdel-hamid-513363406/) |
 
+</div>
+
 <br /><br />
 
----
+<!-- 10. COLLABORATIVE ENGINEERING MODEL -->
+<img src="./assets/sec-methodology.svg" alt="Collaborative Engineering Model: 50% AI / 50% Human Engineering" width="100%" />
 
-## Development Methodology (50% AI / 50% Human Engineering)
-
-<br />
+<br /><br />
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -272,11 +309,12 @@ Project AMUN was engineered by an interdisciplinary team combining full-stack so
 
 <br /><br />
 
----
+<!-- 11. TECHNICAL STACK & QUICK START -->
+<img src="./assets/sec-stack.svg" alt="Technical Stack and Quick Start" width="100%" />
 
-## Technical Stack & Quick Start
+<br /><br />
 
-<br />
+<div align="center">
 
 | Layer | Technology | Role in Project AMUN |
 | :---: | :---: | :--- |
@@ -286,6 +324,8 @@ Project AMUN was engineered by an interdisciplinary team combining full-stack so
 | **Styling & Pigments** | **Tailwind CSS 3.4** | Bespoke palette tokens (Lapis, Egyptian Blue, Limestone, Ochre) |
 | **State Management** | **Zustand 4.5** | Centralized mission store with schema migrations (`persist`) |
 | **Test Runner** | **Vitest 2.1** | Node test environment for 41 pure engine & store test suites |
+
+</div>
 
 <br />
 
@@ -300,18 +340,12 @@ npm install
 # 3. Launch development server
 npm run dev
 
-# 4. Execute unit test suite (41/41 tests)
+# 4. Execute unit test suite (41/41 tests passing)
 npm test
 
 # 5. Compile production bundle
 npm run build
 ```
-
-<br /><br />
-
----
-
-## Automated Verification (100% Tests Passing)
 
 <br />
 
@@ -332,18 +366,22 @@ npm run build
 
 ---
 
-## License & Compliance
+<br />
 
-* **Software Engine**: Open-source under the [MIT License](LICENSE).
-* **NASA Assets**: Public domain under NASA Media Usage Guidelines. Spacecraft and planetary photography courtesy of NASA/JPL-Caltech.
-* **Showcase Laboratory**: [https://omarmetman.vercel.app/projects/amun](https://omarmetman.vercel.app/projects/amun)
+<!-- FOOTER -->
+<p align="center">
+  <b>Project Showcase Lab: <a href="https://omarmetman.vercel.app/projects/amun">omarmetman.vercel.app/projects/amun</a></b><br />
+  <b>Open Source Engine: <a href="https://github.com/omarmetman/amun">github.com/omarmetman/amun</a></b><br />
+  <sub>Licensed under the MIT License • NASA Assets in Public Domain courtesy of NASA/JPL-Caltech</sub><br />
+  <sub>Designed & Developed for NASA Space Apps Challenge 2026</sub>
+</p>
 
 <br />
 
 ```
-=============================================================
-  "From the Nile to the Stars — Designed for NASA Space Apps"
-=============================================================
+========================================================================================
+             "FROM THE NILE TO THE STARS — AMUN DEEP SPACE NAVIGATOR"
+========================================================================================
 ```
 
 </div>
